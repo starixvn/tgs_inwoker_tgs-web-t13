@@ -550,16 +550,13 @@ export const wapT10 = {
   popoverSubWalletText: "#000",
 };
 
-export const wapT11 = {
-  variant: "red",
-  loginBody: `url(${
-    process.env.PUBLIC_URL + `/assets/images/wapp/resource/T11/loginbg.png`
-  }) no-repeat center center / cover`,
+export const wapT13 = {
+  loginBody: "#1b1d30",
   loginText: "#fff",
-  primary: "#0b1014",
+  primary: "#cf2029",
   primaryRgb: "213, 38, 98",
   primaryText: "#fff",
-  primaryGradient: "#d52662",
+  primaryGradient: "#1b1d30",
   primaryGradientRgb: "213, 38, 98",
   primaryHightlight: "#fde73f",
   secondary: "#404040",
@@ -567,16 +564,14 @@ export const wapT11 = {
   tertiary: "rgba(255, 255, 255, 1)",
   tertiaryText: "rgba(255, 255, 255, 0.5)",
   //new addition to compensate wap-t2
-  appbar: "#d52662",
+  appbar: "#1b1d30",
   buttonBackground: "#fff",
   buttonText: "#fff",
   buttonText2: "#000",
-  bottomnav: "#d52662",
+  bottomnav: "#1b1d30",
   bottomNavAction: "#fff",
   bottomNavActionSelected: "#fff",
-  body: `url(${
-    process.env.PUBLIC_URL + `/assets/images/wapp/resource/T11/bodybg.png`
-  })`,
+  body: "#1b1d30",
   bodyBackground: `url(${
     process.env.PUBLIC_URL + `/assets/images/wapp/resource/T11/bodybg.png`
   })`,
@@ -588,8 +583,8 @@ export const wapT11 = {
   pcHeaderText: "#fff",
   pcHeaderTextHover: "#fde73f",
   pcHeaderRightMenu: "#f6f6f6",
-  pcHeaderRightMenuHover: "#d52662",
-  gamelisterOriginalText: "#f499b9",
+  pcHeaderRightMenuHover: "#1b1d30",
+  gamelisterOriginalText: "#fff",
   gamelisterSelectedText: "#fff",
   gamelisterBg:
     "linear-gradient(to right, rgb(216, 42, 102), rgba(251,91,145))",
@@ -597,10 +592,10 @@ export const wapT11 = {
   popoverGameTypeText: "#c40511",
   popoverSubWalletText: "#000",
 
-  wapMarqueeBg: "#d5266275",
+  wapMarqueeBg: "#1b1d3075",
   wapMarqueeText: "#fff",
-  accent: "#d52662",
-  wapPrimary: "#d52662",
+  accent: "#1b1d30",
+  wapPrimary: "#1b1d30",
   wapSecondary: "#fff",
   buttonWapBoxShadow: "none",
 };
@@ -621,5 +616,5 @@ export const themeList = {
   GMO: GMO,
   PB: PB,
   wapT10: wapT10,
-  wapT11: wapT11,
+  wapT13: wapT13,
 };
