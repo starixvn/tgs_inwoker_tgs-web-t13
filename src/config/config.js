@@ -7,7 +7,7 @@ const config = {
     window?.env?.client ||
     "uc0C5tXKanr6gN9P7HqlTQ1AGwUFJhg8jEzuFhCuHEC0E1QcCfZYrH",
   currency: window?.env?.currency || "PHP",
-  brand: window?.env?.brand || process.env.REACT_APP_BRAND || "PGG",
+  brand: window?.env?.brand || process.env.REACT_APP_BRAND || "xxx",
   brandName: window?.env?.brandName
     ? window?.env?.brandName
     : window?.env?.brand || "GPI",
