@@ -63,12 +63,24 @@ const EmptyHeader = styled.div`
 `;
 const RouletteFloatingPanel = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  padding-top: 16%;
-  padding-left: 2%;
+  z-index: 1300;
+
+  ${({ position }) => {
+    //for each item in position object, map accordingly
+    return position !== undefined
+      ? Object.keys(position).map((key) => {
+          return `${key}: ${position[key]}px;`;
+        })
+      : `  top: 0;
+    left: 0;
+    padding-top: 16%;
+    padding-left: 2%;`;
+  }}
+
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ orientation }) => {
+    return orientation ? orientation : "column";
+  }};
 `;
 // try {
 // const bc = new BroadcastChannel('refreshBalance');
@@ -604,7 +616,18 @@ class App extends Component {
                   )}
 
                 {config.features.HomePage_PromoRoulette && this.isInHomePage() && (
-                  <RouletteFloatingPanel>
+                  <RouletteFloatingPanel
+                    position={
+                      config.features.RouletteSetting &&
+                      config.features.RouletteSetting.web &&
+                      config.features.RouletteSetting.web.position
+                    }
+                    orientation={
+                      config.features.RouletteSetting &&
+                      config.features.RouletteSetting.web &&
+                      config.features.RouletteSetting.web.orientation
+                    }
+                  >
                     {this.props.general.rouletteCount.length > 0 &&
                       this.props.general.rouletteCount
                         .filter(
