@@ -71,7 +71,10 @@ const CustomModal = styled(Dialog)`
     background: url(${EmptyBackgroundPNG}) no-repeat;
     min-height: 370px;
     background-position: -9px -6px;
-    padding-top: 100px;
+
+    padding: ${({ isHistory }) => {
+      return isHistory ? `45px 50px 0 50px` : `100px 0 0 0`;
+    }};
   }
 `;
 
@@ -179,7 +182,6 @@ const StyledTableHead = styled.th`
   position: sticky;
   top: 0;
   z-index: 1;
-  background-color: #fffdee;
 `;
 
 const StyledTableData = styled.td`
@@ -883,12 +885,8 @@ const PromotionRoulette = (props) => {
           setTimeout(() => {
             setRouletteModal(false);
             setDisableOnSpin(true);
-            performOpenEmptyModal(
-              i18n.t("promoRoulette.dialogDARUnavailableTitle"),
-              "",
-              i18n.t("promoRoulette.dialogUnavailableTitle3")
-            );
-          }, 2000);
+            performOpenEmptyModal("", "", "", true);
+          }, 100);
         }
       }
     } else if (rouletteCount === null && props.account.token !== null) {
@@ -921,7 +919,7 @@ const PromotionRoulette = (props) => {
   const isIdenticalArray = (arr1, arr2) => {
     if (arr1 && arr2) {
       var sortedArr1 = arr1.sort(function (a, b) {
-        return new Date(a.createdon) - new Date(b.createdfon);
+        return new Date(a.createdon) - new Date(b.createdon);
       });
       var sortedArr2 = arr2.sort(function (a, b) {
         return new Date(a.createdon) - new Date(b.createdon);
@@ -942,12 +940,13 @@ const PromotionRoulette = (props) => {
     setRouletteModal(false);
   };
 
-  const performOpenEmptyModal = (title1, title2, title3) => {
+  const performOpenEmptyModal = (title1, title2, title3, history) => {
     setEmptyModal(true);
     setDialogContent({
-      title1: title1,
-      title2: title2,
-      title3: title3,
+      title1,
+      title2,
+      title3,
+      history,
     });
   };
 
@@ -1041,7 +1040,9 @@ const PromotionRoulette = (props) => {
         await updateRouletteCount();
       } else {
         setItems(mapRouletteItems(promotionDetail.campaignDetail));
-        props.getPromotionRouletteStatus(promotionDetail.id);
+        if (props.account.token != null) {
+          props.getPromotionRouletteStatus(promotionDetail.id);
+        }
       }
     } else if (props.rouletteType === RouletteEnum.DAR) {
       await updateRouletteCount();
@@ -1097,11 +1098,51 @@ const PromotionRoulette = (props) => {
     },
   ];
 
+  const HistoryContent = () => {
+    return (
+      <TableContent>
+        <StyledTable>
+          <tr>
+            <StyledTableHead>
+              {i18n.t("promoRoulette.winningID")}
+            </StyledTableHead>
+            <StyledTableHead>
+              {i18n.t("promoRoulette.dateTime")}
+            </StyledTableHead>
+            <StyledTableHead>
+              {i18n.t("promoRoulette.winnings")}
+            </StyledTableHead>
+          </tr>
+          {items.length > 0 &&
+            rouletteHistory.length > 0 &&
+            rouletteHistory
+              .sort((a, b) => new Date(b.createdon) - new Date(a.createdon))
+              .map((row) => {
+                return (
+                  <tr>
+                    <StyledTableData>{row.id}</StyledTableData>
+                    <StyledTableData>
+                      {moment(row.createdon)
+                        .utcOffset("+0800")
+                        .format("HH:mm:ss DD/MM/YYYY")}
+                    </StyledTableData>
+                    <StyledTableData>
+                      {items[row.itemindex].label}
+                    </StyledTableData>
+                  </tr>
+                );
+              })}
+        </StyledTable>
+      </TableContent>
+    );
+  };
+
   return (
     <React.Fragment>
       <Container
         rouletteType={props.rouletteType}
         position={
+          config.features.RouletteSetting &&
           config.features.RouletteSetting.web &&
           config.features.RouletteSetting.web.position
         }
@@ -1117,6 +1158,7 @@ const PromotionRoulette = (props) => {
             </CloseIcon>
             <BtnRoulette
               size={
+                config.features.RouletteSetting &&
                 config.features.RouletteSetting.web &&
                 config.features.RouletteSetting.web.size
               }
@@ -1271,49 +1313,16 @@ const PromotionRoulette = (props) => {
                 ></EventText>
               </React.Fragment>
             )}
-            {tabIndex === 3 && (
-              <TableContent>
-                <StyledTable>
-                  <tr>
-                    <StyledTableHead>
-                      {i18n.t("promoRoulette.winningID")}
-                    </StyledTableHead>
-                    <StyledTableHead>
-                      {i18n.t("promoRoulette.dateTime")}
-                    </StyledTableHead>
-                    <StyledTableHead>
-                      {i18n.t("promoRoulette.winnings")}
-                    </StyledTableHead>
-                  </tr>
-                  {items.length > 0 &&
-                    rouletteHistory.length > 0 &&
-                    rouletteHistory
-                      .sort(
-                        (a, b) => new Date(b.createdon) - new Date(a.createdon)
-                      )
-                      .map((row) => {
-                        return (
-                          <tr>
-                            <StyledTableData>{row.id}</StyledTableData>
-                            <StyledTableData>
-                              {moment(row.createdon)
-                                .utcOffset("+0800")
-                                .format("HH:mm:ss DD/MM/YYYY")}
-                            </StyledTableData>
-                            <StyledTableData>
-                              {items[row.itemindex].label}
-                            </StyledTableData>
-                          </tr>
-                        );
-                      })}
-                </StyledTable>
-              </TableContent>
-            )}
+            {tabIndex === 3 && <HistoryContent />}
           </Content>
         )}
         <CloseButton onClick={performCloseRouletteModal}></CloseButton>
       </RouletteModal>
-      <CustomModal open={emptyModal} onClose={performCloseEmptyModal}>
+      <CustomModal
+        open={emptyModal}
+        isHistory={dialogContent.history}
+        onClose={performCloseEmptyModal}
+      >
         {dialogContent.title1 && (
           <ModalTitleH1>
             <Textfit min={38} max={48}>
@@ -1335,6 +1344,8 @@ const PromotionRoulette = (props) => {
             </Textfit>
           </ModalTitleH3>
         )}
+
+        {dialogContent.history && <HistoryContent />}
       </CustomModal>
     </React.Fragment>
   );
