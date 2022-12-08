@@ -122,68 +122,10 @@ const RightContainer = styled.div`
   align-items: center;
 `;
 
-const BtnAppsAndCS = styled.div`
-  width: 77px;
-  display: flex;
-  align-items: center;
-  word-wrap: break-word;
-  height: 30px;
-
-  float: right;
-  &:hover {
-    cursor: pointer;
-  }
-  @media (max-width: 700px) {
-    display: none;
-  }
-`;
-
-const BtnCS = styled(BtnAppsAndCS)`
-  background-image: url(${({ theme }) => btnCSSwitcher()});
-  color: ${({ theme }) => theme.pcHeaderText};
-  &:hover {
-    background-image: url(${({ theme }) => btnCSHoverSwitcher()});
-    color: ${({ theme }) => theme.pcHeaderTextHover};
-  }
-  padding-left: 32px;
-  line-height: 10px;
-`;
-
-const CSIcon = styled.div`
-  height: 18px;
-  width: 18px;
-  mask: url(${process.env.PUBLIC_URL + "/assets/images/iconpack/cs.png"});
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  background: ${({ theme }) => theme.pcHeaderText};
-  margin-right: 4px;
-`;
-
-const NewButtonCs = styled.div`
-  font-size: 15px;
-  padding: 2.5px 10px;
-  text-align: center;
-  color: ${({ theme }) => theme.pcHeaderText};
-  cursor: pointer;
-  border-radius: 4px;
-  border: solid 1px ${({ theme }) => theme.pcHeaderText};
-  display: flex;
-  align-items: center;
-
-  :hover {
-    color: ${({ theme }) => theme.accent};
-    border: solid 1px ${({ theme }) => theme.accent};
-
-    ${CSIcon} {
-      background: ${({ theme }) => theme.accent};
-    }
-  }
-`;
 
 const BottomContainer = styled.div`
   display: grid;
-  grid-template-columns: 230px auto;
+  grid-template-columns: 230px auto auto;
   grid-gap: 5px;
   @media (max-width: 1279px) {
     grid-template-columns: auto;
@@ -212,7 +154,6 @@ const RightMenuContainer = styled.div`
 const RightMenuUL = styled.ul`
   display: flex;
   align-items: stretch; /* Default */
-  justify-content: flex-end;
   width: 100%;
   list-style: none;
   padding: 0;
@@ -221,13 +162,14 @@ const RightMenuUL = styled.ul`
 `;
 
 const RightMenuTextSpan = styled.span`
-  font-size: ${(props) => (i18n.language === "vi-VN" ? "15px" : "16px")};
-
+  font-size: ${(props) => (i18n.language === "vi-VN" ? "23px" : "24px")};
+  font-family: "Montserrat";
   margin: 0 auto;
   display: block;
 
   padding-top: 6px;
   text-align: center;
+  text-transform: uppercase;
 `;
 
 const MouseOverContainer = styled.div`
@@ -262,11 +204,6 @@ const RightMenuImg = styled.div`
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: contain;
-`;
-const MouseOverInner = styled.div`
-  width: 1280px;
-  height: 161px;
-  margin: 0 auto;
 `;
 
 const GameImg = styled.img`
@@ -312,8 +249,7 @@ const breatheAnimation = keyframes`
 `;
 const RightMenuLI = styled.li`
   display: inline-block;
-  width: 130px;
-  height: 95%;
+  width: max-content;
   color: ${({ theme }) => theme.pcHeaderRightMenu};
   cursor: pointer;
   border-bottom: solid 4px transparent;
@@ -326,46 +262,8 @@ const RightMenuLI = styled.li`
   @media (max-width: 650px) {
     width: 100px;
   }
-  &:hover {
-  }
-  &:hover ${MouseOverContainer} {
-    height: 190px;
-  }
+  padding: 45px 35px 0px 35px;
 
-  :hover {
-    ${({ active, theme }) => {
-      return active
-        ? ``
-        : `
-        border-bottom: solid 4px ${theme.pcHeaderRightMenuHover};
-        color: ${theme.pcHeaderRightMenuHover};
-        ${RightMenuImg}{
-          background: ${theme.pcHeaderRightMenuHover};
-        }
-
-        `;
-    }}
-  }
-
-  &:hover ${GameImg} {
-    animation-name: ${breatheAnimation};
-  }
-  &:hover ${GameName} {
-    animation-name: ${breatheAnimation};
-  }
-  background-repeat: no-repeat;
-  background-position: 15% center;
-  ${({ active, theme }) =>
-    active
-      ? `
-      color: ${theme.primaryText};
-      background: ${theme.pcHeaderRightMenuHover};
-      ${RightMenuImg}{
-        background: #fff;
-      }
-  `
-      : `
-  `}
 `;
 
 const StyledAppBar = withStyles((theme) => ({
@@ -381,6 +279,7 @@ const CustomAppBar = styled(StyledAppBar)`
     return hide ? "none" : "block";
   }};
   background: ${({ theme }) => theme.pcAppBar};
+  box-shadow: none;
 `;
 
 const GameFrameWrapper = styled.div`
@@ -675,11 +574,7 @@ class Header extends Component {
 
   RightMenuItem = (
     to,
-    image,
     label,
-    imageHover,
-    subMenuImg,
-    img_PB,
     active
   ) => {
     const { classes } = this.props;
@@ -688,21 +583,7 @@ class Header extends Component {
       <RightMenuLI
         active={active}
         onClick={() => this.handleClickMenu(to)}
-        onMouseOver={() => this.handleMenuMouseOver(to)}
-        onMouseLeave={this.handleMenuMouseLeave}
-        img={image}
       >
-        <RightMenuImg
-          img={image}
-          active={active}
-          className={`${
-            this.state.shouldShow === null
-              ? classes.maxIcon
-              : this.state.shouldShow
-              ? classes.maxIcon
-              : classes.minIcon
-          }`}
-        ></RightMenuImg>
         <RightMenuTextSpan
           className={`${
             this.state.shouldShow === null
@@ -714,26 +595,6 @@ class Header extends Component {
         >
           {label}
         </RightMenuTextSpan>
-        {(() => {
-          if (subMenuImg != null) {
-            return (
-              <MouseOverContainer
-                onClick={(e) => e.stopPropagation()}
-                style={
-                  this.state.shouldShow === null
-                    ? { top: "155px" }
-                    : this.state.shouldShow
-                    ? { top: "155px" }
-                    : { top: "114px" }
-                }
-              >
-                <MouseOverBackground>{subMenuImg}</MouseOverBackground>
-              </MouseOverContainer>
-            );
-          } else {
-            return null;
-          }
-        })()}
       </RightMenuLI>
     );
   };
@@ -934,7 +795,17 @@ class Header extends Component {
       <CustomAppBar hide={this.props.hide}>
         <InnerWrap>
           <TopContainer>
-            <LeftContent>
+            <LeftContent></LeftContent>
+            <RightContainer>
+              <LinkContainer>
+                <LanguageChanger
+                  language={this.props.general.brandLanguage}
+                  changeLanguage={this.changeLanguage}
+                />
+              </LinkContainer>
+              {config.features.OnlineUser && (
+                <OnlineUserDisplayer color="#fff" size="14px" />
+              )}
               <TimerContainer>
                 <TimerSpan>GMT+8 {this.state.systemDateTime}</TimerSpan>
               </TimerContainer>
@@ -948,18 +819,80 @@ class Header extends Component {
                   </PhoneNumberSpan>
                 </TimerContainer>
               )}
-              <LinkContainer>
-                <LanguageChanger
-                  language={this.props.general.brandLanguage}
-                  changeLanguage={this.changeLanguage}
-                />
-              </LinkContainer>
-            </LeftContent>
-            <RightContainer>
-              {config.features.OnlineUser && (
-                <OnlineUserDisplayer color="#fff" size="14px" />
-              )}
-              {(() => {
+              {/* {(() => {
+                if (!this.props.general.isMaintenance) {
+                  if (
+                    this.props.account.token !== this.props.account.info.token
+                  ) {
+                    return (
+                      <GuestContainer
+                        onhandleShowCSClick={this.props.onhandleShowCSClick}
+                        onhandleContactUsClick={this.handleContactUsClick}
+                        onDialogChange={this.handleDialogChange}
+                      ></GuestContainer>
+                    );
+                  } else {
+                    return (
+                      <MemberContainer
+                        onhandleLogout={this.onhandleLogout}
+                        onhandleTransfer={this.onhandleTransfer}
+                        onhandleDeposit={this.onhandleDeposit}
+                        onhandleInboxClick={this.handleInboxClick}
+                        onhandleRefreshBalanceClick={
+                          this.handleRefreshBalanceClick
+                        }
+                        wallet={this.props.wallet}
+                        game={this.props.game}
+                        account={this.props.account}
+                      ></MemberContainer>
+                    );
+                  }
+                }
+              })()} */}
+              {/* <NewButtonCs onClick={this.props.onhandleShowCSClick}>
+                <CSIcon /> {i18n.t("common.cs")}
+              </NewButtonCs> */}
+            </RightContainer>
+          </TopContainer>
+          <BottomContainer>
+            <LogoContainer
+              img={
+                this.props.general.brand &&
+                this.props.general.brand.desktopLogoUrl
+              }
+              onClick={this.onhandleLogoClick}
+              className={`${
+                this.state.shouldShow === null
+                  ? classes.maxMenu
+                  : this.state.shouldShow
+                  ? classes.maxMenu
+                  : classes.minMenu
+              }`}
+            ></LogoContainer>
+            <RightMenuContainer>
+              <RightMenuUL
+                className={`${
+                  this.state.shouldShow === null
+                    ? classes.maxMenu
+                    : this.state.shouldShow
+                    ? classes.maxMenu
+                    : classes.minMenu
+                }`}
+              >
+                {this.RightMenuItem(
+                  "promotion",
+                  i18n.t("common.promotion"),
+                  currentPage === "promotion"
+                )}
+
+                {this.RightMenuItem(
+                  "vip",
+                  "VIP",
+                  currentPage === "vip"
+                )}
+              </RightMenuUL>
+            </RightMenuContainer>
+            {(() => {
                 if (!this.props.general.isMaintenance) {
                   if (
                     this.props.account.token !== this.props.account.info.token
@@ -989,274 +922,6 @@ class Header extends Component {
                   }
                 }
               })()}
-              <NewButtonCs onClick={this.props.onhandleShowCSClick}>
-                <CSIcon /> {i18n.t("common.cs")}
-              </NewButtonCs>
-            </RightContainer>
-          </TopContainer>
-          <BottomContainer>
-            <LogoContainer
-              img={
-                this.props.general.brand &&
-                this.props.general.brand.desktopLogoUrl
-              }
-              onClick={this.onhandleLogoClick}
-              className={`${
-                this.state.shouldShow === null
-                  ? classes.maxMenu
-                  : this.state.shouldShow
-                  ? classes.maxMenu
-                  : classes.minMenu
-              }`}
-            ></LogoContainer>
-            <RightMenuContainer>
-              <RightMenuUL
-                className={`${
-                  this.state.shouldShow === null
-                    ? classes.maxMenu
-                    : this.state.shouldShow
-                    ? classes.maxMenu
-                    : classes.minMenu
-                }`}
-              >
-                {SortedMenuList.map((item, index) => {
-                  var list = this.props.game.homePageGameList
-                    .filter((game) => item.gameType.indexOf(game.type) >= 0)
-                    .sort((a, b) => {
-                      if (config.features.LiveGame_Sorting_SKY) {
-                        var sortDGFirst = ["DG"];
-                        return (
-                          sortDGFirst.indexOf(b.abbreviation) -
-                          sortDGFirst.indexOf(a.abbreviation)
-                        );
-                      } else return b - a;
-                    });
-                  if (list.length > 0) {
-                    return (
-                      <RightMenuLI
-                        key={index}
-                        active={currentPage === `${item.path}`}
-                        onClick={() => this.handleClickMenu(item.path)}
-                        onMouseOver={() => this.handleMenuMouseOver(item.path)}
-                        onMouseLeave={this.handleMenuMouseLeave}
-                        img={item.img}
-                      >
-                        <RightMenuImg
-                          img={item.img}
-                          active={currentPage === `${item.path}`}
-                          className={`${
-                            this.state.shouldShow === null
-                              ? classes.maxIcon
-                              : this.state.shouldShow
-                              ? classes.maxIcon
-                              : classes.minIcon
-                          }`}
-                        ></RightMenuImg>
-                        <RightMenuTextSpan
-                          className={`${
-                            this.state.shouldShow === null
-                              ? classes.maxLabel
-                              : this.state.shouldShow
-                              ? classes.maxLabel
-                              : classes.minLabel
-                          }`}
-                        >
-                          {i18n.t(item.title)}
-                        </RightMenuTextSpan>
-                        <MouseOverContainer
-                          onClick={(e) => e.stopPropagation()}
-                          style={
-                            this.state.shouldShow === null
-                              ? { top: "150px" }
-                              : this.state.shouldShow
-                              ? { top: "150px" }
-                              : { top: "114px" }
-                          }
-                        >
-                          <MouseOverBackground>
-                            <MouseOverInner>
-                              {(() => {
-                                return list.length <= 5 ? (
-                                  list.map((game, index) => {
-                                    return (
-                                      <GameFrame
-                                        key={index}
-                                        style={{
-                                          width: `calc(1264px / ${list.length})`,
-                                        }}
-                                        //TODO: To remove
-                                        maintenance={game.status !== 0}
-                                      >
-                                        <GameFrameWrapper>
-                                          <Maintenance>
-                                            {i18n.t("transfer.maintenance")}
-                                          </Maintenance>
-                                          {(() => {
-                                            var gameCode = game.abbreviation.toLowerCase();
-                                            if (gameCode === "joker") {
-                                              return (
-                                                <HotGameIcon></HotGameIcon>
-                                              );
-                                            }
-                                          })()}
-                                          {(() => {
-                                            var gameCode = game.abbreviation.toLowerCase();
-                                            if (
-                                              config.features.SportsHideLogo
-                                            ) {
-                                              if (gameCode === "wgvia") {
-                                                return (
-                                                  <GameName index={index}>
-                                                    {i18n.t("common.horserace")}
-                                                  </GameName>
-                                                );
-                                              } else if (gameCode === "wgfm") {
-                                                return (
-                                                  <GameName index={index}>
-                                                    {i18n.t("common.sport")}
-                                                  </GameName>
-                                                );
-                                              }
-                                            }
-                                          })()}
-
-                                          <GameImg
-                                            index={index}
-                                            src={`${
-                                              process.env.PUBLIC_URL
-                                            }/assets/images/pcHeaderMenu/${
-                                              item.path
-                                            }/${game.abbreviation.toLowerCase()}${
-                                              config.features.SportsHideLogo &
-                                              (game.abbreviation.toLowerCase() ===
-                                                "wgvia" ||
-                                                game.abbreviation.toLowerCase() ===
-                                                  "wgfm")
-                                                ? "-HKJP"
-                                                : ""
-                                            }.png`}
-                                            alt=""
-                                            onClick={() => {
-                                              this.consolidateJoinGame(
-                                                game,
-                                                item
-                                              );
-                                            }}
-                                          ></GameImg>
-                                        </GameFrameWrapper>
-                                      </GameFrame>
-                                    );
-                                  })
-                                ) : (
-                                  <Slider {...settings}>
-                                    {list.map((game, index) => {
-                                      return (
-                                        <GameFrame
-                                          key={index}
-                                          style={{
-                                            width: `calc(1264px / ${list.length})`,
-                                          }}
-                                          //TODO: To remove
-                                          maintenance={game.status !== 0}
-                                        >
-                                          <GameFrameWrapper>
-                                            <Maintenance>
-                                              {i18n.t("transfer.maintenance")}
-                                            </Maintenance>
-                                            {(() => {
-                                              var gameCode = game.abbreviation.toLowerCase();
-                                              if (gameCode === "joker") {
-                                                return (
-                                                  <HotGameIcon></HotGameIcon>
-                                                );
-                                              }
-                                            })()}
-                                            {(() => {
-                                              var gameCode = game.abbreviation.toLowerCase();
-                                              if (
-                                                config.features.SportsHideLogo
-                                              ) {
-                                                if (gameCode === "wgvia") {
-                                                  return (
-                                                    <GameName index={index}>
-                                                      {i18n.t(
-                                                        "common.horserace"
-                                                      )}
-                                                    </GameName>
-                                                  );
-                                                } else if (
-                                                  gameCode === "wgfm"
-                                                ) {
-                                                  return (
-                                                    <GameName index={index}>
-                                                      {i18n.t("common.sport")}
-                                                    </GameName>
-                                                  );
-                                                }
-                                              }
-                                            })()}
-
-                                            <GameImg
-                                              index={index}
-                                              src={`${
-                                                process.env.PUBLIC_URL
-                                              }/assets/images/pcHeaderMenu/${
-                                                item.path
-                                              }/${game.abbreviation.toLowerCase()}${
-                                                config.features.SportsHideLogo &
-                                                (game.abbreviation.toLowerCase() ===
-                                                  "wgvia" ||
-                                                  game.abbreviation.toLowerCase() ===
-                                                    "wgfm")
-                                                  ? "-HKJP"
-                                                  : ""
-                                              }.png`}
-                                              alt=""
-                                              onClick={() => {
-                                                this.consolidateJoinGame(
-                                                  game,
-                                                  item
-                                                );
-                                              }}
-                                            ></GameImg>
-                                          </GameFrameWrapper>
-                                        </GameFrame>
-                                      );
-                                    })}
-                                  </Slider>
-                                );
-                              })()}
-                            </MouseOverInner>
-                          </MouseOverBackground>
-                        </MouseOverContainer>
-                      </RightMenuLI>
-                    );
-                  } else {
-                    return null;
-                  }
-                })}
-
-                {this.RightMenuItem(
-                  "promotion",
-                  TopMenuPromoPNG,
-                  i18n.t("common.promotion"),
-                  TopMenuPromoHoverPNG,
-                  null,
-                  TopMenuPromoPNG_PB,
-                  currentPage === "promotion"
-                )}
-
-                {this.RightMenuItem(
-                  "vip",
-                  TopMenuPromoPNG,
-                  "VIP",
-                  TopMenuPromoHoverPNG,
-                  null,
-                  TopMenuPromoPNG_PB,
-                  currentPage === "vip"
-                )}
-              </RightMenuUL>
-            </RightMenuContainer>
           </BottomContainer>
         </InnerWrap>
       </CustomAppBar>

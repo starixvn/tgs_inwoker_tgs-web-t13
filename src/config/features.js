@@ -111,7 +111,7 @@ const featureList = {
     },
     Wap_DisplayButton: false,
     MergeEVORTNT: true,
-    HideMarquee: true,
+    HideMarquee: false,
     Deposit_AccountNameManualInput: false,
     RouletteNewFlow: false,
     UseAccentColor: true,

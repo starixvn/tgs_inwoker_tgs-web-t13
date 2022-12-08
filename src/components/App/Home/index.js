@@ -20,6 +20,8 @@ import config from "../../../config/config";
 
 import PopupAnnouncement from "./PopupAnnouncement";
 import JackpotSection from "./jackpot-section";
+import GameLister from "./game-lister";
+
 const HomeContainer = styled.div`
   width: 100%;
   overflow: hidden;
@@ -29,17 +31,18 @@ const SliderContainer = styled.div`
 `;
 
 const MarqueeContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  width: 1280px;
+  background-color: #27273f;
+  border-radius: 25px;
+  margin: 30px auto;
 `;
 const SectionContainer = styled.div`
-  width: 100%;
+  width: 1280px;
   min-height: 1200px;
 
   display: flex;
   justify-content: center;
+  margin: 0 auto;
 `;
 
 class Home extends Component {
@@ -175,7 +178,6 @@ class Home extends Component {
 
   handleNavigateClick = (url) => {
     this.props.history.push(url);
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
   render() {
@@ -183,12 +185,13 @@ class Home extends Component {
       <HomeContainer>
         <SliderContainer>
           <Slider list={this.props.ui.board_list}></Slider>
-          {!config.features.HideMarquee && (
+        </SliderContainer>
+        <GameLister game={this.props.game} handleNavigateClick={this.handleNavigateClick} ></GameLister>
+        {!config.features.HideMarquee && (
             <MarqueeContainer>
               <Marquee text={this.props.ui.marqueeText}></Marquee>
             </MarqueeContainer>
           )}
-        </SliderContainer>
         <SectionContainer>
           <JackpotSection
             showLogin={this.props.showLogin}

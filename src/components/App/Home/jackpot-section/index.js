@@ -14,18 +14,20 @@ import {
   jdbFish,
 } from "../../../Wap/Main/Home/scene-1/template11/hardcode";
 import { GameService } from "../../../../api-services/services/GameService";
-import BGJPG from "../../../../assets/images/home/section/bg.png";
 
 const Container = styled.div`
   width: 100%;
-  //transform: translateX(50px);
-  background-image: url(${process.env.PUBLIC_URL +
-    "/assets/images/wapp/home/T11/jackpot.gif"}),
-    url(${process.env.PUBLIC_URL + "/assets/images/pcHomePage/jackpot.png"}),
-    url(${BGJPG});
-  background-position: calc(50% + 7px) 270px, calc(50% + 50px) 187px, top;
-  background-repeat: no-repeat, no-repeat, no-repeat;
-  background-size: 464px 190px, 1350px 785px, auto;
+`;
+
+const Title = styled.div`
+  width: 1280px;
+  margin: 40px auto;
+  font-size: 44px;
+  font-family: "Montserrat";
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: center;
+  color: #ffffff;
 `;
 
 const JackpotHolder = styled.div`
@@ -35,17 +37,16 @@ const JackpotHolder = styled.div`
 `;
 
 const JackpotContentWorkingSpace = styled.div`
-  width: 1016px;
+  width: 1280px;
   height: 512px;
   position: relative;
-  top: 365px;
   display: grid;
   grid-auto-columns: 1fr;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 215px 1fr;
   grid-template-areas:
     "topContent topContent"
-    "bottomLeft bottomRight";
+    "bottomContent bottomContent";
   margin: 0 auto;
 `;
 
@@ -54,19 +55,28 @@ const TopContent = styled.div`
   position: absolute;
   color: white;
   display: flex;
-  height: 111px;
-  width: 664px;
-  right: 130px;
-  top: 75px;
+  height: 150px;
+  width: 1280px;
 
   font-size: 75px;
   align-items: center;
   letter-spacing: 14px;
   gap: 4px;
+  font-weight: 500;
+  justify-content: space-evenly;
+  font-weight: bold;
 `;
 
 const CurrencyHolder = styled.div`
   padding-top: 35px;
+  font-family: "Montserrat";
+`;
+
+const BottomContent = styled.div`
+  grid-area: bottomContent;
+  width: 1280px;
+  display: flex;
+  height: 150px;
 `;
 
 const BottomLeftcontent = styled.div`
@@ -81,31 +91,42 @@ const BottomRightContent = styled.div`
 
 const TextHolder = styled.div`
   border-radius: 8px;
-  padding: 0 0 0 10px;
+  padding: 0 10px 0 10px;
   text-align: center;
-  font-size: 60px;
-  height: 72px;
+  font-size: 55px;
+  height: 80px;
   display: flex;
 
   ${({ hide }) => {
     return hide
       ? `
-   font-size: 30px;
-   width: 20px;
+   font-size: 60px;
    padding: 0 0 0 0px;
-   width: 10px;
+   width: 20px;
    align-items: flex-end;
   
   `
-      : ` background: #000;font-size: 55px;
-      align-items: center;`;
+      : ` background: #1B1D30;font-size: 55px;
+      align-items: center; width: 75px;`;
   }};
+  color: ${({ theme }) => theme.primary};
+  filter: drop-shadow(2px 5px 15px #00000033);
+  border-radius: 20px;
+
+  justify-content: center;
+  margin: 7px;
+
 `;
 
 const TextContent = styled.div`
   display: flex;
   height: 100%;
-  align-items: flex-end;
+  align-items: center;
+`;
+
+const Digit = styled.div`
+  font-family: "Montserrat";
+  width: 45px;
 `;
 
 const SlotContainer = styled.div`
@@ -122,8 +143,10 @@ const JackpotSection = ({ showLogin, token }) => {
     return display.map((element) => {
       return (
         <TextContent>
-          <TextHolder hide={element === "," || element === "."}>
-            <div>{element}</div>
+          <TextHolder
+            hide={element === "," || element === "." || element === " "}
+          >
+            <Digit>{element}</Digit>
           </TextHolder>
         </TextContent>
       );
@@ -225,18 +248,23 @@ const JackpotSection = ({ showLogin, token }) => {
 
   return (
     <Container>
+      <Title>MEGA JACKPOT</Title>
       <JackpotHolder>
         <JackpotContentWorkingSpace>
           <TopContent>
-            <CurrencyHolder>₱</CurrencyHolder>{" "}
+            {/* <CurrencyHolder>PHP</CurrencyHolder>{" "} */}
+            <Numbers amount="PHP "></Numbers>
             <Numbers amount={jackpotAmount} />
           </TopContent>
-          <BottomLeftcontent>
+          <BottomContent>
+              <Winners></Winners>
+          </BottomContent>
+          {/* <BottomLeftcontent>
             <Winners title="Slots Winners" />
           </BottomLeftcontent>
           <BottomRightContent>
             <Winners title="Latest Winners" />
-          </BottomRightContent>
+          </BottomRightContent> */}
         </JackpotContentWorkingSpace>
       </JackpotHolder>
       <SlotContainer>

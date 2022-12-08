@@ -13,6 +13,8 @@ import { generalAction } from "../../../api-services/actions/generalAction";
 import { SHOW_LOGIN } from "../../../api-services/constant/actionType";
 import IconLoginClosePNG from "../../../assets/images/icon-login-close.png";
 import { Grid, Container as MContainer } from "@material-ui/core";
+import ChevronLeftRounded from "@material-ui/icons/ChevronLeftRounded";
+import ChevronRightRounded from "@material-ui/icons/ChevronRightRounded";
 
 const moment = require("moment");
 
@@ -21,13 +23,98 @@ const Container = styled.div`
   padding-top: 20px;
 
   position: relative;
-  background: url(${BGJPG}) no-repeat top center #19262f;
   min-height: 800px;
 `;
 
+const Title = styled.div`
+  width: 1280px;
+  margin: 40px auto;
+  font-size: 44px;
+  font-family: "Montserrat";
+  text-transform: uppercase;
+  text-align: center;
+  color: #ffffff;
+`;
+
+const BannerContainer = styled.div`
+  width: 1280px;
+  height: 486px;
+  background: url(${(props) => props.img}) no-repeat;
+  background-size: 1280px 486px;
+  margin: 0 auto;
+  border-radius: 25px;
+  position: relative;
+`;
+
+const NavigationButton = styled.div`
+  width: 77px;
+  height: 77px;
+  background: #232323;
+  border-radius: 50px;
+  color: #ffffff;
+  padding: 3px 2px;
+  position: absolute;
+  cursor: pointer;
+  top: 200px;
+  ${(props) =>
+    props.isLeft
+      ? `
+    left: 30px;
+  `
+      : `
+  right: 30px;
+  `}
+
+  & > svg {
+    font-size: 4.5rem;
+  }
+`;
+
+const SubTitle = styled.div`
+  width: 1280px;
+  margin: 30px auto;
+  font-size: 30px;
+  font-family: "Montserrat";
+  text-transform: uppercase;
+  text-align: center;
+  color: #ffffff;
+`;
+
+const PromotionContent = styled.div`
+  width: 1000px;
+  background: #27273f;
+  margin: 0 auto 40px auto;
+  padding: 25px;
+  color: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const PromotionButton = styled.div`
+  width: 141px;
+  height: 54px;
+  font-size: 22px;
+  font-family: "Montserrat";
+  padding: 12.5px 0px;
+  text-align: center;
+  color: ${({ theme }) => theme.pcHeaderText};
+  cursor: pointer;
+  background: ${({ theme }) => theme.primary};
+  border-color: ${({ theme }) => theme.primary};
+  border-radius: 30px;
+  text-transform: uppercase;
+  filter: drop-shadow(1px 1px 8px #cf2029ba);
+  ${({ disabled }) => {
+    return disabled
+      ? `
+    opacity: 0.65;
+    cursor: not-allowed;`
+      : ``;
+  }}
+`;
 const PromoDesc = styled.div`
   font-size: 14px;
-  color: #747474;
 `;
 
 const PromoDetailContainer = styled(Grid)`
@@ -49,7 +136,6 @@ const PromoDetailImage = styled.div`
 `;
 
 const EventTitle = styled.div`
-  color: #7e0000;
   margin-bottom: 10px;
   font-size: 16px;
   font-family: Arial;
@@ -58,8 +144,6 @@ const EventTitle = styled.div`
 
 const EventText = styled.div`
   font-size: 14px;
-  color: #4f4f4f;
-
   line-height: 26px;
   margin-bottom: 20px;
 `;
@@ -84,10 +168,33 @@ const PromoButtonContainer = styled(Grid)`
       : ``;
   }}
 `;
-const TNCContainer = styled.span`
-  color: #123414;
-  text-decoration: underline;
+const BottomContainer = styled.div`
+  width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+`;
+const TNCToggle = styled.div`
+  display: flex;
+  color: #ffffff;
   font-weight: bold;
+  place-self: flex-start;
+  &:before {
+    content: ${(props) => (props.active ? `"—"` : `"+"`)};
+    color: ${({ theme }) => theme.primary};
+    width: 28px;
+    height: 28px;
+    margin: 0 5px;
+    font-size: ${(props) => (props.active ? `13px` : `18px`)};
+    text-align: center;
+  }
+`;
+const TNCContainer = styled.div`
+  color: #ffffff;
+  padding: 0 35px;
+  margin-bottom: 40px;
 `;
 const PromoButtonText = styled(Grid)`
   color: #fff;
@@ -131,17 +238,6 @@ const DialogContent = styled.div`
   padding: 10px 40px;
 `;
 
-const CloseButton = styled.div`
-  position: absolute;
-  right: 22px;
-  top: 24px;
-  user-select: none;
-  cursor: pointer;
-  font-size: 24px;
-  background: #fff;
-  padding: 8px 12px;
-  color: #000;
-`;
 class PromotionDetails extends Component {
   constructor(props) {
     super(props);
@@ -181,6 +277,7 @@ class PromotionDetails extends Component {
       term: term,
       joined: false,
       openDialog: false,
+      isTNCToggled: false,
     };
   }
 
@@ -216,6 +313,53 @@ class PromotionDetails extends Component {
     }
     if (prevProps.account.token !== this.props.account.token) {
       AppHistory.replace("/" + i18n.language + "/promotion");
+    }
+    if (
+      prevProps.match.params.id !== null &&
+      this.props.match.params.id != null &&
+      prevProps.match.params.id !== this.props.match.params.id
+    ) {
+      for (var i = 0; i < this.props.general.promotionList.items.length; i++) {
+        if (
+          this.props.general.promotionList.items[i].id ===
+          this.props.match.params.id
+        ) {
+          var term = "";
+          if (this.props.general.promotionList.items[i]) {
+            if (
+              JSON.stringify(
+                this.props.general.promotionList.items[i].localization
+              ) !== "{}" &&
+              (this.props.general.promotionList.items[i].localization[
+                i18n.language
+              ] !== "" ||
+                this.props.general.promotionList.items[i].localization[
+                  i18n.language
+                ] !== null)
+            ) {
+              term = this.props.general.promotionList.items[i].localization[
+                i18n.language
+              ].terms
+                ? this.props.general.promotionList.items[i].localization[
+                    i18n.language
+                  ].terms
+                : this.props.general.promotionList.items[i].terms;
+            } else {
+              term = this.props.general.promotionList.items[i].terms || "";
+            }
+          }
+          this.setState({
+            ...this.state,
+            index: i,
+            details: this.props.general.promotionList.items[i],
+            term: term,
+            joined: false,
+            openDialog: false,
+            isTNCToggled: false,
+          });
+          break;
+        }
+      }
     }
   }
 
@@ -303,9 +447,35 @@ class PromotionDetails extends Component {
     this.setState({ ...this.state, openDialog: true });
   };
 
+  handleToggleTnC = () => {
+    this.setState({ ...this.state, isTNCToggled: !this.state.isTNCToggled });
+  };
+
   goBack() {
     AppHistory.replace("/" + i18n.language + "/promotion");
   }
+
+  navigatePromotion = (isLeft) => {
+    var newPromotionId = "";
+    var newIndex;
+    if (isLeft) {
+      newIndex =
+        this.state.index - 1 < 0
+          ? this.props.general.promotionList.items.length - 1
+          : this.state.index - 1;
+      newPromotionId = this.props.general.promotionList.items[newIndex].id;
+    } else {
+      newIndex =
+        this.state.index + 1 >= this.props.general.promotionList.items.length
+          ? 0
+          : this.state.index + 1;
+      newPromotionId = this.props.general.promotionList.items[newIndex].id;
+    }
+    if (newPromotionId !== "") {
+      AppHistory.push("/" + i18n.language + "/promotion/" + newPromotionId);
+    }
+  };
+
   render() {
     if (this.state.details === null) return <></>;
     var isDummy = this.state.details.promotionType.toUpperCase() === "DUMMY";
@@ -313,122 +483,125 @@ class PromotionDetails extends Component {
       JSON.stringify(this.state.details.localization) === "{}";
     return (
       <Container>
-        <MContainer>
-          <PromoDetailContainer container direction="column">
-            <CloseButton onClick={this.goBack}>✖</CloseButton>
-            <PromoDetailImage
-              img={(() => {
-                if (this.state.details.localization !== null) {
-                  var checkLocale =
-                    this.state.details.localization[i18n.language];
-                  if (checkLocale) {
-                    return checkLocale.desktopBanner;
-                  } else {
-                    return this.state.details.desktopBanner;
-                  }
-                } else {
-                  return this.state.details.desktopBanner;
-                }
-              })()}
-            ></PromoDetailImage>
-            <EventTitle>{i18n.t("promotion.promoTarget")}：</EventTitle>
-            <EventText>
-              {this.state.details.vipLevels
-                .sort((a, b) => {
-                  return a - b;
-                })
-                .map((a, index) => {
-                  return (
-                    <span key={index}>
-                      VIP{a}
-                      {index < this.state.details.vipLevels.length - 1 && ", "}
-                    </span>
-                  );
-                })}
-            </EventText>
-            <EventTitle>{i18n.t("promotion.promoDate")}：</EventTitle>
-            <EventText>
-              {moment(this.state.details.from).format("YYYY/MM/DD HH:mm:ss")}
-              {" - "}
-              {moment(this.state.details.to).format("YYYY/MM/DD HH:mm:ss")}
-            </EventText>
-            <EventText>
-              <PromoDesc
-                dangerouslySetInnerHTML={{
-                  __html:
-                    "<div>" +
-                    (() => {
-                      if (
-                        !checkIfLocalizationIsEmpty &&
-                        (this.state.details.localization[i18n.language] !==
-                          "" ||
-                          this.state.details.localization[i18n.language] !==
-                            null)
-                      ) {
-                        return (
-                          (this.state.details.localization[i18n.language]
-                            .content
-                            ? this.state.details.localization[i18n.language]
-                                .content
-                            : this.state.details.content) ?? ""
-                        );
-                      } else {
-                        return this.state.details.content ?? "";
-                      }
-                    })() +
-                    "</div>",
-                }}
-              ></PromoDesc>
-              {this.state.term !== "" && (
-                <TNCContainer onClick={this.handleShowDialog}>
-                  {i18n.t("common.termsAndCondition")}
-                </TNCContainer>
-              )}
-            </EventText>
-            <Grid container justify="center">
-              {!isDummy && (
-                <PromoButtonContainer
-                  container
-                  alignItems="center"
-                  justify="center"
-                  md={3}
-                  disableTheButton={this.state.joined}
-                  onClick={() =>
-                    !this.state.joined &&
-                    this.handlejoinPromotionClick(
-                      this.state.details.id,
-                      this.state.details.promotionType
-                    )
-                  }
-                >
-                  <PromoButtonText item>
-                    {i18n.t("promotion.joinPromo")}
-                  </PromoButtonText>
-                </PromoButtonContainer>
-              )}
-            </Grid>
-          </PromoDetailContainer>
-        </MContainer>
-        <StyledDialog
-          open={this.state.openDialog}
-          onClose={this.handleCloseDialog}
+        <Title>{this.state.details.name}</Title>
+        <BannerContainer
+          img={(() => {
+            if (this.state.details.localization !== null) {
+              var checkLocale = this.state.details.localization[i18n.language];
+              if (checkLocale) {
+                return checkLocale.desktopBanner;
+              } else {
+                return this.state.details.desktopBanner;
+              }
+            } else {
+              return this.state.details.desktopBanner;
+            }
+          })()}
         >
-          <DialogContainer>
-            <CloseIconContainer
-              viewBox="4 4 16 16"
-              onClick={this.handleCloseDialog}
-            ></CloseIconContainer>
-            <div className="clear"></div>
-            <TitleContainer>
-              {i18n.t("common.termsAndCondition")}
-            </TitleContainer>
-            <DialogContent
+          {this.props.general.promotionList.items.length > 1 && (
+            <React.Fragment>
+              <NavigationButton
+                isLeft={true}
+                onClick={() => {
+                  this.navigatePromotion(true);
+                }}
+              >
+                <ChevronLeftRounded></ChevronLeftRounded>
+              </NavigationButton>
+              <NavigationButton
+                isLeft={false}
+                onClick={() => {
+                  this.navigatePromotion(false);
+                }}
+              >
+                <ChevronRightRounded></ChevronRightRounded>
+              </NavigationButton>
+            </React.Fragment>
+          )}
+        </BannerContainer>
+        <SubTitle>{this.state.details.subSubject}</SubTitle>
+        <PromotionContent>
+          <EventTitle>{i18n.t("promotion.promoTarget")}：</EventTitle>
+          <EventText>
+            {this.state.details.vipLevels
+              .sort((a, b) => {
+                return a - b;
+              })
+              .map((a, index) => {
+                return (
+                  <span key={index}>
+                    VIP{a}
+                    {index < this.state.details.vipLevels.length - 1 && ", "}
+                  </span>
+                );
+              })}
+          </EventText>
+          <EventTitle>{i18n.t("promotion.promoDate")}：</EventTitle>
+          <EventText>
+            {moment(this.state.details.from).format("YYYY/MM/DD HH:mm:ss")}
+            {" - "}
+            {moment(this.state.details.to).format("YYYY/MM/DD HH:mm:ss")} (GMT
+            +8)
+          </EventText>
+          <EventText>
+            <PromoDesc
               dangerouslySetInnerHTML={{
-                __html: "<div >" + this.state.term + "</div>",
+                __html:
+                  "<div>" +
+                  (() => {
+                    if (
+                      !checkIfLocalizationIsEmpty &&
+                      (this.state.details.localization[i18n.language] !== "" ||
+                        this.state.details.localization[i18n.language] !== null)
+                    ) {
+                      return (
+                        (this.state.details.localization[i18n.language].content
+                          ? this.state.details.localization[i18n.language]
+                              .content
+                          : this.state.details.content) ?? ""
+                      );
+                    } else {
+                      return this.state.details.content ?? "";
+                    }
+                  })() +
+                  "</div>",
               }}
-            ></DialogContent>
-          </DialogContainer>
-        </StyledDialog>
+            ></PromoDesc>
+          </EventText>
+        </PromotionContent>
+        <BottomContainer>
+          {this.state.term !== "" && (
+            <React.Fragment>
+              <TNCToggle
+                onClick={this.handleToggleTnC}
+                active={this.state.isTNCToggled}
+              >
+                {i18n.t("common.termsAndCondition")}
+              </TNCToggle>
+              {this.state.isTNCToggled && (
+                <TNCContainer
+                  dangerouslySetInnerHTML={{
+                    __html: "<div >" + this.state.term + "</div>",
+                  }}
+                ></TNCContainer>
+              )}
+            </React.Fragment>
+          )}
+          {!isDummy && (
+            <PromotionButton
+              disabled={this.state.joined}
+              onClick={() =>
+                !this.state.joined &&
+                this.handlejoinPromotionClick(
+                  this.state.details.id,
+                  this.state.details.promotionType
+                )
+              }
+            >
+              {i18n.t("promotion.joinPromo")}
+            </PromotionButton>
+          )}
+        </BottomContainer>
       </Container>
     );
   }

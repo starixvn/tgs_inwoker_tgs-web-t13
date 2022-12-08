@@ -34,19 +34,25 @@ const Container = styled.div`
   padding-right: 10px;
 `;
 const BtnLoginRegister = styled.div`
-  font-size: 15px;
-  padding: 4.5px 10px;
+  width: 141px;
+  height: 54px;
+  font-size: 22px;
+  font-family: "Montserrat";
+  padding: 12.5px 0px;
   text-align: center;
   color: ${({ theme }) => theme.pcHeaderText};
   cursor: pointer;
-  border-radius: 4px;
+  border: 1px solid ${({ theme }) => theme.pcHeaderText};
+  border-radius: 30px;
+  text-transform: uppercase;
 `;
 const BtnRegister = styled(BtnLoginRegister)`
-  background: ${({ theme }) => theme.accent};
+  background: ${({ theme }) => theme.primary};
+  border-color: ${({ theme }) => theme.primary};
 `;
 
 const BtnLogin = styled(BtnLoginRegister)`
-  background: #393939;
+  background: transparent;
 `;
 
 const StyledDialog = withStyles({

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import { SHOW_LOGIN } from "../../../api-services/constant/actionType";
@@ -8,54 +9,85 @@ import { GameTypeEnum } from "../../../api-services/utils/Enum";
 import i18n from "../../../utils/i18n";
 import ScrollAnimation from "react-animate-on-scroll";
 import Common from "../../../utils/Common";
-
+import GameLister from "../Home/game-lister";
 const Container = styled.div`
   width: 100%;
   height: auto;
   min-height: 770px;
-  padding: 70px 0px;
   position: relative;
+`;
+const Banner = styled.div`
+  width: 1920px;
+  height: 600px;
   background: url(${(props) =>
-      process.env.PUBLIC_URL}/assets/images/pcGamePage/lottery/background.jpg)
+      process.env.PUBLIC_URL}/assets/images/pcGamePage/lottery/background.png)
     no-repeat center;
 `;
-const GirlImage = styled.div`
+const GPLogo = styled.div`
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  background: url(${(props) => props.img}) no-repeat center;
+  background-size: 150px auto;
+  background-color: #00000080;
+`;
+const GameImage = styled.div`
   background: url(${(props) => props.img}) no-repeat;
-  width: 308px;
-  height: 244px;
-
-  float: left;
+  width: 240px;
+  height: 240px;
+  background-size: cover;
   &:hover {
     cursor: pointer;
   }
 `;
 const LeftSlide = styled(ScrollAnimation)`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  row-gap: 15px;
+  column-gap: 10px;
 `;
 
 const ItemContainer = styled.div`
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  overflow: visible;
+  display: flex;
+  align-items: center;
+  width: 1280px;
+  margin: 0 auto;
+  padding: 15px 15px;
 `;
 const Maintenance = styled.div`
   width: 100%;
   height: 100%;
   z-index: 1;
   position: absolute;
-  align-items: center;
-  justify-content: center;
   color: white;
   display: none;
-  text-transform: capitalize;
-  font-weight: bold;
-  font-size: 24px;
   user-select: none;
+  max-height: 109px;
+  max-width: 170px;
+  bottom: 10px;
+  left: 35px;
   cursor: not-allowed;
+  background: url(${(props) =>
+      process.env.PUBLIC_URL}/assets/images/pcGamePage/maintenance.png)
+    no-repeat;
+`;
+const GameTitle = styled.div`
+  position: absolute;
+  bottom: 0;
+  display: none;
+  width: 100%;
+  height: 30px;
+  color: #fff;
+  background: #000000c7;
+  line-height: 30px;
+  text-align: center;
+  text-transform: uppercase;
 `;
 const GameWrapper = styled.div`
+  width: 240px;
+  height: 240px;
   position: relative;
+  border-radius: 25px;
 
   ${({ maintenance }) => {
     return maintenance
@@ -65,13 +97,25 @@ const GameWrapper = styled.div`
    
     display: flex;
   }
-  ${GirlImage}{
+  ${GameImage}{
     filter: brightness(40%) grayscale(200%);
+  }
+  ${GPLogo}{
+    filter: brightness(40%);
   }
   
   
   `
-      : ``;
+      : `
+      &:hover {
+        ${GPLogo}{
+          display: none;
+        }
+        ${GameTitle}{
+          display: block;
+        }
+      }
+      `;
   }}
 `;
 class Lottery extends Component {
@@ -137,35 +181,47 @@ class Lottery extends Component {
   render() {
     return (
       <Container>
-        <ItemContainer style={{ marginTop: 380 }}>
+        <Banner></Banner>
+        <GameLister
+          game={this.props.game}
+        ></GameLister>
+        <ItemContainer>
           <LeftSlide
             animateIn="fadeInLeft"
             duration={1}
             animateOnce={true}
             style={{ overflow: "visible" }}
           >
-            {this.state.list
-              .slice(0, 4)
-
-              .map((item, index) => {
-                return (
-                  <GameWrapper maintenance={item.status !== 0}>
-                    <Maintenance>{i18n.t("transfer.maintenance")}</Maintenance>
-                    <GirlImage
-                      style={{ float: "right" }}
-                      img={
-                        process.env.PUBLIC_URL +
-                        "/assets/images/pcGamePage/lottery/" +
-                        item.abbreviation.toLowerCase() +
-                        ".png"
-                      }
-                      onClick={() => {
-                        this.handleJoinGameClick(item.abbreviation);
-                      }}
-                    />
-                  </GameWrapper>
-                );
-              })}
+            {this.state.list.map((item, index) => {
+              return (
+                <GameWrapper maintenance={item.status !== 0}>
+                  <Maintenance></Maintenance>
+                  <GameImage
+                    style={{ float: "right" }}
+                    img={
+                      process.env.PUBLIC_URL +
+                      "/assets/images/pcGamePage/lottery/" +
+                      item.abbreviation.toLowerCase() +
+                      ".jpg"
+                    }
+                    onClick={() => {
+                      this.handleJoinGameClick(item.abbreviation);
+                    }}
+                  />
+                  <GPLogo
+                    img={
+                      process.env.PUBLIC_URL +
+                      "/assets/images/provider/" +
+                      item.abbreviation.toLowerCase() +
+                      ".png"
+                    }
+                  ></GPLogo>
+                  <GameTitle>
+                    {i18n.t(item.abbreviation.toUpperCase() + ".lottery")}
+                  </GameTitle>
+                </GameWrapper>
+              );
+            })}
           </LeftSlide>
         </ItemContainer>
       </Container>
@@ -185,4 +241,7 @@ const mapStateToProps = (state) => {
     game: state.game,
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Lottery);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Lottery));

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Common from "../../../../../utils/Common";
-
+import config from "../../../../../config/config";
 const ContentHolder = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row;
+  gap: 40px;
 `;
 
 const Title = styled.div`
@@ -48,6 +48,45 @@ const TableData = styled(TableLayout)`
     white-space: nowrap;
   }
 `;
+
+const WinnerListItem = styled.div`
+  display: grid;
+  grid-template-columns: 120px 1fr 1fr;
+  justify-content: space-evenly;
+  align-items: center;
+  background: #27273f;
+  color: #fff;
+  width: 400px;
+  height: 120px;
+  border-radius: 25px;
+`;
+
+const WinnerListItemImage = styled.div`
+  width: 80px;
+  height: 80px;
+  background-image: url(${(props) => props.img});
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  margin: auto;
+`;
+const WinnerListItemDescription = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  & > div{
+    font-family: "Montserrat";
+    font-size: 16px;
+  }
+`;
+const WinnerListItemPrize = styled.div`
+  color: ${({ theme }) => theme.primary};
+  font-family: "Montserrat";
+  font-weight: 600;
+  font-size: 22px;
+  align-self: center;
+`;
+
 const Winners = React.memo(({ title }) => {
   const playerName = [
     "kin9123***",
@@ -101,19 +140,67 @@ const Winners = React.memo(({ title }) => {
     "927364***",
   ];
 
-  const gameName = [
-    "Super Ace",
-    "Golden Empire",
-    "Fortune Gems",
-    "Masquerade",
-    "10001 Nights",
-    "Aztec Spins",
-    "Mega Fishing",
-    "Jackpot Fishing",
-    "Dinosaur Tycoon",
-    "TrumpCard",
-    "MayaGoldCrazy",
-    "TreasureBowl",
+  const gameList = [
+    {
+      code: "Super_Ace",
+      name: "Super Ace",
+      gpcode: "JILITF",
+    },
+    {
+      code: "Golden_Empire",
+      name: "Golden Empire",
+      gpcode: "JILITF",
+    },
+    {
+      code: "Fortune_Gems",
+      name: "Fortune Gems",
+      gpcode: "JILITF",
+    },
+    {
+      code: "Masquerade",
+      name: "Masquerade",
+      gpcode: "RTTF",
+    },
+    {
+      code: "10001_Nights",
+      name: "10001 Nights",
+      gpcode: "RTTF",
+    },
+    {
+      code: "Aztec_Spins",
+      name: "Aztec Spins",
+      gpcode: "RTTF",
+    },
+    {
+      code: "Mega_Fishing",
+      name: "Mega Fishing",
+      gpcode: "JILITF",
+    },
+    {
+      code: "Jackpot_Fishing",
+      name: "Jackpot Fishing",
+      gpcode: "JILITF",
+    },
+    {
+      code: "Dinosaur_Tycoon",
+      name: "Dinosaur Tycoon",
+      gpcode: "JILITF",
+    },
+    {
+      code: "Trump_Card",
+      name: "Trump Card",
+      gpcode: "JDBTF",
+    },
+    {
+      code: "MayaGoldCrazy",
+      name: "MayaGoldCrazy",
+      gpcode: "JDBTF",
+    },
+    {
+      code: "TreasureBowl",
+      name: "TreasureBowl",
+      gpcode: "JDBTF",
+    },
   ];
 
   var min = 5;
@@ -122,11 +209,11 @@ const Winners = React.memo(({ title }) => {
   const [winnerList, setWinnerList] = useState([]);
   var newList = [...winnerList];
 
-  Array.from({ length: 5 }, () =>
+  Array.from({ length: 3 }, () =>
     newList.push({
       name: randomize(playerName),
-      game: randomize(gameName),
-      amount: Common.addComma(randomNumber(min, max)),
+      game: randomize(gameList),
+      amount: Common.formatNumberWithThousand(randomNumber(min, max)),
     })
   );
 
@@ -136,8 +223,8 @@ const Winners = React.memo(({ title }) => {
 
       newList.unshift({
         name: randomize(playerName),
-        game: randomize(gameName),
-        amount: Common.addComma(randomNumber(min, max)),
+        game: randomize(gameList),
+        amount: Common.formatNumberWithThousand(randomNumber(min, max)),
       });
       setWinnerList(newList);
     };
@@ -160,7 +247,25 @@ const Winners = React.memo(({ title }) => {
 
   return (
     <ContentHolder>
-      <Title>{title}</Title>
+      {winnerList.slice(0, 3).map((data, index) => {
+        return (
+          <WinnerListItem>
+            <WinnerListItemImage
+              img={`${
+                config.sourceUrl
+              }${data.game.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
+                data.game.code
+              }.jpg`}
+            ></WinnerListItemImage>
+            <WinnerListItemDescription>
+              <div>{data.name}</div>
+              <div>{data.game.name}</div>
+            </WinnerListItemDescription>
+            <WinnerListItemPrize>₱ {data.amount}</WinnerListItemPrize>
+          </WinnerListItem>
+        );
+      })}
+      {/* <Title>{title}</Title>
       <WinnerList>
         <TableHeader>
           <div>Player</div> <div>Game</div> <div>Wins</div>
@@ -174,7 +279,7 @@ const Winners = React.memo(({ title }) => {
             </TableData>
           );
         })}
-      </WinnerList>
+      </WinnerList> */}
     </ContentHolder>
   );
 });

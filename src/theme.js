@@ -1,4 +1,5 @@
 export const wapT13 = {
+  pcAppBar: "#1b1d30",
   loginBody: "#1b1d30",
   loginText: "#fff",
   primary: "#cf2029",

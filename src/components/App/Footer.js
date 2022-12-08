@@ -9,257 +9,167 @@ import config from "../../config/config";
 import i18n from "../../utils/i18n";
 
 const Container = styled.div`
-  width: 100%;
-
-  display: ${({ hide }) => {
-    return hide ? "none" : "block";
-  }}
- background: #212121;
-`;
-
-const MiddleContainer = styled.div`
-  padding: 40px 0;
-  width: 100%;
-
-  border-top: solid 4px ${(props) => props.theme.accent};
-`;
-const MiddleInnerWrap = styled.div`
-  display: block;
-  margin: 0 auto;
   width: 1280px;
-  overflow-x: auto;
-`;
-
-const BottomContainer = styled.div`
-  height: 70px;
-  width: 1280px;
-  padding-top: 16px;
   margin: 0 auto;
-  color: #f6f6f6;
-`;
-const CopyRightLine1 = styled.span`
-  font-size: 12px;
-
-  margin: 0 auto;
-  display: block;
-  text-align: center;
-`;
-const CopyRightLine2 = styled.span`
-  font-size: 12px;
-
-  margin: 0 auto;
-  display: block;
-  text-align: center;
-`;
-const Version = styled.span`
-  font-size: 12px;
-
-  margin: 0 auto;
-  display: block;
-  text-align: center;
+  height: 577px;
+  display: flex;
+  justify-content: space-between;
+  font-family: "Montserrat";
 `;
 
-const BrandsImage = styled.div`
-  opacity: 1;
-  height: 80px;
-  width: 150px;
-  background: url(${(props) => props.img}) no-repeat center;
+const Section = styled.div`
+  color: #ffffff;
+  width: 400px;
+`;
+
+const SectionTitle = styled.div`
+  font-family: "Montserrat";
+  font-size: 34px;
+  text-transform: uppercase;
+`;
+
+const AboutUsLogo = styled.div`
+  width: 200px;
+  height: 120px;
+
+  background: #ffffff;
+  background-position: left center;
   background-size: contain;
+  background-repeat: no-repeat;
+
+  mask: url("${(props) => props.img}");
+  mask-position: left center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
 `;
 
-const ThirdPartyLogoHolder = styled.div`
-  display: flex !important;
-  justify-content: center;
-  width: 150px;
+const AboutUsContainer = styled.div`
+  line-height: 25px;
 `;
-const settings = {
-  className: "footer",
-  dots: false,
-  arrows: false,
-  slidesToShow: 6,
-  slidesToScroll: 6,
-  autoplay: true,
-  speed: 500,
-  autoplaySpeed: 2000,
-  cssEase: "linear",
 
-  infinite: true,
-};
+const LinkContainer = styled.div`
+  margin: 20px 0;
+  line-height: 35px;
+`;
+
+const Link = styled.div`
+  width: max-content;
+  font-family: "Montserrat";
+  cursor: pointer;
+`;
+
+const SocialMediaContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin: 20px 0;
+`;
+
+const SocialMedia = styled.div`
+  width: 68px;
+  height: 68px;
+  background: ${({ src }) => {
+    return `url(${
+      process.env.PUBLIC_URL + `/assets/images/pcHomePage/${src}.svg`
+    }) no-repeat center /
+  contain;`;
+  }};
+  cursor: pointer;
+`;
+
+const ChipContainer = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  width: 400px;
+  gap: 8px;
+  align-content: flex-start;
+  margin: 10px 0;
+`;
+
+const Chip = styled.div`
+  width: max-content;
+  min-width: 55px;
+  height: 35px;
+  border: 1px solid #ffffff;
+  border-radius: 25px;
+  text-align: center;
+  padding: 6px 15px;
+`;
+
 function Footer(props) {
+  const navigateTo = (to) => {
+    props.history.push("/" + i18n.language + "/" + to);
+  };
+  const AboutUs = ({ img }) => (
+    <Section>
+      <SectionTitle>About Us</SectionTitle>
+      <AboutUsContainer>
+        <AboutUsLogo img={img}></AboutUsLogo>
+        {i18n.t("web.footer.copyright")}
+        <br />
+        {i18n
+          .t("web.footer.copyrightLine2")
+          .replace(/{brand}/g, config.brandName)}
+        <br />
+        Version {process.env.REACT_APP_VERSION}
+      </AboutUsContainer>
+    </Section>
+  );
+  const QuickLinks = ({ navigateTo }) => (
+    <Section>
+      <SectionTitle>Quick Links</SectionTitle>
+      <LinkContainer>
+        <Link onClick={() => navigateTo("cs")}>24/7 Customer Service</Link>
+        <Link onClick={() => navigateTo("faq")}>FAQs</Link>
+        <Link onClick={() => navigateTo("privacy")}>Privacy Policy</Link>
+        <Link onClick={() => navigateTo("terms")}>Terms and Conditions</Link>
+        <Link onClick={() => alert(i18n.t("common.comingSoon"))}>
+          Responsible Gaming
+        </Link>
+      </LinkContainer>
+      <SectionTitle>Follow Us</SectionTitle>
+      <SocialMediaContainer>
+        <SocialMedia src="facebook" onClick={() => navigateTo("cs")}></SocialMedia>
+        <SocialMedia src="instagram" onClick={() => navigateTo("cs")}></SocialMedia>
+        <SocialMedia src="twitter" onClick={() => navigateTo("cs")}></SocialMedia>
+      </SocialMediaContainer>
+    </Section>
+  );
+  const Partners = ({ providers }) => (
+    <Section>
+      <SectionTitle>Partners</SectionTitle>
+      <ChipContainer>
+        {providers
+          .filter(
+            (a) =>
+              a.abbreviation.toLowerCase() !== "wgfm" &&
+              a.abbreviation.toLowerCase() !== "wgvia"
+          )
+          .filter((gp) => {
+            if (gp.abbreviation.includes("TCG")) {
+              return gp.abbreviation === "TCG_SEA";
+            } else {
+              return gp;
+            }
+          })
+          .map((item, index) => (
+            <Chip key={index}>{item.name}</Chip>
+          ))}
+      </ChipContainer>
+    </Section>
+  );
   return (
     <Container hide={props.hide}>
-      {/*     
-      <InnerWrap>
-        <TopContainer>
-          <TopLeftContainer>
-            <TopLeftContent>
-              <TopLeftContentTopContainer>
-                <RestricContainer>
-                  <RestricImage src={FooterHandIconPNG}></RestricImage>
-                  <RestricImage src={FooterArrowIconPNG}></RestricImage>
-                  <RestricImage src={Footer18plusIconPNG}></RestricImage>
-                </RestricContainer>
-              </TopLeftContentTopContainer>
-              <TopLeftContentBottomContainer language={i18n.language}>
-                {i18n
-                  .t("web.footer.cautionText")
-                  .replace(/{brand}/g, config.brand)}
-              </TopLeftContentBottomContainer>
-            </TopLeftContent>
-          </TopLeftContainer>
-          <TopCenterContainer>
-            <FooterATag
-              onClick={() => {
-                AppHistory.push("/" + i18n.language + "/download");
-                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-              }}
-            >
-              <FooterColumn>
-                <FooterIcon1></FooterIcon1>
-                <FooterLabelCotanier>
-                  {i18n.t("web.footer.appDownload")}
-                  <br />
-                  {i18n.t("web.footer.appDownloadLine2")}
-                </FooterLabelCotanier>
-              </FooterColumn>
-
-              <QRContainerVisit>
-                <QRImg>
-                  <QRCode
-                    value={`${window.location.protocol}//${window.location.hostname}`}
-                    size={70}
-                  />
-                </QRImg>
-                <QRRedTitle>{i18n.t("web.footer.wapQRCodeDesc")}</QRRedTitle>
-              </QRContainerVisit>
-
-              <QRContainerVisit>
-                <QRDownloadImg
-                  src={`${process.env.PUBLIC_URL}/assets/images/qrcode/appdownload-qr-soon.png`}
-                >
-                  {i18n.t("common.comingSoon")}
-                </QRDownloadImg>
-                <QRRedTitle>{i18n.t("web.footer.appQRCodeDesc")}</QRRedTitle>
-              </QRContainerVisit>
-            </FooterATag>
-          </TopCenterContainer>
-          <TopRightContainer>
-            <AffContainer onClick={() => alert(i18n.t("common.comingSoon"))}>
-              <AffImg img={FooterAffIconPNG}></AffImg>
-              <AffCSRightContent
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="center"
-              >
-                <AffRightContentLine1>
-                  {i18n.t("web.footer.affiliateCampaign")}
-                </AffRightContentLine1>
-                <AffRightContentLine2>
-                  {i18n.t("web.footer.affiliateCampaignLine2")}
-                </AffRightContentLine2>
-              </AffCSRightContent>
-            </AffContainer>
-            <CSContainer>
-              <CSImg img={Footer24CSIconPNG}></CSImg>
-              <AffCSRightContent
-                container
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="center"
-              >
-                <AffCSRightContentLine1>
-                  {i18n.t("common.csPhoneNumber")}
-                </AffCSRightContentLine1>
-                <AffCSRightContentLine2>
-                  {i18n.t("web.footer.customerServiceHotline")}
-                </AffCSRightContentLine2>
-              </AffCSRightContent>
-            </CSContainer>
-          </TopRightContainer>
-        </TopContainer>
-      </InnerWrap> */}
-
-      <MiddleContainer>
-        <MiddleInnerWrap>
-          <Slider {...settings}>
-            {(() => {
-              return props.game.providerList
-                .filter(
-                  (a) =>
-                    a.abbreviation.toLowerCase() !== "wgfm" &&
-                    a.abbreviation.toLowerCase() !== "wgvia"
-                )
-                .filter((gp) => {
-                  if (gp.abbreviation.includes("TCG")) {
-                    return gp.abbreviation === "TCG_SEA";
-                  } else {
-                    return gp;
-                  }
-                })
-                .map((item, index) => {
-                  return (
-                    <ThirdPartyLogoHolder>
-                      <BrandsImage
-                        img={
-                          process.env.PUBLIC_URL +
-                          `/assets/images/provider/${item.abbreviation.toLowerCase()}.png`
-                        }
-                      />
-                    </ThirdPartyLogoHolder>
-                  );
-                });
-            })()}
-          </Slider>
-          {/* <ProductUL>
-           
-            <ProductLI>
-              <ProductImg src={Provider1PNG}></ProductImg>
-            </ProductLI>
-            <ProductLI>
-              <ProductImg src={Provider2PNG}></ProductImg>
-            </ProductLI>
-            <ProductLI>
-              <ProductImg src={Provider3PNG}></ProductImg>
-            </ProductLI>
-            <ProductLI>
-              <ProductImg src={Provider4PNG}></ProductImg>
-            </ProductLI>
-            <ProductLI>
-              <ProductImg src={Provider5PNG}></ProductImg>
-            </ProductLI>
-            <ProductLI>
-              <ProductImg src={Provider6PNG}></ProductImg>
-            </ProductLI>
-            <ProductLI>
-              <ProductImg src={Provider7PNG}></ProductImg>
-            </ProductLI>
-            <ProductLI>
-              <ProductImg src={Provider8PNG}></ProductImg>
-            </ProductLI>
-            <ProductLI>
-              <ProductImg src={Provider9PNG}></ProductImg>
-            </ProductLI>
-            <ProductLI>
-              <ProductImg src={Provider10PNG}></ProductImg>
-            </ProductLI> 
-          </ProductUL>*/}
-        </MiddleInnerWrap>
-      </MiddleContainer>
-      <BottomContainer>
-        <CopyRightLine1>{i18n.t("web.footer.copyright")}</CopyRightLine1>
-        <CopyRightLine2>
-          {i18n
-            .t("web.footer.copyrightLine2")
-            .replace(/{brand}/g, config.brandName)}
-        </CopyRightLine2>
-        <Version>Version {process.env.REACT_APP_VERSION}</Version>
-      </BottomContainer>
+      <AboutUs img={props.general.brand.desktopLogoUrl} />
+      <QuickLinks navigateTo={navigateTo} />
+      <Partners providers={props.game.providerList} />
     </Container>
   );
 }
 const mapStateToProps = (state) => {
   return {
     game: state.game,
+    general: state.general,
   };
 };
 export default connect(mapStateToProps, null)(withRouter(Footer));
