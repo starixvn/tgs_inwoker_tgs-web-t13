@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import Slider from "react-slick";
 
 import config from "../../config/config";
 import i18n from "../../utils/i18n";

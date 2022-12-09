@@ -21,6 +21,9 @@ import config from "../../../config/config";
 import PopupAnnouncement from "./PopupAnnouncement";
 import JackpotSection from "./jackpot-section";
 import GameLister from "./game-lister";
+import PromotionSlider from "./promotion-slider";
+import NewsSection from "./news-section";
+import BrandSection from "./brand-section";
 
 const HomeContainer = styled.div`
   width: 100%;
@@ -198,7 +201,11 @@ class Home extends Component {
             token={this.props.token}
           />
         </SectionContainer>
-
+        <SliderContainer>
+          <PromotionSlider promotionList={this.props.general.promotionList.items} handleNavigateClick={this.handleNavigateClick}></PromotionSlider>
+        </SliderContainer>
+        <NewsSection handleNavigateClick={this.handleNavigateClick}></NewsSection>
+        <BrandSection logo={this.props.general.brand.desktopLogoUrl}></BrandSection>
         {(() => {
           if (
             config.features.PopupAnnouncement &&

@@ -275,7 +275,6 @@ const PlayButton = styled.div`
   top: 65px;
   width: 85px;
   height: 34px;
-  background: #27273f;
   border-radius: 16px;
   margin: 0 40px;
   padding-top: 7px;
@@ -423,7 +422,6 @@ class Slots extends Component {
     ) {
       if (prevProps.match.url !== this.props.match.url) {
         //window.scrollTo({ top: 0, behavior: "smooth" });
-
         var platform = this.props.match.params.platform
           ? this.props.match.params.platform
           : "";
@@ -446,6 +444,16 @@ class Slots extends Component {
       } else {
         this.getGameList();
       }
+    }
+    if (
+      this.props.location.state !== undefined &&
+      this.props.location.state !== null &&
+      this.props.location.state.category !== undefined &&
+      this.props.location.state.category !== null 
+    ) {
+      this.props.history.replace(this.props.location.pathname, null);
+      window.scrollTo({ top: 200, behavior: "smooth" });
+      this.handleFilterGameClick(this.props.location.state.category);
     }
     if (prevProps.token !== this.props.token && this.props.token !== null) {
       this.getFav();
