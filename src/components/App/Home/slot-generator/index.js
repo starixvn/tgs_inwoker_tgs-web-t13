@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 
-import { GameTypeEnum } from "../../../../api-services/utils/Enum";
+import { GameTypeEnum, SlotFilterType } from "../../../../api-services/utils/Enum";
 import config from "../../../../config/config";
 import { AppHistory } from "../../../../history/History";
 import Common from "../../../../utils/Common";
@@ -14,42 +14,54 @@ const SlotContent = styled.div`
   user-select: none;
 `;
 
+const TitleIcon = styled.div`
+  width: 45px;
+  height: 45px;
+  background: url(${process.env.PUBLIC_URL +
+  "/assets/images/pcHomePage/crown.svg"});
+  background-repeat: no-repeat;
+  background-size: contain;
+`;
 const TitleHolder = styled.div`
   padding: 5px 20px;
   border-radius: 10px;
   width: 100%;
   color: white;
-  background: ${({ theme }) => theme.accent};
-  background: linear-gradient(
-    153deg,
-    ${({ theme }) => theme.accent} 25%,
-    rgba(20, 26, 29, 0) 78%
-  );
-
+  font-family: "Montserrat";
   font-size: 30px;
-  font-weight: bold;
+  font-weight: 500;
+  text-transform: uppercase;
+`;
+
+const TitleMore = styled.div`
+  color: #fff;
+  position: relative;
+  display: flex;
+  padding: 5px 20px;
+  font-size: 26px;
+  font-weight: 500;
+  font-family: "Montserrat";
+  width: 185px;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  &:after {
+    content: " ";
+    width: 30px;
+    height: 30px;
+    background: url(${process.env.PUBLIC_URL +
+      "/assets/images/pcHomePage/right-arrow.svg"});
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
 `;
 
 const ImagePiece = styled.div`
   color: white;
-  padding: 40px 0 10px 40px;
   position: relative;
   cursor: pointer;
-`;
-
-const TheStar = styled.div`
-  position: absolute;
-  background: yellow;
-  height: 100px;
-  width: 100px;
-  left: 0;
-  top: 0;
-
-  background: url(${process.env.PUBLIC_URL +
-  "/assets/images/pcHomePage/star.png"});
-  background-position: center;
-  background-size: 100%;
-  background-repeat: no-repeat;
+  margin: 10px;
+  border-radius: 25px;
 `;
 
 const GameImage = styled.div`
@@ -59,153 +71,89 @@ const GameImage = styled.div`
   aspect-ratio: 1;
 `;
 
-const GameTitle = styled.div`
-  background: #232323;
-  padding: 20px;
-  border-top: solid 1px ${({ theme }) => theme.accent};
-  font-size: 24px;
-  text-align: center;
-  width: auto;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const GameBanner = styled.div`
-  border-radius: 12px;
-`;
-
 const TitleGapper = styled.div`
-  padding: 10px 40px 10px 80px;
-`;
-
-const Overlay = styled.div`
-  width: 100px;
-
-  z-index: 2;
-  height: 100%;
-  cursor: pointer;
+  padding: 10px 0px 10px 0px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 4px;
-`;
-
-const ButtonWrapper = styled.div`
-  padding: 40px 10px 10px 40px;
 `;
 
 const GameList = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: 10% 80% 10%;
+  grid-template-columns: repeat(6, 1fr);
 `;
 
-const Arrow = styled.img`
-  height: 60px;
-  width: auto;
-  cursor: pointer;
-  pointer-events: auto;
-`;
 
-const SlotGenerator = React.memo(
-  ({ title, platform, type, commonprops, list }) => {
-    var settings = {
-      slidesToShow: 4,
-      slidesToScroll: 4,
-    };
-    const sliderRef = useRef();
-
-    const GameContainer = ({ name, img, trigger }) => {
-      return (
-        <ImagePiece onClick={trigger}>
-          <TheStar></TheStar>
-          <GameBanner>
-            <GameImage img={img} />
-            <GameTitle>{name}</GameTitle>
-          </GameBanner>
-        </ImagePiece>
-      );
-    };
-
-    const ArrowButton = ({ direction, where }) => {
-      return (
-        <ButtonWrapper>
-          <Overlay
-            onClick={() => {
-              goto(where);
-            }}
-          >
-            <Arrow
-              src={
-                process.env.PUBLIC_URL +
-                `/assets/images/pcHomePage/${direction}.png`
-              }
-            />
-          </Overlay>
-        </ButtonWrapper>
-      );
-    };
-
-    const goto = (direction) => {
-      if (direction === "prev") {
-        sliderRef.current.slickPrev();
-      } else {
-        sliderRef.current.slickNext();
-      }
-    };
-
-    const handleJoinGameClick = (gpcode, gpid, gametype) => {
-      const type =
-        gametype === GameTypeEnum.FISH
-          ? "fish"
-          : gametype === GameTypeEnum.SLOT
-          ? "slots"
-          : "electron";
-      if (commonprops.token) {
-        Common.closePreviousPopup();
-
-        AppHistory.push(`/${i18n.language}/${type}/play/${gpcode}/${gpid}`);
-      } else {
-        commonprops.showLogin(true);
-      }
-    };
-
+const SlotGenerator = React.memo(({ title, type, category, commonprops, list }) => {
+  const GameContainer = ({ name, img, trigger }) => {
     return (
-      <SlotContent>
-        <TitleGapper>
-          <TitleHolder>{i18n.t(title)}</TitleHolder>
-        </TitleGapper>
-        <GameList>
-          <ArrowButton direction="left" where="prev" />
-
-          <Slider {...settings} ref={sliderRef}>
-            {list &&
-              list.map((data, index) => {
-                return (
-                  <GameContainer
-                    key={index}
-                    name={data.name}
-                    img={`${
-                      config.sourceUrl
-                    }${data.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
-                      data.code
-                    }.jpg`}
-                    trigger={() =>
-                      handleJoinGameClick(data.gpcode, data.id, data.type)
-                    }
-                  />
-                );
-              })}
-          </Slider>
-
-          <ArrowButton direction="right" where="next" />
-        </GameList>
-      </SlotContent>
+      <ImagePiece onClick={trigger}>
+          <GameImage img={img} />
+      </ImagePiece>
     );
-  }
-);
+  };
+
+  const handleJoinGameClick = (gpcode, gpid, gametype) => {
+    const type =
+      gametype === GameTypeEnum.FISH
+        ? "fish"
+        : gametype === GameTypeEnum.SLOT
+        ? "slots"
+        : "electron";
+    if (commonprops.token) {
+      Common.closePreviousPopup();
+
+      AppHistory.push(`/${i18n.language}/${type}/play/${gpcode}/${gpid}`);
+    } else {
+      commonprops.showLogin(true);
+    }
+  };
+
+  const navigateTo = () => {
+    const gametype =
+      type === GameTypeEnum.FISH
+        ? "fish"
+        : type === GameTypeEnum.SLOT
+        ? "slots"
+        : "electron";
+    AppHistory.push(`/${i18n.language}/${gametype}`, {
+      category: category,
+    });
+  };
+
+  return (
+    <SlotContent>
+      <TitleGapper>
+        <TitleIcon></TitleIcon>
+        <TitleHolder>{i18n.t(title)}</TitleHolder>
+        <TitleMore
+          onClick={() => {
+            navigateTo();
+          }}
+        >
+          more
+        </TitleMore>
+      </TitleGapper>
+      <GameList>
+        {list &&
+          list.map((data, index) => {
+            return (
+              <GameContainer
+                key={index}
+                name={data.name}
+                img={`${
+                  config.sourceUrl
+                }${data.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
+                  data.code
+                }.jpg`}
+                trigger={() =>
+                  handleJoinGameClick(data.gpcode, data.id, data.type)
+                }
+              />
+            );
+          })}
+      </GameList>
+    </SlotContent>
+  );
+});
 
 export default SlotGenerator;

@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
-import { GameTypeEnum } from "../../../../api-services/utils/Enum";
+import { GameTypeEnum, SlotFilterType } from "../../../../api-services/utils/Enum";
 import Common from "../../../../utils/Common";
 import SlotGenerator from "../slot-generator";
 import Winners from "./winners";
 
-import {
-  jiliSlot,
-  rtSlot,
-  jdbSlot,
-  jiliFish,
-  jdbFish,
-} from "../../../Wap/Main/Home/scene-1/template11/hardcode";
 import { GameService } from "../../../../api-services/services/GameService";
 
 const Container = styled.div`
@@ -31,14 +24,13 @@ const Title = styled.div`
 `;
 
 const JackpotHolder = styled.div`
-  height: 1135px;
   position: relative;
   margin-bottom: 0px;
 `;
 
 const JackpotContentWorkingSpace = styled.div`
   width: 1280px;
-  height: 512px;
+  height: 400px;
   position: relative;
   display: grid;
   grid-auto-columns: 1fr;
@@ -67,26 +59,11 @@ const TopContent = styled.div`
   font-weight: bold;
 `;
 
-const CurrencyHolder = styled.div`
-  padding-top: 35px;
-  font-family: "Montserrat";
-`;
-
 const BottomContent = styled.div`
   grid-area: bottomContent;
   width: 1280px;
   display: flex;
   height: 150px;
-`;
-
-const BottomLeftcontent = styled.div`
-  grid-area: bottomLeft;
-  padding: 10px 10px 10px 150px;
-`;
-
-const BottomRightContent = styled.div`
-  grid-area: bottomRight;
-  padding: 10px 150px 10px 10px;
 `;
 
 const TextHolder = styled.div`
@@ -174,76 +151,51 @@ const JackpotSection = ({ showLogin, token }) => {
     generateJackpotAmount({ min: 200000, max: 5000000 })
   );
 
-  const [recommendedGames, setRecommendedGames] = useState({
+  const [homePageGames, setHomePageGames] = useState({
     games: [
       {
-        title: "JILITF.slots",
-        list: jiliSlot,
-        type: GameTypeEnum.SLOT,
-        platform: "JILITF",
+        title: "Top Games",
+        type: "hot",
+        category: SlotFilterType.Hot,
         gameList: [],
       },
       {
-        title: "RTTF.slots",
-        list: rtSlot,
-        type: GameTypeEnum.SLOT,
-        platform: "RTTF",
+        title: "Recommended For You",
+        type: "recommend",
+        category: SlotFilterType.Recommend,
         gameList: [],
       },
       {
-        title: "JDBTF.slots",
-        list: jdbSlot,
-        type: GameTypeEnum.SLOT,
-        platform: "JDBTF",
-        gameList: [],
-      },
-
-      {
-        title: "JILITF.fish",
-        list: jiliFish,
-        type: GameTypeEnum.FISH,
-        platform: "JILITF",
-        gameList: [],
-      },
-      {
-        title: "JDBTF.fish",
-        list: jdbFish,
-        type: GameTypeEnum.FISH,
-        platform: "JDBTF",
+        title: "New Games",
+        type: "new",
+        category: SlotFilterType.New,
         gameList: [],
       },
     ],
+    type: GameTypeEnum.SLOT,
     isInitialized: false,
   });
 
   useEffect(() => {
-    if (!recommendedGames.isInitialized) {
       getGameList();
-    }
-  });
+  },[]);
 
-  const getGameList = () => {
-    var temp = recommendedGames;
-    temp.games.map(async (game, index) => {
-      GameService.GetGameList(game.platform, game.type).then((response) => {
+  const getGameList = async () => {
+    if (!homePageGames.isInitialized) {
+      var temp = homePageGames;
+      await GameService.GetGameList("", temp.type).then((response) => {
         if (response.IsSuccess) {
           var data = response.data;
-          game.list.map((item) => {
-            var index = data.findIndex((item2) => item2.code === item.code);
-            if (index >= 0 && data[index] !== null) {
-              game.gameList.push(data[index]);
-              game.gameList.filter((item, index) => {
-                return game.gameList.indexOf(item) === index;
-              });
-            }
-            return null;
+          temp.games.map((game, index) => {
+            game.gameList = data
+              .filter((item) => item["tag"][game.type])
+              .slice(0, 6);
           });
         }
       });
-      return null;
-    });
-    temp.isInitialized = true;
-    setRecommendedGames(temp);
+      temp.isInitialized = true;
+      setHomePageGames(temp);
+    }
   };
 
   return (
@@ -252,32 +204,25 @@ const JackpotSection = ({ showLogin, token }) => {
       <JackpotHolder>
         <JackpotContentWorkingSpace>
           <TopContent>
-            {/* <CurrencyHolder>PHP</CurrencyHolder>{" "} */}
             <Numbers amount="PHP "></Numbers>
             <Numbers amount={jackpotAmount} />
           </TopContent>
           <BottomContent>
               <Winners></Winners>
           </BottomContent>
-          {/* <BottomLeftcontent>
-            <Winners title="Slots Winners" />
-          </BottomLeftcontent>
-          <BottomRightContent>
-            <Winners title="Latest Winners" />
-          </BottomRightContent> */}
         </JackpotContentWorkingSpace>
       </JackpotHolder>
       <SlotContainer>
-        {recommendedGames.games.map((data, index) => {
+        {homePageGames.games.map((data, index)=>{
           return (
-            data.gameList.length > 0 && (
+              (
               <SlotGenerator
                 title={data.title}
-                platform={data.platform}
-                type={data.type}
+                type={homePageGames.type}
+                category={data.category}
                 list={data.gameList}
                 commonprops={commonprops}
-              />
+              ></SlotGenerator>
             )
           );
         })}
