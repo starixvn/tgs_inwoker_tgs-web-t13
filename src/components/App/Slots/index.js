@@ -718,10 +718,10 @@ class Slots extends Component {
               SlotFilterType.Recommend,
               i18n.t("slot.recommendGame")
             )}
-            {this.genCategoryItem(
+            {/* {this.genCategoryItem(
               SlotFilterType.Bookmark,
               i18n.t("slot.bookmarkGame")
-            )}
+            )} */}
             <CustomFormControl>
               <Select
                 native
