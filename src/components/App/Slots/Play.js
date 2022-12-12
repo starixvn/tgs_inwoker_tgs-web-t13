@@ -25,7 +25,6 @@ import { AppHistory } from "../../../history/History";
 // }
 const Container = styled.div`
   width: 100%;
-  background: url(${BGJPG});
   min-height: 800px;
 `;
 const InnerContainer = styled.div`
@@ -33,10 +32,10 @@ const InnerContainer = styled.div`
   width: 1280px;
   height: 837px;
   overflow: hidden;
-  background-color: #eaeaea;
+  background-color: #1b1d30;
   padding-bottom: 15px;
   position: relative;
-  border: solid #eaeaea 15px;
+  border: solid #1b1d30 15px;
 `;
 const LoadingContainer = styled.div`
   width: 100%;
@@ -69,7 +68,7 @@ const GameFrameHeader = styled.div`
   width: 100%;
   height: 50px;
   margin: 0 0 10px 0;
-  background-color: ${({ theme }) => theme.primary};
+  background-color: #1b1d30;
   display: flex;
   justify-content: space-between;
 `;
@@ -108,17 +107,10 @@ const GameName = styled.div`
   margin: 14px 0 0 20px;
 `;
 const StyleButton = styled.div`
-  border-radius: 4px;
-
-  border: solid 1px #ffffff;
-  background-image: linear-gradient(
-    to top,
-    ${({ theme }) => theme.primaryGradient},
-    ${({ theme }) => theme.primary}
-  );
+  border-radius: 25px;
+  background: ${({ theme }) => theme.primary};
   &:hover {
     cursor: pointer;
-    box-shadow: inset 1px 1px 9px 0 rgba(255, 255, 255, 0.75);
   }
 
   width: 96px;
@@ -129,6 +121,7 @@ const StyleButton = styled.div`
   font-size: 14px;
   color: #fff;
   float: left;
+  filter: drop-shadow(1px 1px 8px #cf2029ba);
 `;
 const ButtonLabel = styled.span`
   text-align: center;
@@ -327,13 +320,13 @@ class Play extends Component {
               }
             })()}
             <GameFrameHeader>
-              <div>
+              <div style={{padding: "0px 10px"}}>
                 <BackButton onClick={this.handleGoBack}></BackButton>
-                <Spliter></Spliter>
+                {/* <Spliter></Spliter> */}
                 <RefreshButton
                   onClick={this.handleRefreshClick}
                 ></RefreshButton>
-                <Spliter></Spliter>
+                {/* <Spliter></Spliter> */}
                 <GameName>{this.props.match.params.name}</GameName>
                 <StyleButton onClick={this.handleFullScreenClick}>
                   <ButtonLabel>{i18n.t("slot.fullscreen")}</ButtonLabel>

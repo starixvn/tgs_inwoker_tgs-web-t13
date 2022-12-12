@@ -37,7 +37,8 @@ import Footer from "./Footer";
 import Loading from "./Loading";
 // import RegisterSuccess from "./RegisterSuccess";
 import Download from "./Download/index";
-
+import News from "./News/index";
+import NewsDetails from "./News/Details";
 import VIP from "./VIP/index";
 
 import i18n from "../../utils/i18n";
@@ -573,6 +574,16 @@ class App extends Component {
                       exact
                       path={baseRouteUrl + "/download"}
                       component={Download}
+                    />
+                    <Route
+                      exact
+                      path={baseRouteUrl + "/news"}
+                      component={News}
+                    />
+                    <Route
+                      exact
+                      path={baseRouteUrl + "/news/:id"}
+                      render={(props) => <NewsDetails />}
                     />
                     <Redirect to={"/" + i18n.language} />
                   </Switch>

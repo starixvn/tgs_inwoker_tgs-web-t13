@@ -48,13 +48,16 @@ const NewsItem = styled.div`
     linear-gradient(to bottom, #ffffff00, #707070);
 `;
 
-const NewsImage = styled.div`
-  background: url(${(props) =>
-    process.env.PUBLIC_URL + "/assets/images/news/" + props.img + ".jpg"});
+const NewsImageContainer = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 25px;
   width: 100%;
+  height: 200px;
+`;
+
+const NewsImage = styled.img`
+  width: 400px;
   height: 200px;
 `;
 
@@ -113,7 +116,7 @@ const NewsSection = ({ news, handleNavigateClick }) => {
       title: "Lucky Group Wins $100k In Encore Draw",
       content:
         "A group of enthusiastic lottery players recently won big following their purchase of an Encore ticket from the Ontario Lottery and Gaming ",
-      image: "3",
+      image: "5",
     },
   ];
   return (
@@ -130,7 +133,7 @@ const NewsSection = ({ news, handleNavigateClick }) => {
                 handleNavigateClick("/" + i18n.language + "/news/" + item.id);
               }}
             >
-              <NewsImage img={item.image}></NewsImage>
+              <NewsImageContainer><NewsImage alt={item.image} src={process.env.PUBLIC_URL + "/assets/images/news/" + item.image + ".jpg"}></NewsImage></NewsImageContainer>
               <NewsTitle>{item.title}</NewsTitle>
               <NewsContent>{item.content}</NewsContent>
             </NewsItem>

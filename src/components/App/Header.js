@@ -914,6 +914,8 @@ class Header extends Component {
                         onhandleRefreshBalanceClick={
                           this.handleRefreshBalanceClick
                         }
+                        onhandleWithdraw={this.handleWithdrawClick}
+                        onhandleProfile={this.handleProfileClick}
                         wallet={this.props.wallet}
                         game={this.props.game}
                         account={this.props.account}
