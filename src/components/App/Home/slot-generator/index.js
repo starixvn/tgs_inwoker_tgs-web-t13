@@ -27,7 +27,6 @@ const TitleHolder = styled.div`
   border-radius: 10px;
   width: 100%;
   color: white;
-  font-family: "Montserrat";
   font-size: 30px;
   font-weight: 500;
   text-transform: uppercase;
@@ -40,7 +39,6 @@ const TitleMore = styled.div`
   padding: 5px 20px;
   font-size: 26px;
   font-weight: 500;
-  font-family: "Montserrat";
   width: 185px;
   align-items: center;
   justify-content: space-between;

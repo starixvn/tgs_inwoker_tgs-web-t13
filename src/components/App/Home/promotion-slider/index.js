@@ -46,7 +46,6 @@ const TitleHolder = styled.div`
   border-radius: 10px;
   width: 100%;
   color: white;
-  font-family: "Montserrat";
   font-size: 30px;
   font-weight: 500;
   text-transform: uppercase;

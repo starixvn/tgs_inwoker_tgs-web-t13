@@ -26,7 +26,6 @@ const Title = styled.div`
   width: 1280px;
   margin: 40px auto;
   font-size: 44px;
-  font-family: "Montserrat";
   text-transform: uppercase;
   text-align: center;
   color: #ffffff;
