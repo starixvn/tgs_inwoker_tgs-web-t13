@@ -12,7 +12,6 @@ import { withSnackbar } from "notistack";
 import i18n from "../../../utils/i18n";
 import { generalAction } from "../../../api-services/actions/generalAction";
 import { SHOW_LOGIN } from "../../../api-services/constant/actionType";
-import { Grid, Container as MContainer } from "@material-ui/core";
 
 import PromoEmpty from "../../../assets/images/promo-empty.png";
 
@@ -20,9 +19,16 @@ const moment = require("moment");
 
 const Container = styled.div`
   width: 100%;
-  background: url(${BGPromotionJPG}) no-repeat top center #fff;
   min-height: 800px;
   position: relative;
+`;
+const Title = styled.div`
+  width: 1280px;
+  margin: 40px auto;
+  font-size: 44px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #ffffff;
 `;
 const Wrap = styled.div`
   width: 1280px;
@@ -54,74 +60,27 @@ const PromoEmptyTextLine = styled.div`
   -webkit-text-fill-color: transparent;
 `;
 
-const ThePromotion = styled(Grid)``;
-
-const ThePromotionContainer = styled(Grid)`
-  background: #fff;
-  width: 100%;
-  border-radius: 20px;
-  padding: 25px 18px;
-  flex-direction: column;
-  box-shadow: 5px 5px 8px rgba(32, 0, 0, 0.7);
-  height: 539px;
-  position: relative;
+const PromotionContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px 40px;
+  padding: 30px 0;
 `;
 
-const PromoImages = styled.div`
+const PromotionItem = styled.div`
   width: 550px;
   height: 222px;
   position: relative;
   margin-bottom: 12px;
   background: url(${(props) => props.img}) no-repeat;
   background-size: 100% 100%;
-`;
-
-const EventTitle = styled.div`
-  color: #7e0000;
-  margin-bottom: 10px;
-  font-size: 19px;
-  font-family: Arial;
-  margin-left: -8px;
-`;
-const EventLabel = styled.div`
-  font-size: 15px;
-  color: #4f4f4f;
-  font-family: Arial;
-  line-height: 16px;
-  margin-bottom: 6px;
-  font-weight: bold;
-`;
-const EventText = styled.div`
-  font-size: 15px;
-  color: #4f4f4f;
-  font-family: Arial;
-  line-height: 16px;
-  margin-bottom: 12px;
-`;
-
-const PromoButtonContainer = styled(Grid)`
-  cursor: pointer;
-  user-select: none;
-  position: relative;
-`;
-
-const PromoButtonImg = styled.div`
-  width: 100%;
-  border-radius: 5px;
-  height: 62px;
-  background: ${({ theme }) => theme.accent};
-`;
-
-const PromoButtonText = styled.div`
-  position: absolute;
-  left: calc(50% - 32px);
-  bottom: 20px;
-  color: white;
-  font-size: 20px;
-`;
-
-const ContainerForPromoList = styled(Grid)`
-  padding: 14px;
+  margin: 0 auto;
+  border-radius: 25px;
+  transition: all 1s;
+  &:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(1px 10px 10px #000000C4);
+  }
 `;
 
 class Promotion extends Component {
@@ -207,6 +166,7 @@ class Promotion extends Component {
   render() {
     return (
       <Container>
+        <Title>{i18n.t("common.promotion")}</Title>
         {this.props.general.promotionList.items &&
         this.props.general.promotionList.items.length <= 0 ? (
           <PromoEmptyContainer>
@@ -226,138 +186,28 @@ class Promotion extends Component {
           <></>
         )}
         <Wrap>
-          <MContainer>
-            <ThePromotion container>
+            <PromotionContainer>
               {this.props.general.promotionList.items
                 .sort((a, b) => {
                   return a.order - b.order;
                 })
                 .map((data, index) => {
+                  const checkIfLocaleExist = data.localization !== null && data.localization[i18n.language];
                   return (
-                    <ContainerForPromoList
-                      lg={6}
+                    <PromotionItem
                       key={index}
-                      order={data.order}
-                    >
-                      <ThePromotionContainer
-                        container
-                        direction="column"
-                        justify="space-between"
-                        alignItems="stretch"
-                      >
-                        <Grid item>
-                          <Grid container direction="column">
-                            {(() => {
-                              if (data.localization !== null) {
-                                const checkIfLocaleExist =
-                                  data.localization[i18n.language];
-                                return (
-                                  <PromoImages
-                                    key={index}
-                                    img={
-                                      checkIfLocaleExist
-                                        ? checkIfLocaleExist.desktopBanner
-                                        : data.desktopBanner
-                                    }
-                                  ></PromoImages>
-                                );
-                              } else {
-                                return (
-                                  <PromoImages
-                                    key={index}
-                                    img={data.desktopBanner}
-                                  ></PromoImages>
-                                );
-                              }
-                            })()}
-
-                            <EventTitle>
-                              【{i18n.t("promotion.promoDetail")}】
-                            </EventTitle>
-                            <EventLabel>
-                              {i18n.t("promotion.promoTarget")}:
-                            </EventLabel>
-                            <EventText>
-                              {data.vipLevels
-                                .sort((a, b) => {
-                                  return a - b;
-                                })
-                                .map((a, index) => {
-                                  return (
-                                    <span key={index}>
-                                      VIP{a}
-                                      {index < data.vipLevels.length - 1 &&
-                                        ", "}
-                                    </span>
-                                  );
-                                })}
-                            </EventText>
-                            <br />
-                            <EventLabel>
-                              {i18n.t("promotion.promoDate")}：
-                            </EventLabel>
-                            <EventText>
-                              {moment(data.from).format("YYYY/MM/DD HH:mm:ss")}
-                              {" - "}
-                              {moment(data.to).format("YYYY/MM/DD HH:mm:ss")}
-                            </EventText>
-                          </Grid>
-                        </Grid>
-                        <PromoButtonContainer
-                          item
-                          onClick={() =>
-                            this.handlePromotionClick(
-                              data.id,
-                              data.promotionType
-                            )
-                          }
-                        >
-                          <PromoButtonImg />
-                          <PromoButtonText>
-                            {i18n.t("promotion.details")}
-                          </PromoButtonText>
-                        </PromoButtonContainer>
-                      </ThePromotionContainer>
-                    </ContainerForPromoList>
+                      img={
+                        checkIfLocaleExist
+                          ? checkIfLocaleExist.desktopBanner
+                          : data.desktopBanner
+                      }
+                      onClick={() => {
+                        this.handlePromotionClick(data.id, data.promotionType);
+                      }}
+                    ></PromotionItem>
                   );
                 })}
-            </ThePromotion>
-          </MContainer>
-
-          {
-            //
-            //  <MainContent>
-            //    <Inner>
-            //      {this.state.list.map((row) => (
-            //        <Content key={row.id} id={"promo" + row.id}>
-            //          <LeftContent>
-            //            <PromoImg src={row.pc_thumbnail_text}></PromoImg>
-            //          </LeftContent>
-            //          <RightContent>
-            //            <PromoTitle>{row.title}</PromoTitle>
-            //            <PromoDate>{row.end_time_text}</PromoDate>
-            //            <Collapse in={row.checked} collapsedHeight="70px">
-            //              <PromoDesc
-            //                onClick={this.contentClickHandler}
-            //                dangerouslySetInnerHTML={{
-            //                  __html: row.pc_promotion_describe.replace(
-            //                    /{activity_id}/g,
-            //                    row.id
-            //                  ),
-            //                }}
-            //              ></PromoDesc>
-            //            </Collapse>
-            //            <Viewall onClick={() => this.ViewAllClick(row.id)}>
-            //              {i18n.t("promotion.moreInfo")}&#187;
-            //              <ViewallArrow></ViewallArrow>
-            //            </Viewall>
-            //          </RightContent>
-            //        </Content>
-            //      ))}
-            //    </Inner>
-            //  </MainContent>
-            //
-          }
+            </PromotionContainer>
         </Wrap>
       </Container>
     );

@@ -4,10 +4,10 @@ include:
     file: '/templates/.lobby-deployment.yaml'
 
 variables:
-  ImageName: pgtgs/lobby-t11
-  components_dev: lobby-t11
-  components_staging: lobby-bunny,lobby-t11,lobby-demo-t11
-  components_prod: lobby-t11,lobby-gpi-php,lobby-bunny
+  ImageName: pgtgs/lobby-t13
+  components_dev: lobby-t13
+  components_staging: lobby-t13
+  components_prod: lobby-t13
   GIT_STRATEGY: clone
   GIT_SUBMODULE_STRATEGY: normal
   GIT_SUBMODULE_UPDATE_FLAGS: "--remote --checkout --no-single-branch"

@@ -6,7 +6,7 @@ import "./assets/fonts/notosans/notosans-tc/css.css";
 const languageSwitcher = (language) => {
   switch (language) {
     case "en-US":
-      return `Tahoma, Helvetica, Arial, sans-serif`;
+      return `Montserrat`;
     case "zh-CN":
       return `'Noto Sans SC', Microsoft Yahei, '微软雅黑', STXihei, '华文细黑'`;
     case "zh-TW":
@@ -14,12 +14,24 @@ const languageSwitcher = (language) => {
     case "th-TH":
       return ``;
     default:
-      return `Tahoma, Helvetica, Arial, sans-serif`;
+      return `Montserrat`;
   }
 };
 export const GlobalStyles = createGlobalStyle`
+
+
+@font-face {
+  font-family: 'Montserrat';
+  src: URL(${
+    process.env.PUBLIC_URL + "/assets/font/montserrat.ttf"
+  }) format('truetype');
+}
+
+
+
   * {
     font-family: ${languageSwitcher(i18n.language)};
+  
   }
   
   body {

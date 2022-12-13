@@ -44,49 +44,14 @@ const Container = styled.div`
   align-items: center;
   gap: 5px;
   padding-right: 5px;
-`;
-const BtnStyle1 = styled.div`
-  border-radius: 4px;
-
-  font-size: 15px;
-  padding: 4.5px 10px;
-  text-align: center;
-  color: ${({ theme }) => theme.pcHeaderText};
-  cursor: pointer;
-  border-radius: 4px;
-
-  text-align: center;
-
-  color: #fff;
-  background: ${({ theme }) => theme.accent};
-`;
-const BtnLogout = styled.div`
-  color: ${({ theme }) => theme.pcHeaderText};
-  text-align: right;
-
-  &:hover {
-    cursor: pointer;
-    color: ${({ theme }) => theme.accent};
-  }
-`;
-
-const BtnTransfer = styled(BtnStyle1)``;
-const BtnDeposit = styled(BtnStyle1)``;
-
-const BalanceContainer = styled.div`
-  color: ${({ theme }) => theme.pcHeaderText};
-  text-align: right;
-
-  &:hover {
-    cursor: pointer;
-  }
+  justify-content: flex-end;
 `;
 
 const RefreshBalance = styled.div`
-  margin: 2px 0 0 0;
+  margin: 1px 1px 0 1px;
 
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 
   &:hover {
     cursor: pointer;
@@ -96,8 +61,9 @@ const RefreshBalanceIcon = styled.div`
   background-image: url(${({ theme }) => balanceIconSwitcher()});
   background-repeat: no-repeat;
   background-position: center;
-  width: 16px;
-  height: 16px;
+  background-size: 13px;
+  width: 18px;
+  height: 18px;
 
   &:hover {
     background-image: url(${({ theme }) => balanceHoverIconSwitcher()});
@@ -105,47 +71,14 @@ const RefreshBalanceIcon = styled.div`
   }
 `;
 const BalanceAmountLabel = styled.span`
-  color: ${({ theme }) => theme.accent};
-`;
-const MemberUserName = styled.span`
-  color: ${({ theme }) => theme.accent};
-`;
-const Spliter = styled.div`
-  width: 2px;
-  height: 16px;
-  margin: 0 5px;
-  background-color: rgba(255, 255, 255, 0.2);
-`;
-const InboxContainer = styled(BalanceContainer)`
-  color: ${({ theme }) => theme.accent};
-  text-align: right;
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  gap: 5px;
-`;
-const InboxIconImg = styled.img`
-  display: inline-block;
-
-  margin-top: 2px;
-`;
-const InboxCountLabel = styled.span`
-  color: ${({ theme }) => theme.accent};
-  display: inline-block;
-`;
-const WelcomeContainer = styled(BalanceContainer)`
   color: ${({ theme }) => theme.pcHeaderText};
-
-  margin-right: 0px;
-
-  max-width: 300px;
-`;
-const CustomLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
+  display: flex;
   &:hover {
     cursor: pointer;
   }
+`;
+const MemberUserName = styled.span`
+  color: ${({ theme }) => theme.pcHeaderText};
 `;
 
 const GameType = styled.div`
@@ -186,6 +119,48 @@ const BrandAndBalanceButBigger = styled(BrandAndBalance)`
   font-size: 20px;
 `;
 
+const ActionButton = styled.div`
+  background: ${({ theme }) => theme.primary};
+  width: 35px;
+  height: 35px;
+  font-size: 35px;
+  line-height: 35px;
+  padding-left: 7px;
+  border-radius: 25px;
+  cursor: pointer;
+`;
+
+const AccountDetail = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px;
+  font-size: 18px;
+`;
+
+const PopoverButton = styled.div`
+  width: 100%;
+  height: 30px;
+  color: #b7b7b7;
+  text-align: center;
+  cursor: pointer;
+  &:hover {
+    color: #000;
+  }
+`;
+
+const HeaderButton = styled.div`
+  width: 141px;
+  height: 54px;
+  font-size: 22px;
+  padding: 12.5px 0px;
+  text-align: center;
+  color: ${({ theme }) => theme.pcHeaderText};
+  cursor: pointer;
+  border: 1px solid ${({ theme }) => theme.pcHeaderText};
+  border-radius: 30px;
+  text-transform: uppercase;
+`;
+
 const MemberContainer = (props) => {
   const vipSwitcher = (rank) => {
     switch (rank) {
@@ -204,15 +179,6 @@ const MemberContainer = (props) => {
     }
   };
 
-  const inboxIconSwitcher = () => {
-    switch (config.theme.toLowerCase()) {
-      case "pb":
-        return InboxIconPNG_PB;
-      default:
-        return InboxIconPNG;
-    }
-  };
-
   const handleTransfer = (e) => {
     if (config.features.NewTransferUI) {
       handleClick(e);
@@ -222,9 +188,18 @@ const MemberContainer = (props) => {
   };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorAction, setAnchorAction] = React.useState(null);
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
+  };
+
+  const handleActionClick = (e) => {
+    setAnchorAction(e.currentTarget);
+  };
+
+  const handleActionClose = (e) => {
+    setAnchorAction(null);
   };
 
   const handleClose = () => {
@@ -232,6 +207,7 @@ const MemberContainer = (props) => {
   };
 
   const open = Boolean(anchorEl);
+  const openAction = Boolean(anchorAction);
   const totalBalance =
     props.wallet.mainBalance +
     props.game.providerList
@@ -240,113 +216,113 @@ const MemberContainer = (props) => {
 
   return (
     <Container>
-      <WelcomeContainer>
-        <CustomLink to={"/" + i18n.language + "/account/profile"}>
-          {i18n.t("web.header.welcomBack")}{" "}
-          <MemberUserName>
-            {props.account.info.member_username}(
-            {config.features.CustomVIP
-              ? vipSwitcher(props.account.info.member_level_id)
-              : "VIP" + props.account.info.member_level_id}
-            )
-          </MemberUserName>
-        </CustomLink>
-      </WelcomeContainer>
-      <Spliter></Spliter>
-      <BtnLogout onClick={props.onhandleLogout}>
-        {i18n.t("web.header.logout")}
-      </BtnLogout>
-      <Spliter></Spliter>
-      <InboxContainer onClick={props.onhandleInboxClick}>
-        <InboxCountLabel>{props.account.info.message_num}</InboxCountLabel>
-        <InboxIconImg src={inboxIconSwitcher()}></InboxIconImg>
-      </InboxContainer>
-      <Spliter></Spliter>
-      <BalanceContainer style={{ display: "flex" }}>
-        <span>{i18n.t("web.header.mainAccount")}:</span>
+      <ActionButton
+        onClick={(e) => {
+          handleActionClick(e);
+        }}
+      >
+        +
+      </ActionButton>
+      <AccountDetail>
+        <MemberUserName>
+          {props.account.info.member_username}(
+          {config.features.CustomVIP
+            ? vipSwitcher(props.account.info.member_level_id)
+            : "VIP" + props.account.info.member_level_id}
+          )
+        </MemberUserName>
         <BalanceAmountLabel
           onClick={(e) => {
             handleTransfer(e);
           }}
         >
-          {Common.formatNumberWithThousand(totalBalance)}
+          {config.currency} {Common.formatNumberWithThousand(totalBalance)}
+          <RefreshBalance onClick={props.onhandleRefreshBalanceClick}>
+            <RefreshBalanceIcon
+              icon={balanceIconSwitcher()}
+              hoverIcon={balanceHoverIconSwitcher()}
+            ></RefreshBalanceIcon>
+          </RefreshBalance>
         </BalanceAmountLabel>
-        <CustomPopover
-          open={open}
-          anchorEl={anchorEl}
-          handleClose={handleClose}
-        >
-          <div>
-            <BrandAndBalanceButBigger>
-              <div style={{ paddingRight: 30 }}>
-                {i18n.t("web.header.mainAccount")}
-              </div>
-              <div
-                style={{
-                  width: 150,
-                  display: "flex",
-                  alignSelf: "flex-end",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <Textfit mode="single">
-                  {Common.formatNumberWithThousand(totalBalance)}
-                </Textfit>
-              </div>
-            </BrandAndBalanceButBigger>
-          </div>
-          {SortedMenuList.map((item, key) => {
-            return (
-              <GameType>
-                <GameTypeName>{i18n.t(item.title)}</GameTypeName>
-                {props.game.homePageGameList
-                  .filter((game) => {
-                    return item.gameType.indexOf(game.type) >= 0;
-                  })
-                  .map((brand, index) => {
-                    return props.game.providerList
-                      .filter((item) => {
-                        return (
-                          item.abbreviation === brand.abbreviation &&
-                          item.transferwallet === true
-                        );
-                      })
-                      .map((data, index) => {
-                        return (
-                          <BrandAndBalance>
-                            <Brand>
-                              {i18n.t(`${data.abbreviation}.${item.path}`)}
-                            </Brand>
-                            <Balance>
-                              {data.maintenance === 1
-                                ? i18n.t("transfer.maintenance")
-                                : Common.formatNumberWithCommas(data.balance)}
-                            </Balance>
-                          </BrandAndBalance>
-                        );
-                      });
-                  })}
-              </GameType>
-            );
-          })}
-        </CustomPopover>
-
-        <RefreshBalance onClick={props.onhandleRefreshBalanceClick}>
-          <RefreshBalanceIcon
-            icon={balanceIconSwitcher()}
-            hoverIcon={balanceHoverIconSwitcher()}
-          ></RefreshBalanceIcon>
-        </RefreshBalance>
-      </BalanceContainer>
-      <Spliter></Spliter>
-      {props.game.containTransferWallet && !config.features.NewTransferUI && (
-        <BtnTransfer onClick={props.onhandleTransfer}>
-          {i18n.t("web.header.transfer")}
-        </BtnTransfer>
-      )}
-      <BtnDeposit onClick={props.onhandleDeposit}>
-        {i18n.t("web.header.deposit")}
-      </BtnDeposit>
+      </AccountDetail>
+      <HeaderButton onClick={props.onhandleProfile}>
+        {i18n.t("web.account.profile")}
+      </HeaderButton>
+      <HeaderButton onClick={props.onhandleLogout}>
+        {i18n.t("web.header.logout")}
+      </HeaderButton>
+      <CustomPopover
+        open={openAction}
+        anchorEl={anchorAction}
+        handleClose={handleActionClose}
+      >
+        <PopoverButton onClick={props.onhandleDeposit}>
+          {i18n.t("web.header.deposit")}
+        </PopoverButton>
+        <PopoverButton onClick={props.onhandleWithdraw}>
+          {i18n.t("common.withdrawal")}
+        </PopoverButton>
+        {props.game.containTransferWallet && !config.features.NewTransferUI && (
+          <PopoverButton onClick={props.onhandleTransfer}>
+            {i18n.t("web.header.transfer")}
+          </PopoverButton>
+        )}
+      </CustomPopover>
+      <CustomPopover open={open} anchorEl={anchorEl} handleClose={handleClose}>
+        <div>
+          <BrandAndBalanceButBigger>
+            <div style={{ paddingRight: 30 }}>
+              {i18n.t("web.header.mainAccount")}
+            </div>
+            <div
+              style={{
+                width: 150,
+                display: "flex",
+                alignSelf: "flex-end",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Textfit mode="single">
+                {Common.formatNumberWithThousand(totalBalance)}
+              </Textfit>
+            </div>
+          </BrandAndBalanceButBigger>
+        </div>
+        {SortedMenuList.map((item, key) => {
+          return (
+            <GameType>
+              <GameTypeName>{i18n.t(item.title)}</GameTypeName>
+              {props.game.homePageGameList
+                .filter((game) => {
+                  return item.gameType.indexOf(game.type) >= 0;
+                })
+                .map((brand, index) => {
+                  return props.game.providerList
+                    .filter((item) => {
+                      return (
+                        item.abbreviation === brand.abbreviation &&
+                        item.transferwallet === true
+                      );
+                    })
+                    .map((data, index) => {
+                      return (
+                        <BrandAndBalance>
+                          <Brand>
+                            {i18n.t(`${data.abbreviation}.${item.path}`)}
+                          </Brand>
+                          <Balance>
+                            {data.maintenance === 1
+                              ? i18n.t("transfer.maintenance")
+                              : Common.formatNumberWithCommas(data.balance)}
+                          </Balance>
+                        </BrandAndBalance>
+                      );
+                    });
+                })}
+            </GameType>
+          );
+        })}
+      </CustomPopover>
     </Container>
   );
 };

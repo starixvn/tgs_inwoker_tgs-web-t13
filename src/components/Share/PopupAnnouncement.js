@@ -18,32 +18,43 @@ const StyledDialog = withStyles({
 })(Dialog);
 const Container = styled.div`
   width: 80vw;
-  background: #fff;
+  background: #27273f;
   background-attachment: fixed;
   background-position: center;
+  color: #fff;
   display: flex;
-  padding: 30px;
+  padding: 50px;
+
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  border-radius: 50px;
 `;
 const CloseButton = styled.div`
   background: ${({ theme }) => theme.primary};
   color: white;
   padding: 20px 30px;
   margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 3px;
   font-size: 30px;
-  border-radius: 20px;
+  border-radius: 50px;
+  filter: drop-shadow(0 0 4px ${({ theme }) => theme.primary})
+    drop-shadow(0 0 4px ${({ theme }) => theme.primary}) contrast(1)
+    brightness(1);
 `;
 const TitleContainer = styled.div`
   text-align: center;
 
   font-size: 50px;
+  margin-top: 30px;
 `;
 const FormContainer = styled.div`
   margin: 30px 60px 40px 60px;
   padding: 0 3px;
   width: 100%;
+  min-height: 300px;
   font-size: 30px;
   text-align: justify;
   overflow: auto;
@@ -61,7 +72,7 @@ const ImageBanner = styled.div`
   background: url(${({ img }) => img}) no-repeat center;
   height: 200px;
   width: 560px;
-  border-radius: 5px;
+  border-radius: 50px;
   background-size: 100%;
   padding: 10px;
   margin-bottom: 20px;
@@ -89,6 +100,7 @@ const CustomContainer = styled.div`
   padding: 30px;
   justify-content: center;
   flex-direction: column;
+  position: relative;
   align-items: center;
 `;
 const CustomEmptyHeader = styled.div`
@@ -148,6 +160,18 @@ const CustomFormContainer = styled.div`
   color: #fff;
 `;
 
+const CloseIcon = styled.div`
+  background: url(${process.env.PUBLIC_URL +
+    `/assets/images/wapp/icons/close.svg`})
+    no-repeat;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background-size: 100%;
+`;
+
 const ContainerSwitcher = (props) => {
   if (props.isCustom)
     return (
@@ -204,6 +228,7 @@ class PopupAnnouncement extends Component {
           isCustom={this.props.isCustom}
           onClose={this.props.onClose}
         >
+          <CloseIcon />
           <div className="clear"></div>
           <TitleSwitcher isCustom={this.props.isCustom}>
             {this.props.header}
