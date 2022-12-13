@@ -163,7 +163,6 @@ const RightMenuUL = styled.ul`
 
 const RightMenuTextSpan = styled.span`
   font-size: ${(props) => (i18n.language === "vi-VN" ? "23px" : "24px")};
-  font-family: "Montserrat";
   margin: 0 auto;
   display: block;
 

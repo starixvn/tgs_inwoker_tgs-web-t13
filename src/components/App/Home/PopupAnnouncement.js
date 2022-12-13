@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/core/styles";
-import LoginBGPNG from "../../../assets/images/login-bg.png";
 import IconLoginClosePNG from "../../../assets/images/icon-login-close.png";
 import { AppHistory } from "../../../history/History";
 import i18n from "../../../utils/i18n";
@@ -13,6 +12,16 @@ const StyledDialog = withStyles({
     "& .MuiPaper-root": {
       backgroundColor: "transparent",
       borderRadius: "15px",
+    },
+  },
+})(Dialog);
+const CustomStyledPromoDialog = withStyles({
+  root: {
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    "& .MuiPaper-root": {
+      backgroundColor: "#27273F",
+      borderRadius: "35px",
+      maxWidth: "1160px",
     },
   },
 })(Dialog);
@@ -30,12 +39,18 @@ const CustomStyledDialog = withStyles({
   },
 })(Dialog);
 const Container = styled.div`
-  width: 506px;
-  background: url(${LoginBGPNG}) no-repeat;
-  background-size: cover;
+  width: ${(props) => (props.isPromo ? `1160px` : `506px`)};
+  background: #27273f;
   background-attachment: fixed;
   background-position: center;
-  display: table;
+  color: #fff;
+  display: flex;
+  padding: 50px;
+
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 50px;
 `;
 const CloseIconContainer = styled.div`
   background: url(${IconLoginClosePNG}) no-repeat;
@@ -47,21 +62,53 @@ const CloseIconContainer = styled.div`
     cursor: pointer;
   }
 `;
+const CloseButton = styled.div`
+  background: ${({ theme }) => theme.primary};
+  color: white;
+  padding: 20px 30px;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 3px;
+  font-size: 30px;
+  border-radius: 50px;
+  filter: drop-shadow(1px 1px 8px ${({ theme }) => theme.primary}ba);
+`;
 const TitleContainer = styled.div`
   text-align: center;
-
-  font-size: 30px;
+  font-size: 53px;
 `;
 const FormContainer = styled.div`
   margin: 30px 60px 40px 60px;
   padding: 0 3px;
   text-align: justify;
+  font-size: 26px;
 `;
 
 const ContentContainer = styled.div`
   margin: 20px 20px 10px 20px;
   padding: 0 3px;
   overflow: auto;
+`;
+
+const CustomPromoContentContainer = styled(ContentContainer)`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px 25px;
+  height: 705px;
+  padding: 0 55px;
+  &::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #1b1d30;
+    border-radius: 14px;
+  }
 `;
 
 const ImageBanner = styled.div`
@@ -75,6 +122,10 @@ const ImageBanner = styled.div`
   justify-content: flex-end;
   align-items: flex-end;
   box-shadow: 0 4px 6px -1px rgb(0 0 0/0.1), 0 2px 4px -2px rgb(0 0 0/0.1);
+`;
+
+const CustomPromoImageBanner = styled(ImageBanner)`
+  border-radius: 15px;
 `;
 
 const TheButton = styled.div`
@@ -95,6 +146,10 @@ const CustomContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+`;
+const CustomPromoContainer = styled(CustomContainer)`
+  width: 1160px;
+  background: #27273f;
 `;
 const CustomCloseButton = styled.div`
   background: url(${process.env.PUBLIC_URL +
@@ -143,6 +198,14 @@ const CustomTitleContainer = styled(TitleContainer)`
   font-size: 30px;
   margin: 45px auto 12px;
 `;
+const CustomPromoTitleContainer = styled(CustomTitleContainer)`
+  color: #fff;
+  font-style: italic;
+  font-size: 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 45px auto 12px;
+`;
 const CustomBodyContainer = styled.div`
   width: 680px;
   height: 391px;
@@ -151,6 +214,12 @@ const CustomBodyContainer = styled.div`
     `/assets/images/pcHomePage/dialog-body.png`})
     no-repeat;
   background-size: 680px 391px;
+  margin-top: -10px;
+`;
+const CustomPromoBodyContainer = styled.div`
+  width: 1160px;
+  height: 850px;
+  text-align: center;
   margin-top: -10px;
 `;
 const CustomFormContainer = styled.div`
@@ -163,8 +232,27 @@ const CustomFormContainer = styled.div`
   height: 253px;
   color: #fff;
 `;
+
+const DetailButton = styled.div`
+  width: 100px;
+  height: 34px;
+  border-radius: 25px;
+  margin: 0 10px;
+  padding-top: 7px;
+  text-align: center;
+  background: #cf2029;
+  color: #fff;
+  cursor: pointer;
+`;
+
 const DialogSwitcher = (props) => {
-  if (props.isCustom)
+  if (props.isCustom && props.isPromo)
+    return (
+      <CustomStyledPromoDialog open={props.open} onClose={props.onClose}>
+        {props.children}
+      </CustomStyledPromoDialog>
+    );
+  else if (props.isCustom)
     return (
       <CustomStyledDialog open={props.open} onClose={props.onClose}>
         {props.children}
@@ -178,6 +266,12 @@ const DialogSwitcher = (props) => {
     );
 };
 const ContainerSwitcher = (props) => {
+  if (props.isCustom && props.isPromo)
+    return (
+      <CustomPromoContainer>
+        <CustomPromoBodyContainer>{props.children}</CustomPromoBodyContainer>
+      </CustomPromoContainer>
+    );
   if (props.isCustom)
     return (
       <CustomContainer>
@@ -190,19 +284,24 @@ const ContainerSwitcher = (props) => {
   else
     return (
       <Container>
-        <CloseIconContainer
-          viewBox="4 4 16 16"
-          onClick={props.onClose}
-        ></CloseIconContainer>
-        {props.children}
+        {props.children}{" "}
+        <CloseButton onClick={props.onClose}>
+          {i18n.t("common.confirm")}
+        </CloseButton>
       </Container>
     );
 };
+
 const TitleSwitcher = (props) => {
+  if (props.isCustom && props.isPromo)
+    return (
+      <CustomPromoTitleContainer>{props.children}</CustomPromoTitleContainer>
+    );
   if (props.isCustom)
     return <CustomTitleContainer>{props.children}</CustomTitleContainer>;
   else return <TitleContainer>{props.children}</TitleContainer>;
 };
+
 const FormContainerSwitcher = (props) => {
   if (props.isCustom)
     return (
@@ -217,29 +316,65 @@ const FormContainerSwitcher = (props) => {
       ></FormContainer>
     );
 };
+
 class PopupAnnouncement extends Component {
   handlePromotionClick = (id) => {
     AppHistory.push({
       pathname: "/" + i18n.language + "/promotion/" + id,
     });
+    this.props.onClose();
   };
 
   render() {
     return (
       <DialogSwitcher
         isCustom={this.props.isCustom}
+        isPromo={this.props.type === "promo"}
         open={this.props.open}
         onClose={this.props.onClose}
       >
         <ContainerSwitcher
           isCustom={this.props.isCustom}
           onClose={this.props.onClose}
+          isPromo={this.props.type === "promo"}
         >
           <div className="clear"></div>
-          <TitleSwitcher isCustom={this.props.isCustom}>
+          <TitleSwitcher
+            isCustom={this.props.isCustom}
+            isPromo={this.props.type === "promo"}
+          >
             {this.props.header}
           </TitleSwitcher>
-          {this.props.type === "promo" ? (
+          {this.props.isCustom && this.props.type === "promo" ? (
+            <CustomPromoContentContainer>
+              {this.props.content
+                .sort((a, b) => {
+                  return a.order - b.order;
+                })
+                .map((data, index) => {
+                  var checkLocale = data.localization[i18n.language];
+                  return (
+                    <CustomPromoImageBanner
+                      key={index}
+                      order={data.order}
+                      img={
+                        checkLocale
+                          ? checkLocale.desktopBanner
+                          : data.desktopBanner
+                      }
+                    >
+                      <DetailButton
+                        onClick={() => {
+                          this.handlePromotionClick(data.id);
+                        }}
+                      >
+                        {i18n.t("promotion.details")}
+                      </DetailButton>
+                    </CustomPromoImageBanner>
+                  );
+                })}
+            </CustomPromoContentContainer>
+          ) : this.props.type === "promo" ? (
             <ContentContainer>
               {this.props.content
                 .sort((a, b) => {
@@ -249,22 +384,17 @@ class PopupAnnouncement extends Component {
                   var checkLocale = data.localization[i18n.language];
                   return (
                     <ImageBanner
-                      order={data.order}
                       key={index}
+                      order={data.order}
                       img={
                         checkLocale
                           ? checkLocale.desktopBanner
                           : data.desktopBanner
                       }
-                    >
-                      <TheButton
-                        onClick={() => {
-                          this.handlePromotionClick(data.id);
-                        }}
-                      >
-                        {i18n.t("promotion.details")}
-                      </TheButton>
-                    </ImageBanner>
+                      onClick={() => {
+                        this.handlePromotionClick(data.id);
+                      }}
+                    ></ImageBanner>
                   );
                 })}
             </ContentContainer>

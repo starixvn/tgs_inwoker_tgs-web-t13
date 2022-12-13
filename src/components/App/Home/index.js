@@ -236,7 +236,6 @@ class Home extends Component {
                     ? row.localization.subject
                     : row.subject
                 }
-                isCustom={true}
               ></PopupAnnouncement>
             );
           }
@@ -254,6 +253,7 @@ class Home extends Component {
               }}
               content={this.props.general.promotionList.items}
               header={i18n.t("promotion.title")}
+              isCustom={true}
             ></PopupAnnouncement>
           )}
       </HomeContainer>

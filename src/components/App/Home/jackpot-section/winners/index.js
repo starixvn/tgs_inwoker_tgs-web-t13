@@ -75,13 +75,11 @@ const WinnerListItemDescription = styled.div`
   flex-direction: column;
   align-self: center;
   & > div{
-    font-family: "Montserrat";
     font-size: 16px;
   }
 `;
 const WinnerListItemPrize = styled.div`
   color: ${({ theme }) => theme.primary};
-  font-family: "Montserrat";
   font-weight: 600;
   font-size: 22px;
   align-self: center;

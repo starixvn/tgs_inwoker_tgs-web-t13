@@ -16,7 +16,6 @@ const Title = styled.div`
   width: 1280px;
   margin: 40px auto;
   font-size: 44px;
-  font-family: "Montserrat";
   font-weight: 500;
   text-transform: uppercase;
   text-align: center;
@@ -102,7 +101,6 @@ const TextContent = styled.div`
 `;
 
 const Digit = styled.div`
-  font-family: "Montserrat";
   width: 45px;
 `;
 
