@@ -4,17 +4,17 @@ import { withRouter } from "react-router-dom";
 import { accountAction } from "../../api-services/actions/accountAction";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/core/styles";
-import LoginBGPNG from "../../assets/images/login-bg.png";
-import clsx from "clsx";
 
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import UserIconPNG from "../../assets/images/user-icon.png";
 import Password1IconPNG from "../../assets/images/password1-icon.png";
 import Password2IconPNG from "../../assets/images/password2-icon.png";
-import IconInboxSelectedPNG from "../../assets/images/icon-inbox-selected.png";
 import IconMobilePNG from "../../assets/images/icon-mobile.png";
 import IconEmailPNG from "../../assets/images/icon-input-email.png";
+import IconUncheckedPNG from "../../assets/images/icon-unchecked.png";
+import IconCheckedPNG from "../../assets/images/icon-checked.png";
+import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown";
 
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -29,7 +29,7 @@ import { generalAction } from "../../api-services/actions/generalAction";
 
 const Container = styled.div`
   width: 506px;
-  background: url(${LoginBGPNG});
+  background: #27273f;
   background-attachment: fixed;
   background-position: center;
   display: table;
@@ -39,17 +39,19 @@ const CloseIconContainer = styled.div`
   width: 28px;
   height: 28px;
   float: right;
-  margin: 10px 10px 0 0;
+  margin: 30px 30px 0 0;
   &:hover {
     cursor: pointer;
   }
 `;
 const TitleContainer = styled.div`
   text-align: center;
-
-  font-size: 42px;
-
-  color: ${({ theme }) => theme.secondary};
+  text-transform: uppercase;
+  font-size: 53px;
+  font-style: italic;
+  font-weight: 600;
+  color: #fff;
+  margin: 30px 0 35px 0;
 `;
 const SubTitleContainer = styled.div`
   text-align: center;
@@ -64,93 +66,17 @@ const FormContainer = styled.div`
 `;
 const CustomText = withStyles({
   root: {
-    width: "350px",
-    height: "51px",
-    borderRadius: "6px",
+    width: "430px",
+    height: "55px",
     border: "none",
-
-    margin: 0,
-
-    background: "white",
-
-    "& .MuiOutlinedInput-input": {
-      fontSize: "14px",
-    },
-    "& label.Mui-focused": {
-      color: "#b6b6b6",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "none",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        border: "none",
-      },
-      "&:hover fieldset": {
-        border: "none",
-      },
-      "&.Mui-focused fieldset": {
-        border: "none",
-      },
-    },
-  },
-})(TextField);
-
-const CustomText2 = withStyles({
-  root: {
-    marginLeft: "8px",
-    width: "240px",
-    height: "51px",
-    borderRadius: "6px",
-    border: "none",
-    boxShadow: "0px 3px 8px -2px rgba(0,0,0,0.75)",
     margin: 0,
     marginTop: "13px",
-    background: "white",
-
+    WebkitTextFillColor: "#b6b6b6",
     "& .MuiOutlinedInput-input": {
-      fontSize: "14px",
+      fontSize: "16px",
     },
-    "& label.Mui-focused": {
-      color: "#b6b6b6",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "none",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        border: "none",
-      },
-      "&:hover fieldset": {
-        border: "none",
-      },
-      "&.Mui-focused fieldset": {
-        border: "none",
-      },
-    },
-  },
-})(CustomText);
-
-const CustomFormControl = withStyles((theme) => ({
-  root: {
-    width: "100px",
-    height: "51px",
-    border: "none",
-    boxShadow: "0px 3px 8px -2px rgba(0,0,0,0.75)",
-    marginTop: "13px",
-    marginBottom: "13px",
-    float: "left",
-    backgroundColor: "#fff",
-    padding: 0,
-    "&:before": {
-      borderRight: "1px solid #b6b6b6",
-      content: '"\\00a0"',
-      position: "absolute",
-      top: "1px",
-      right: "36px",
-      zIndex: " 1",
-      display: "block",
-      height: "100%",
+    "& .MuiInputBase-input::-webkit-input-placeholder": {
+      fontSize: "16px",
     },
     "& label.Mui-focused": {
       color: "#b6b6b6",
@@ -159,6 +85,100 @@ const CustomFormControl = withStyles((theme) => ({
       borderBottomColor: "#b6b6b6",
     },
     "& .MuiOutlinedInput-root": {
+      borderRadius: "15px",
+      "& fieldset": {
+        borderColor: "#b6b6b6",
+      },
+      "&:hover fieldset": {
+        borderColor: "#b6b6b6",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#b6b6b6",
+        borderWidth: "1px",
+      },
+    },
+    "& .PrivateNotchedOutline-root-19": {
+      top: "-4px",
+    },
+    "& .MuiInputBase-root": {
+      color: "#b6b6b6 !important",
+    },
+  },
+})(TextField);
+
+const CustomText2 = withStyles({
+  root: {
+    marginLeft: "8px",
+    width: "320px",
+    height: "55px",
+    borderRadius: "6px",
+    border: "none",
+    margin: 0,
+    marginTop: "20px",
+    WebkitTextFillColor: "#b6b6b6",
+    "& .MuiOutlinedInput-input": {
+      fontSize: "16px",
+    },
+    "& .MuiInputBase-input::-webkit-input-placeholder": {
+      fontSize: "16px",
+    },
+    "& label.Mui-focused": {
+      color: "#b6b6b6",
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#b6b6b6",
+    },
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "15px",
+      "& fieldset": {
+        borderColor: "#b6b6b6",
+      },
+      "&:hover fieldset": {
+        borderColor: "#b6b6b6",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#b6b6b6",
+        borderWidth: "1px",
+      },
+    },
+    "& .PrivateNotchedOutline-root-19": {
+      top: "-4px",
+    },
+    "& .MuiInputBase-root": {
+      color: "#b6b6b6 !important",
+    },
+  },
+})(CustomText);
+
+const CustomFormControl = withStyles((theme) => ({
+  root: {
+    width: "100px",
+    height: "55px",
+    border: "none",
+    marginTop: "20px",
+    float: "left",
+    backgroundColor: "none",
+    padding: 0,
+    "&:before": {
+      content: '"\\00a0"',
+      position: "absolute",
+      top: "1px",
+      right: "36px",
+      zIndex: " 1",
+      display: "block",
+      height: "100%",
+    },
+    "& .MuiSelect-icon": {
+      color: "#fff",
+    },
+    "& label.Mui-focused": {
+      color: "#b6b6b6",
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#b6b6b6",
+    },
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "15px",
       "& fieldset": {
         borderColor: "#b6b6b6",
         marginTop: "1px",
@@ -169,6 +189,7 @@ const CustomFormControl = withStyles((theme) => ({
       },
       "&.Mui-focused fieldset": {
         borderColor: "#b6b6b6",
+        borderWidth: "1px",
         marginTop: "1px",
       },
     },
@@ -178,37 +199,28 @@ const CustomFormControl = withStyles((theme) => ({
 const CustomSelect = withStyles((theme) => ({
   root: {
     fontSize: "14px",
-
-    color: "#818181",
+    color: "#fff",
   },
 }))(Select);
 
 const ButtonLogin = styled.div`
-  margin-top: 24px;
-  margin-bottom: 35px;
-  width: 350px;
-  height: 51px;
+  margin: 20px auto 0 auto;
+  width: 250px;
+  height: 60px;
   color: #fff;
   font-size: 20px;
-  border-radius: 6px;
-
-  border: solid 1px #ffffff;
-  background-image: linear-gradient(
-    to top,
-    ${({ theme }) => theme.primaryGradient},
-    ${({ theme }) => theme.primary}
-  );
-
+  border-radius: 30px;
+  background: #cf2029;
+  filter: drop-shadow(1px 1px 8px #cf2029ba);
   &:hover {
     cursor: pointer;
-
-    box-shadow: inset 1px 1px 9px 0 rgba(255, 255, 255, 0.75);
   }
 `;
 const ButtonLoginLabel = styled.span`
   text-align: center;
   display: block;
-  margin-top: 10px;
+  margin-top: 17px;
+  text-transform: uppercase;
 `;
 
 const DescriptionContainer = styled.div`
@@ -216,13 +228,29 @@ const DescriptionContainer = styled.div`
 `;
 const Description = styled.div`
   float: left;
-  width: 310px;
+  width: 380px;
   margin-left: 5px;
   font-size: 14px;
 
   line-height: 1.43;
 
-  color: ${({ theme }) => theme.secondary};
+  color: #fff;
+`;
+
+const Text = styled.div`
+  text-align: center;
+  font-size: 14px;
+  color: #fff;
+`;
+
+const LinkStyle = styled.a`
+  font-size: 15px;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const useStyles = makeStyles((theme) => ({
@@ -276,13 +304,16 @@ const useStyles = makeStyles((theme) => ({
     height: 20,
 
     borderRadius: "5px",
+    backgroundImage: "url(" + IconUncheckedPNG + ")",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
     backgroundColor: "#fff",
     "$root.Mui-focusVisible &": {},
     "input:hover ~ &": {},
     "input:disabled ~ &": {},
   },
   checkedIcon: {
-    backgroundImage: "url(" + IconInboxSelectedPNG + ")",
+    backgroundImage: "url(" + IconCheckedPNG + ")",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     backgroundColor: "#fff",
@@ -291,7 +322,7 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
       width: 20,
       height: 20,
-      backgroundImage: "url(" + IconInboxSelectedPNG + ")",
+      backgroundImage: "url(" + IconCheckedPNG + ")",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       borderRadius: "5px",
@@ -309,15 +340,45 @@ const CustomInvitationContainer = styled.div`
 const CustomInvitationSelect = styled.select`
   position: absolute;
   right: 10px;
-  bottom: 15px;
+  bottom: 18px;
   border: none;
   outline: none;
+  background: none;
+  color: #fff;
 `;
 
 const CustomTextWrapper = styled.div`
-  box-shadow: 0px 3px 8px -2px rgba(0, 0, 0, 0.75);
   border-radius: 6px;
   margin-top: 13px;
+`;
+
+const CheckBoxUnchecked = styled.div`
+  width: 20px;
+  height: 20px;
+
+  background: ${() => {
+    return `url(${IconUncheckedPNG}) no-repeat center /
+    contain;`;
+  }};
+`;
+
+const CheckBoxChecked = styled.div`
+  width: 20px;
+  height: 20px;
+
+  background: ${() => {
+    return `url(${IconCheckedPNG}) no-repeat center /
+    contain;`;
+  }};
+`;
+
+const BottomContainer = styled.div`
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 20px;
 `;
 
 function Register(props) {
@@ -398,7 +459,8 @@ function Register(props) {
       }
     }
 
-    expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    expr =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (config.features.Register_ShowEmail) {
       if (!expr.test(email)) {
         props.enqueueSnackbar(i18n.t("common.msgInvalidEmail"), {
@@ -506,7 +568,8 @@ function Register(props) {
       }
     }
 
-    expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    expr =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (config.features.Register_ShowEmail) {
       if (!expr.test(email)) {
         props.enqueueSnackbar(i18n.t("common.msgInvalidEmail"), {
@@ -532,7 +595,8 @@ function Register(props) {
               variant: "warning",
             });
           } else if (response.IsSuccess) {
-            let setPhoneDontCareDuplicate = response.data.nextStepType === "SetPhoneDontCareDuplicate";
+            let setPhoneDontCareDuplicate =
+              response.data.nextStepType === "SetPhoneDontCareDuplicate";
 
             if (config.features.SMSVerification) {
               props.onRegisterSuccess(username, password);
@@ -540,7 +604,13 @@ function Register(props) {
               config.features.Register_ShowEmail &&
               config.features.Register_ShowPhone
             ) {
-              props.doLoginWithHpEmail(username, password, phone, email, setPhoneDontCareDuplicate);
+              props.doLoginWithHpEmail(
+                username,
+                password,
+                phone,
+                email,
+                setPhoneDontCareDuplicate
+              );
             } else if (config.features.Register_ShowPhone) {
               props.doLoginWithHp(username, password, phone);
             } else {
@@ -597,9 +667,6 @@ function Register(props) {
       ></CloseIconContainer>
       <div className="clear"></div>
       <TitleContainer>{i18n.t("web.register.registerTitle")}</TitleContainer>
-      <SubTitleContainer>
-        {i18n.t("web.register.registerTitleLine2")}
-      </SubTitleContainer>
       <FormContainer>
         <CustomTextWrapper>
           <CustomText
@@ -616,7 +683,7 @@ function Register(props) {
               startAdornment: (
                 <InputAdornment
                   position="start"
-                  style={{ height: "24px", width: "30px" }}
+                  style={{ height: "30px", width: "40px" }}
                 >
                   <img src={UserIconPNG} alt=""></img>
                 </InputAdornment>
@@ -641,7 +708,7 @@ function Register(props) {
               startAdornment: (
                 <InputAdornment
                   position="start"
-                  style={{ height: "26px", width: "30px" }}
+                  style={{ height: "30px", width: "40px" }}
                 >
                   <img src={Password1IconPNG} alt=""></img>
                 </InputAdornment>
@@ -665,7 +732,7 @@ function Register(props) {
               startAdornment: (
                 <InputAdornment
                   position="start"
-                  style={{ height: "30px", width: "32px" }}
+                  style={{ height: "30px", width: "40px" }}
                 >
                   <img src={Password2IconPNG} alt=""></img>
                 </InputAdornment>
@@ -685,6 +752,7 @@ function Register(props) {
                 onChange={(e) => {
                   setAreacode(e.target.value);
                 }}
+                IconComponent={KeyboardArrowDown}
               >
                 <option value={config.features.PhonePrefix}>
                   {config.features.PhonePrefix}
@@ -778,10 +846,8 @@ function Register(props) {
             checked={tnc}
             className={classes.checkboxRoot}
             onClick={handleTncClick}
-            checkedIcon={
-              <span className={clsx(classes.icon, classes.checkedIcon)} />
-            }
-            icon={<span className={classes.icon} />}
+            checkedIcon={<CheckBoxChecked />}
+            icon={<CheckBoxUnchecked />}
           />
           <Description>{i18n.t("web.register.contract")}</Description>
         </DescriptionContainer>
@@ -793,6 +859,12 @@ function Register(props) {
               : i18n.t("web.register.btn")}
           </ButtonLoginLabel>
         </ButtonLogin>
+        <BottomContainer>
+          <Text>{i18n.t("Already have an account ?")}</Text>
+          <LinkStyle onClick={props.onhandleLogin}>
+            {i18n.t("web.login.login")}
+          </LinkStyle>
+        </BottomContainer>
       </FormContainer>
     </Container>
   );

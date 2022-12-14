@@ -13,7 +13,6 @@ const Container = styled.div`
   height: 577px;
   display: flex;
   justify-content: space-between;
-  font-family: "Montserrat";
 `;
 
 const Section = styled.div`
@@ -22,7 +21,6 @@ const Section = styled.div`
 `;
 
 const SectionTitle = styled.div`
-  font-family: "Montserrat";
   font-size: 34px;
   text-transform: uppercase;
 `;
@@ -53,7 +51,6 @@ const LinkContainer = styled.div`
 
 const Link = styled.div`
   width: max-content;
-  font-family: "Montserrat";
   cursor: pointer;
 `;
 

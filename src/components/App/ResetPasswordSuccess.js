@@ -1,58 +1,52 @@
 import React, { Component } from "react";
 
 import styled from "styled-components";
-
-import LoginBGPNG from "../../assets/images/login-bg.png";
 import i18n from "../../utils/i18n";
-import CloseIcon from "@material-ui/icons/Close";
+import IconLoginClosePNG from "../../assets/images/icon-login-close.png";
 
 const Container = styled.div`
   width: 506px;
-
-  background: url(${LoginBGPNG});
+  height: 360px;
+  background: #27273f;
   display: table;
 `;
-const CloseIconContainer = styled(CloseIcon)`
+const CloseIconContainer = styled.div`
+  background: url(${IconLoginClosePNG}) no-repeat;
   width: 28px;
   height: 28px;
   float: right;
-  margin: 10px 10px 0 0;
+  margin: 30px 30px 0 0;
   &:hover {
     cursor: pointer;
   }
 `;
 const TitleContainer = styled.div`
   text-align: center;
-
-  font-size: 28px;
-
-  color: #000;
+  text-transform: uppercase;
+  font-size: 34px;
+  font-style: italic;
+  font-weight: 600;
+  color: #fff;
+  margin: 30px 0 35px 0;
 `;
 
 const FormContainer = styled.div`
-  margin: 10px 78px 0 78px;
+  margin: 10px 78px 20px 78px;
 `;
 const ButtonStyle = styled.div`
-  margin-top: 15px;
-
+  ${(props) =>
+    props.disable === true
+      ? `  background: #b6b6b6;`
+      : `  background: #cf2029;
+  `}
+  border-radius: 30px;
+  font-size: 16px;
   color: #fff;
-  font-size: 20px;
-
-  border-radius: 6px;
-
-  border: solid 1px #ffffff;
-  background-image: linear-gradient(
-    to top,
-    ${({ theme }) => theme.primaryGradient},
-    ${({ theme }) => theme.primary}
-  );
   text-align: center;
-  padding-top: 8px;
-
+  padding-top: 14px;
+  margin: 15px 5px;
   &:hover {
     cursor: pointer;
-
-    box-shadow: inset 1px 1px 9px 0 rgba(255, 255, 255, 0.75);
   }
 `;
 const Button = styled(ButtonStyle)`
@@ -61,10 +55,8 @@ const Button = styled(ButtonStyle)`
 `;
 
 const LinkStyle = styled.a`
-  font-size: 14px;
-
-  margin-top: 5px;
-  text-decoration: underline;
+  font-size: 15px;
+  color: #fff;
   &:hover {
     cursor: pointer;
   }
@@ -72,16 +64,14 @@ const LinkStyle = styled.a`
 
 const Description = styled.p`
   text-align: center;
-  display: inline-block;
-  width: 100%;
-
   font-size: 14px;
-
-  color: #ffffff;
+  color: #fff;
 `;
 
 const ContactUsLink = styled(LinkStyle)`
   font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
 `;
 
 class ResetPasswordSuccess extends Component {

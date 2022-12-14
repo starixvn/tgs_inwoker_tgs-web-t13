@@ -163,13 +163,13 @@ const RightMenuUL = styled.ul`
 
 const RightMenuTextSpan = styled.span`
   font-size: ${(props) => (i18n.language === "vi-VN" ? "23px" : "24px")};
-  font-family: "Montserrat";
   margin: 0 auto;
   display: block;
 
-  padding-top: 6px;
+  padding: 6px 0 15px 0;
   text-align: center;
   text-transform: uppercase;
+  border-bottom: solid 3px transparent;
 `;
 
 const MouseOverContainer = styled.div`
@@ -252,7 +252,7 @@ const RightMenuLI = styled.li`
   width: max-content;
   color: ${({ theme }) => theme.pcHeaderRightMenu};
   cursor: pointer;
-  border-bottom: solid 4px transparent;
+
   @media (max-width: 925px) {
     width: 100px;
   }
@@ -264,6 +264,14 @@ const RightMenuLI = styled.li`
   }
   padding: 45px 35px 0px 35px;
 
+  ${(props) =>
+    props.active
+      ? `  
+      ${RightMenuTextSpan} {
+        border-bottom: solid 3px #cf2029;
+      }
+  `
+      : ``}
 `;
 
 const StyledAppBar = withStyles((theme) => ({
@@ -889,6 +897,11 @@ class Header extends Component {
                   "vip",
                   "VIP",
                   currentPage === "vip"
+                )}
+                {this.RightMenuItem(
+                  "download",
+                  "APP",
+                  currentPage === "download"
                 )}
               </RightMenuUL>
             </RightMenuContainer>

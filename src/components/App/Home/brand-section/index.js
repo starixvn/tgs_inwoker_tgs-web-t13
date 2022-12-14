@@ -28,7 +28,6 @@ const TitleHolder = styled.div`
   border-radius: 10px;
   width: 100%;
   color: white;
-  font-family: "Montserrat";
   font-size: 30px;
   font-weight: 500;
   text-transform: uppercase;
@@ -52,7 +51,6 @@ const BrandDescription = styled.div`
   width: 950px;
   font-size: 25px;
   line-height: 40px;
-  font-family: "Montserrat";
   font-weight: lighter;
   white-space: break-spaces;
 `;

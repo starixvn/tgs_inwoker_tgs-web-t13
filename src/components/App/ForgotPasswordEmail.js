@@ -2,18 +2,17 @@ import React, { Component } from "react";
 
 import styled from "styled-components";
 import { withStyles } from "@material-ui/core/styles";
-import LoginBGPNG from "../../assets/images/login-bg.png";
 import IconLoginClosePNG from "../../assets/images/icon-login-close.png";
 
 import TextField from "@material-ui/core/TextField";
 import { withSnackbar } from "notistack";
-import {AccountService} from "../../api-services/services/AccountService";
+import { AccountService } from "../../api-services/services/AccountService";
 import i18n from "../../utils/i18n";
 import ErrorSwitcher from "../../utils/ErrorSwitcher";
 const Container = styled.div`
   width: 506px;
   height: 360px;
-  background: url(${LoginBGPNG});
+  background: #27273f;
   display: table;
 `;
 const CloseIconContainer = styled.div`
@@ -21,21 +20,23 @@ const CloseIconContainer = styled.div`
   width: 28px;
   height: 28px;
   float: right;
-  margin: 10px 10px 0 0;
+  margin: 30px 30px 0 0;
   &:hover {
     cursor: pointer;
   }
 `;
 const TitleContainer = styled.div`
   text-align: center;
-
-  font-size: 28px;
-
-  color: #000;
+  text-transform: uppercase;
+  font-size: 34px;
+  font-style: italic;
+  font-weight: 600;
+  color: #fff;
+  margin: 30px 0 35px 0;
 `;
 
 const FormContainer = styled.div`
-  margin: 10px 78px 0 78px;
+  margin: 10px 78px 20px 78px;
 `;
 const CustomText = withStyles({
   root: {
@@ -43,10 +44,12 @@ const CustomText = withStyles({
     height: "46px",
     margin: 0,
     marginTop: "13px",
-    float: "left",
-    background: "white",
+    WebkitTextFillColor: "#b6b6b6",
     "& .MuiOutlinedInput-input": {
-      fontSize: "14px",
+      fontSize: "16px",
+    },
+    "& .MuiInputBase-input::-webkit-input-placeholder": {
+      fontSize: "16px",
     },
     "& label.Mui-focused": {
       color: "#b6b6b6",
@@ -55,6 +58,7 @@ const CustomText = withStyles({
       borderBottomColor: "#b6b6b6",
     },
     "& .MuiOutlinedInput-root": {
+      borderRadius: "15px",
       "& fieldset": {
         borderColor: "#b6b6b6",
       },
@@ -63,16 +67,21 @@ const CustomText = withStyles({
       },
       "&.Mui-focused fieldset": {
         borderColor: "#b6b6b6",
+        borderWidth: "1px",
       },
+    },
+    "& .PrivateNotchedOutline-root-19": {
+      top: "-4px",
+    },
+    "& .MuiInputBase-root": {
+      color: "#b6b6b6 !important",
     },
   },
 })(TextField);
 
 const LinkStyle = styled.a`
-  font-size: 14px;
-
-  margin-top: 5px;
-  text-decoration: underline;
+  font-size: 15px;
+  color: #fff;
   &:hover {
     cursor: pointer;
   }
@@ -80,50 +89,39 @@ const LinkStyle = styled.a`
 
 const Description = styled.p`
   text-align: center;
-  display: inline-block;
-  width: 100%;
-
   font-size: 14px;
-
-  color: #000;
+  color: #fff;
 `;
 
 const ContactUsLink = styled(LinkStyle)`
   font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
 `;
 const StyleButton = styled.div`
   width: 135px;
   height: 46px;
-
-  color: #fff;
-  font-size: 20px;
-
-  border-radius: 6px;
-
-  border: solid 1px #ffffff;
-  background-image: linear-gradient(
-    to top,
-    ${({ theme }) => theme.primaryGradient},
-    ${({ theme }) => theme.primary}
-  );
-  text-align: center;
-  padding-top: 8px;
+  margin-top: 15px;
   float: right;
-  margin: 13px 0 0 0;
+  ${(props) =>
+    props.disable === true
+      ? `  background: #b6b6b6;`
+      : `  background: #cf2029;
+  `}
+  border-radius: 30px;
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  padding-top: 14px;
   &:hover {
     cursor: pointer;
-
-    box-shadow: inset 1px 1px 9px 0 rgba(255, 255, 255, 0.75);
   }
 `;
 const Button = styled(StyleButton)`
   width: 100%;
   height: 46px;
   float: left;
-
-  margin-top: 15px;
-
-  float: left;
+  margin-bottom: 15px;
 `;
 class ForgotPasswordEmail extends Component {
   state = {
@@ -227,7 +225,7 @@ class ForgotPasswordEmail extends Component {
           />
           <StyleButton
             onClick={this.onhandleGetCodeClick}
-            disabled={this.state.countdown > 0}
+            disable={this.state.countdown > 0}
           >
             {this.state.countdown <= 0
               ? i18n.t("common.msgSendToken")

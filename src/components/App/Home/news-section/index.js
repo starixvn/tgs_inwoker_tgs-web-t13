@@ -25,7 +25,6 @@ const TitleHolder = styled.div`
   border-radius: 10px;
   width: 100%;
   color: white;
-  font-family: "Montserrat";
   font-size: 30px;
   font-weight: 500;
   text-transform: uppercase;
@@ -63,7 +62,6 @@ const NewsImage = styled.img`
 
 const NewsTitle = styled.div`
   color: white;
-  font-family: "Montserrat";
   font-size: 24px;
   font-weight: 500;
   padding: 30px 20px 10px 20px;
@@ -72,7 +70,6 @@ const NewsTitle = styled.div`
 
 const NewsContent = styled.div`
   color: white;
-  font-family: "Montserrat";
   font-size: 14px;
   padding: 0px 20px 10px 20px;
   height: 100px;
@@ -90,7 +87,6 @@ const ButtonMore = styled.div`
   text-transform: uppercase;
   text-align: center;
   font-size: 26px;
-  font-family: "Montserrat";
   color: #fff;
   cursor: pointer;
 `;
