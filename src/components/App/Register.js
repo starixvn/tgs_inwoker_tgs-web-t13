@@ -4,15 +4,12 @@ import { withRouter } from "react-router-dom";
 import { accountAction } from "../../api-services/actions/accountAction";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/core/styles";
-import LoginBGPNG from "../../assets/images/login-bg.png";
-import clsx from "clsx";
 
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import UserIconPNG from "../../assets/images/user-icon.png";
 import Password1IconPNG from "../../assets/images/password1-icon.png";
 import Password2IconPNG from "../../assets/images/password2-icon.png";
-import IconInboxSelectedPNG from "../../assets/images/icon-inbox-selected.png";
 import IconMobilePNG from "../../assets/images/icon-mobile.png";
 import IconEmailPNG from "../../assets/images/icon-input-email.png";
 import IconUncheckedPNG from "../../assets/images/icon-unchecked.png";
@@ -137,7 +134,7 @@ const CustomText2 = withStyles({
         borderColor: "#b6b6b6",
       },
       "&:hover fieldset": {
-        bordeborderColorr: "#b6b6b6",
+        borderColor: "#b6b6b6",
       },
       "&.Mui-focused fieldset": {
         borderColor: "#b6b6b6",
