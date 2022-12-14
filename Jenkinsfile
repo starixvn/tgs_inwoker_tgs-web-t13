@@ -1,6 +1,5 @@
 @Library('global-shared-library') _
 def componentArray = [];
-def componentArrayMerged = [];
 def message = "";
 pipeline {
 	agent any
@@ -71,7 +70,7 @@ pipeline {
                         envItems.each { key, value -> 
                             env."tgs_${key}" = value;
                         }
-                        componentArray = "${env.tgs_lobby_t11_components}".split(",")
+                        componentArray = "${env.tgs_lobby_t13_components}".split(",")
                     }
                 }
 
