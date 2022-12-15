@@ -8,6 +8,7 @@ import { withSnackbar } from "notistack";
 import i18n from "../../../utils/i18n";
 import ChevronLeftRounded from "@material-ui/icons/ChevronLeftRounded";
 import ChevronRightRounded from "@material-ui/icons/ChevronRightRounded";
+import { hardcodeNews } from "../../Wap/Main/Home/scene-1/template13/news/hardcoded";
 
 const Container = styled.div`
   width: 100%;
@@ -83,9 +84,13 @@ const NewsAuthor = styled.div`
 const NewsContent = styled.div`
   font-size: 28px;
   text-align: justify;
-  margin: 20px 0;
+  margin: 20px 0 0 0;
   font-weight: 100;
   white-space: pre-line;
+`;
+
+const NewsContent2 = styled(NewsContent)`
+  margin: 0 0 20px 0;
 `;
 
 class NewsDetails extends Component {
@@ -93,80 +98,7 @@ class NewsDetails extends Component {
     super(props);
     var index = -1;
     var newsDetail = null;
-    var newsList = [
-      {
-        id: "1",
-        title: "Caesars Racebook launches on Android and desktop",
-        author: "Peter Lynch",
-        content: `The launch is in cooperation with Nyra Bets, the official online wagering platform of the New York Racing Association.
-
-          Fans of horseracing in the US states of Kentucky, Florida, Ohio, Indiana, Oregon, Montana and North Dakota can now enjoy access to Caesars Racebook ahead of the 2022 Breeders’ Cup.
-          
-          “Caesars Racebook utilises the Nyra Bets platform providing customers with pari-mutuel wagering on premier horseracing content from more than 250 tracks around the world with betting on marquee tracks in the United States and internationally,” a statement from the company read.
-          
-          “In addition to the upcoming Breeders’ Cup races at Keeneland, the wagering menu includes Aqueduct, Belmont Park, Saratoga Race Course, Gulfstream Park, Del Mar and Santa Anita, as well as Caesars-operated tracks Harrah’s Hoosier Park, Horseshoe Indianapolis, Harrah’s Philadelphia and Eldorado Gaming Scioto Downs.”
-          
-          Through the end of 2022, Caesars Racebook players will receive 4x the Racebook Points for every $1 wagered on races at Caesars Entertainment racetracks.
-          
-          As noted by the group, Caesars Racebook plans to continue to launch in additional US states.
-          
-          Caesars Digital Senior Vice President and Chief Development Officer Dan Shapiro commented: “Expanding Caesars Racebook’s access to Android users and desktop is key for the platform’s continued growth.
-          
-          “We’re excited to offer even more customers a horseracing wagering experience that treats them like royalty, no matter what type of device they prefer, thanks to the integration with our industry-leading Caesars Rewards loyalty programme.”
-          
-          Last week, Caesars Sportsbook was made available in Ohio, with bettors able to access it on desktop and download the app on iOS and Android.
-          
-          Legalised sports betting in the state starts on 1 January 2023, and gamers in Ohio will be able to place their first wagers from this date onwards.`,
-        image: "1",
-      },
-      {
-        id: "2",
-        title: "Liverpool vs Manchester United final score",
-        author: "Peter Lynch",
-        content:
-          "Luis Diaz, Sadio Mane, and Mohamed Salah all had at least a goal and an assist in a 4-0 demolition of Manchester United at Anfield that sent Liverpool top of the Premier League.",
-        image: "2",
-      },
-      {
-        id: "3",
-        title:
-          "EVOLUTION LAUNCHES MONOPOLY BIG BALLER, A BINGO-STYLE LIVE GAMES SHOW BASED ON THE WORLD-FAMOUS BOARD GAME",
-        author: "Peter Lynch",
-        content:
-          "Evolution today announced the launch of MONOPOLY Big Baller, a totally new bingo-style live game show played online. The game features live automated ball drawing and a live game host, an augmented reality MR. MONOPOLY, and numerous multipliers offering players the chance of greatly increased payouts.",
-        image: "3",
-      },
-      {
-        id: "4",
-        title:
-          "Snapdragon Pro Series to host multi-title live events at DreamHack Valencia",
-        author: "Peter Lynch",
-
-        content: `The Snapdragon Pro Series, ESL Gaming’s mobile esports ecosystem, will host three live events during DreakHack Valencia, which will be taking place at the Valencia Fair from December 9th-11th.
-                Wild Circuit: Game Changers, the first championships for League of Legends: Wild Rift’s women’s scene, will take place at the gaming festival alongside Wild Rift EUR & North Africa Finals as well as Brawl Stars EUR & MENA Finals.
-                `,
-        image: "4",
-      },
-      {
-        id: "5",
-        title: "Lucky Group Wins $100k In Encore Draw",
-        author: "Peter Lynch",
-
-        content:
-          "A group of enthusiastic lottery players recently won big following their purchase of an Encore ticket from the Ontario Lottery and Gaming ",
-        image: "5",
-      },
-      {
-        id: "6",
-        title: "GET DOUBLE THE PRIZES WITH “WILD BOUNTY SHOWDOWN”!",
-        author: "Peter Lynch",
-
-        content: `Cass has heard that the bandits have hidden some gold bars in an old cellar and that they will be splitting the loot tonight. Cass wants to snatch all the gold bars from them, but she is weak in finding a good ambush spot. Can you help her?
-                PG SOFT™ has launched another new exciting game — "Wild Bounty Showdown"! Once entering the game, players will be immediately immersed in a brutal world where they have to compete against bandits for rewards. Show no mercy to the cunning bandits and keep spinning the reels to gain tremendous rewards! 
-                `,
-        image: "6",
-      },
-    ];
+    var newsList = hardcodeNews;
 
     for (var i = 0; i < newsList.length; i++) {
       if (newsList[i].id === this.props.match.params.id) {
@@ -269,6 +201,11 @@ class NewsDetails extends Component {
           <NewsTitle>{this.state.newsDetail.title}</NewsTitle>
           <NewsAuthor>{this.state.newsDetail.author}</NewsAuthor>
           <NewsContent>{this.state.newsDetail.content}</NewsContent>
+          <NewsContent2
+            dangerouslySetInnerHTML={{
+              __html: "<div>" + this.state.newsDetail.content2 + "</div>",
+            }}
+          ></NewsContent2>
         </NewsContainer>
       </Container>
     );

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import i18n from "../../../../utils/i18n";
-
+import { hardcodeNews } from "../../../Wap/Main/Home/scene-1/template13/news/hardcoded";
 const Container = styled.div`
   width: 1280px;
   height: 637px;
@@ -72,7 +72,7 @@ const NewsContent = styled.div`
   color: white;
   font-size: 14px;
   padding: 0px 20px 10px 20px;
-  height: 100px;
+  height: 90px;
   overflow: hidden;
 `;
 
@@ -92,29 +92,7 @@ const ButtonMore = styled.div`
 `;
 
 const NewsSection = ({ news, handleNavigateClick }) => {
-  const hardcodeNews = [
-    {
-      id: "1",
-      title: "Caesars Racebook launches on Android and desktop",
-      content:
-        "The launch is in cooperation with Nyra Bets, the official online wagering platform of the New York Racing Association.",
-      image: "1",
-    },
-    {
-      id: "2",
-      title: "Liverpool vs Manchester United final score",
-      content:
-        "Luis Diaz, Sadio Mane, and Mohamed Salah all had at least a goal and an assist in a 4-0 demolition of Manchester United at Anfield that sent Liverpool top of the Premier League.",
-      image: "2",
-    },
-    {
-      id: "3",
-      title: "Lucky Group Wins $100k In Encore Draw",
-      content:
-        "A group of enthusiastic lottery players recently won big following their purchase of an Encore ticket from the Ontario Lottery and Gaming ",
-      image: "5",
-    },
-  ];
+  const newsList = hardcodeNews;
   return (
     <Container>
       <TitleGapper>
@@ -122,7 +100,7 @@ const NewsSection = ({ news, handleNavigateClick }) => {
         <TitleHolder>{i18n.t("TOP NEWS")}</TitleHolder>
       </TitleGapper>
       <NewsContainer>
-        {hardcodeNews.slice(0,3).map((item, index) => {
+        {newsList.slice(0,3).map((item, index) => {
           return (
             <NewsItem
               onClick={() => {

@@ -95,7 +95,9 @@ const Chip = styled.div`
 function Footer(props) {
   const navigateTo = (to) => {
     props.history.push("/" + i18n.language + "/" + to);
+    window.scroll({ top: 0, behavior: "smooth" });
   };
+
   const AboutUs = ({ img }) => (
     <Section>
       <SectionTitle>About Us</SectionTitle>
@@ -115,19 +117,30 @@ function Footer(props) {
     <Section>
       <SectionTitle>Quick Links</SectionTitle>
       <LinkContainer>
-        <Link onClick={() => navigateTo("cs")}>24/7 Customer Service</Link>
+        <Link onClick={() => props.onhandleShowCSClick()}>
+          24/7 Customer Service
+        </Link>
         <Link onClick={() => navigateTo("faq")}>FAQs</Link>
         <Link onClick={() => navigateTo("privacy")}>Privacy Policy</Link>
         <Link onClick={() => navigateTo("terms")}>Terms and Conditions</Link>
-        <Link onClick={() => alert(i18n.t("common.comingSoon"))}>
+        <Link onClick={() => navigateTo("responsiblegaming")}>
           Responsible Gaming
         </Link>
       </LinkContainer>
       <SectionTitle>Follow Us</SectionTitle>
       <SocialMediaContainer>
-        <SocialMedia src="facebook" onClick={() => navigateTo("cs")}></SocialMedia>
-        <SocialMedia src="instagram" onClick={() => navigateTo("cs")}></SocialMedia>
-        <SocialMedia src="twitter" onClick={() => navigateTo("cs")}></SocialMedia>
+        <SocialMedia
+          src="facebook"
+          onClick={() => navigateTo(" ")}
+        ></SocialMedia>
+        <SocialMedia
+          src="instagram"
+          onClick={() => navigateTo(" ")}
+        ></SocialMedia>
+        <SocialMedia
+          src="twitter"
+          onClick={() => navigateTo(" ")}
+        ></SocialMedia>
       </SocialMediaContainer>
     </Section>
   );

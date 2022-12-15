@@ -54,6 +54,8 @@ import config from "../../config/config";
 import CustomLibrary from "./Sports/CustomLibrary.js";
 import ForcedVerification from "./ForcedVerification";
 
+import { Faq, TermsAndConditions, PrivacyPolicy, ResponsibleGaming} from "../App/QuickLinks/index";
+
 const baseRouteUrl = Common.baseRouteUrl;
 const Main = styled.div`
   min-height: 600px;
@@ -585,6 +587,26 @@ class App extends Component {
                       path={baseRouteUrl + "/news/:id"}
                       render={(props) => <NewsDetails />}
                     />
+                    <Route
+                      exact
+                      path={baseRouteUrl + "/faq"}
+                      render={(props) => <Faq />}
+                    />
+                    <Route
+                      exact
+                      path={baseRouteUrl + "/terms"}
+                      render={(props) => <TermsAndConditions />}
+                    />
+                    <Route
+                      exact
+                      path={baseRouteUrl + "/privacy"}
+                      render={(props) => <PrivacyPolicy />}
+                    />
+                    <Route
+                      exact
+                      path={baseRouteUrl + "/responsiblegaming"}
+                      render={(props) => <ResponsibleGaming />}
+                    />
                     <Redirect to={"/" + i18n.language} />
                   </Switch>
                 </Main>
@@ -675,7 +697,10 @@ class App extends Component {
                     </RouletteFloatingPanel>
                   )}
 
-                <Footer target={"_blank"}></Footer>
+                <Footer
+                  target={"_blank"}
+                  onhandleShowCSClick={this.handleShowCSClick}
+                ></Footer>
               </>
             );
           }

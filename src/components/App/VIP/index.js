@@ -144,6 +144,7 @@ const VIP = (props) => {
     const onScroll = () => {
       if (
         vipContainerRef &&
+        vipContainerRef.current &&
         vipContainerRef.current.getBoundingClientRect().y < -1500
       ) {
         setIsHeaderOutside(true);
