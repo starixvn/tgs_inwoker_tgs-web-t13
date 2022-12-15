@@ -13,6 +13,7 @@ const config = {
     : window?.env?.brand || "GPI",
   theme: window?.env?.theme || "wapT13",
   wapVersion: template,
+  accountTemplate: 13,
   sourceUrl: window?.env?.sourceUrl || "https://images.srvptt.com/",
   defaultLanguage: window?.env?.defaultLanguage
     ? window?.env?.defaultLanguage === ""

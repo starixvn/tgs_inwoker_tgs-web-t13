@@ -199,7 +199,7 @@ class NewsDetails extends Component {
         </BannerContainer>
         <NewsContainer>
           <NewsTitle>{this.state.newsDetail.title}</NewsTitle>
-          <NewsAuthor>{this.state.newsDetail.author}</NewsAuthor>
+          <NewsAuthor>By {this.state.newsDetail.writer}</NewsAuthor>
           <NewsContent>{this.state.newsDetail.content}</NewsContent>
           <NewsContent2
             dangerouslySetInnerHTML={{
