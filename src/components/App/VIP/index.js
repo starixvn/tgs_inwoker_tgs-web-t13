@@ -85,11 +85,14 @@ const VIPHeaderRowContainer = styled.div`
   padding: 10px 5px;
   align-items: center;
   height: 60px;
+  width: 1230px;
+  transition: all 0.5s ease;
   ${(props) =>
     props.isHeaderOutside
       ? ` `
       : `position: fixed;
-  width: 1230px;`}
+      background: #1b1d3080;
+      `}
 `;
 
 const VIPRowContainer = styled(VIPHeaderRowContainer)`
@@ -97,6 +100,12 @@ const VIPRowContainer = styled(VIPHeaderRowContainer)`
   background: none;
   border-radius: 0px;
   height: 200px;
+
+  &:last-child {
+    ${CustomVIPContent} {
+      border-bottom: none;
+    }
+  }
 `;
 
 const VIPRebateRow = styled.div`
@@ -145,7 +154,8 @@ const VIP = (props) => {
       if (
         vipContainerRef &&
         vipContainerRef.current &&
-        vipContainerRef.current.getBoundingClientRect().y < -1500
+        (vipContainerRef.current.getBoundingClientRect().y < -1500 ||
+          vipContainerRef.current.getBoundingClientRect().y > 217)
       ) {
         setIsHeaderOutside(true);
       } else {
