@@ -23,15 +23,15 @@ const Container = styled.div`
 
 const MaintenanceTextContainer = styled.div`
   position: absolute;
-  left: 50%;
-  top: 20%;
+  left: 5%;
+  top: 10%;
 `;
 
 const Text = styled.div`
   color: white;
-  font-size: 30px;
-  text-align: center;
-  padding: 20px 40px;
+  font-size: 20px;
+  text-align: justify;
+  padding: 2px 4px;
   white-space: pre-wrap;
 `;
 
@@ -44,15 +44,14 @@ const Hyperlink = styled.span`
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: center;
 `;
 const Button = styled.div`
   color: white;
-  font-size: 30px;
-  background: #ff8e39;
+  font-size: 20px;
+  background: #cf2029;
   color: #fff;
   padding: 10px;
-  border-radius: 4px;
+  border-radius: 25px;
   min-width: 200px;
   display: flex;
   align-items: center;
@@ -62,9 +61,9 @@ const Button = styled.div`
 `;
 
 const AnotherButton = styled(Button)`
-  color: #ff8e39;
+  color: #cf2029;
   background: none;
-  border: solid 1px #ff8e39;
+  border: solid 1px #cf2029;
 `;
 
 const CustomModal = styled(Dialog)`
@@ -339,6 +338,13 @@ const Maintenance = (props) => {
               );
             }
           })()}
+                     <Button
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                >
+                  {i18n.t("panel.im")}
+                </Button>
         </ButtonContainer>
 
         <CustomModal open={open}>

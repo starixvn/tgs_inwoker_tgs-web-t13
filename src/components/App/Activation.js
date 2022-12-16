@@ -5,7 +5,6 @@ import { accountAction } from "../../api-services/actions/accountAction";
 import { AccountService } from "../../api-services/services/AccountService";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/core/styles";
-import LoginBGPNG from "../../assets/images/login-bg.png";
 
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -25,7 +24,7 @@ import i18n from "../../utils/i18n";
 import config from "../../config/config";
 const Container = styled.div`
   width: 506px;
-  background: url(${LoginBGPNG});
+  background: #27273f;
   background-attachment: fixed;
   background-position: center;
   display: table;
@@ -35,17 +34,19 @@ const CloseIconContainer = styled.div`
   width: 28px;
   height: 28px;
   float: right;
-  margin: 10px 10px 0 0;
+  margin: 30px 30px 0 0;
   &:hover {
     cursor: pointer;
   }
 `;
 const TitleContainer = styled.div`
   text-align: center;
-
-  font-size: 42px;
-
-  color: ${({ theme }) => theme.secondary};
+  text-transform: uppercase;
+  font-size: 34px;
+  font-style: italic;
+  font-weight: 600;
+  color: #fff;
+  margin: 30px 0 35px 0;
 `;
 
 const FormContainer = styled.div`
@@ -56,95 +57,104 @@ const CustomText = withStyles({
   root: {
     width: "350px",
     height: "51px",
-    borderRadius: "6px",
     border: "none",
-    boxShadow: "0px 3px 8px -2px rgba(0,0,0,0.75)",
     margin: 0,
     marginTop: "13px",
-    background: "white",
-
+    WebkitTextFillColor: "#b6b6b6",
     "& .MuiOutlinedInput-input": {
-      fontSize: "14px",
+      fontSize: "16px",
+    },
+    "& .MuiInputBase-input::-webkit-input-placeholder": {
+      fontSize: "16px",
     },
     "& label.Mui-focused": {
       color: "#b6b6b6",
     },
     "& .MuiInput-underline:after": {
-      borderBottomColor: "none",
+      borderBottomColor: "#b6b6b6",
     },
     "& .MuiOutlinedInput-root": {
+      borderRadius: "15px",
       "& fieldset": {
-        border: "none",
+        borderColor: "#b6b6b6",
       },
       "&:hover fieldset": {
-        border: "none",
+        borderColor: "#b6b6b6",
       },
       "&.Mui-focused fieldset": {
-        border: "none",
+        borderColor: "#b6b6b6",
+        borderWidth: "1px",
       },
+    },
+    "& .PrivateNotchedOutline-root-19": {
+      top: "-4px",
+    },
+    "& .MuiInputBase-root": {
+      color: "#b6b6b6 !important",
     },
   },
 })(TextField);
 const CustomText2 = withStyles({
   root: {
     marginLeft: "8px",
-    width: "240px",
+    width: "255px",
     height: "51px",
     borderRadius: "6px",
     border: "none",
-    boxShadow: "0px 3px 8px -2px rgba(0,0,0,0.75)",
     margin: 0,
     marginTop: "13px",
-    background: "white",
-
+    WebkitTextFillColor: "#b6b6b6",
     "& .MuiOutlinedInput-input": {
-      fontSize: "14px",
+      fontSize: "16px",
+    },
+    "& .MuiInputBase-input::-webkit-input-placeholder": {
+      fontSize: "16px",
     },
     "& label.Mui-focused": {
       color: "#b6b6b6",
     },
     "& .MuiInput-underline:after": {
-      borderBottomColor: "none",
+      borderBottomColor: "#b6b6b6",
     },
     "& .MuiOutlinedInput-root": {
+      borderRadius: "15px",
       "& fieldset": {
-        border: "none",
+        borderColor: "#b6b6b6",
       },
       "&:hover fieldset": {
-        border: "none",
+        borderColor: "#b6b6b6",
       },
       "&.Mui-focused fieldset": {
-        border: "none",
+        borderColor: "#b6b6b6",
+        borderWidth: "1px",
       },
+    },
+    "& .PrivateNotchedOutline-root-19": {
+      top: "-4px",
+    },
+    "& .MuiInputBase-root": {
+      color: "#b6b6b6 !important",
     },
   },
 })(CustomText);
 const ButtonLogin = styled.div`
-  margin-top: 24px;
-  margin-bottom: 35px;
+  margin: 30px auto 40px auto;
+  width: 250px;
+  height: 60px;
   color: #fff;
   font-size: 20px;
-  width: 350px;
-  height: 51px;
-  border-radius: 6px;
-
-  border: solid 1px #ffffff;
-  background-image: linear-gradient(
-    to top,
-    ${({ theme }) => theme.primaryGradient},
-    ${({ theme }) => theme.primary}
-  );
-
+  border-radius: 30px;
+  background: #cf2029;
+  filter: drop-shadow(1px 1px 8px #cf2029ba);
   &:hover {
     cursor: pointer;
-
-    box-shadow: inset 1px 1px 9px 0 rgba(255, 255, 255, 0.75);
   }
 `;
 const ButtonLoginLabel = styled.span`
   text-align: center;
   display: block;
-  margin-top: 10px;
+  margin-top: 17px;
+  text-transform: uppercase;
 `;
 
 const useStyles = makeStyles((theme) => ({
@@ -224,17 +234,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 const CustomFormControl = withStyles((theme) => ({
   root: {
-    width: "100px",
+    width: "80px",
     height: "51px",
     border: "none",
-    boxShadow: "0px 3px 8px -2px rgba(0,0,0,0.75)",
     marginTop: "13px",
     marginBottom: "13px",
     float: "left",
-    backgroundColor: "#fff",
+    backgroundColor: "none",
     padding: 0,
     "&:before": {
-      borderRight: "1px solid #b6b6b6",
       content: '"\\00a0"',
       position: "absolute",
       top: "1px",
@@ -243,6 +251,9 @@ const CustomFormControl = withStyles((theme) => ({
       display: "block",
       height: "100%",
     },
+    "& .MuiSelect-icon": {
+      color: "#fff",
+    },
     "& label.Mui-focused": {
       color: "#b6b6b6",
     },
@@ -250,6 +261,7 @@ const CustomFormControl = withStyles((theme) => ({
       borderBottomColor: "#b6b6b6",
     },
     "& .MuiOutlinedInput-root": {
+      borderRadius: "15px",
       "& fieldset": {
         borderColor: "#b6b6b6",
         marginTop: "1px",
@@ -260,6 +272,7 @@ const CustomFormControl = withStyles((theme) => ({
       },
       "&.Mui-focused fieldset": {
         borderColor: "#b6b6b6",
+        borderWidth: "1px",
         marginTop: "1px",
       },
     },
@@ -268,48 +281,31 @@ const CustomFormControl = withStyles((theme) => ({
 const StyleButton = styled.div`
   width: 140px;
   height: 51px;
-  border: solid 1px #b6b6b6;
   margin: 0;
-
-  margin-left: 5px;
   float: right;
-
   ${(props) =>
     props.disable === true
-      ? `  background-image: linear-gradient(90deg, rgba(89,89,89,1) 0%, rgba(126,126,126,1) 100%);`
-      : `  background-image: linear-gradient(to top, ` +
-        props.theme.primaryGradient +
-        `, ` +
-        props.theme.primary +
-        `);
-`}
-
-  border-radius: 5px;
+      ? `  background: #b6b6b6;`
+      : `  background: #cf2029;
+  `}
+  border-radius: 30px;
   font-size: 16px;
   color: #fff;
-
+  text-align: center;
+  padding-top: 16px;
   &:hover {
     cursor: pointer;
-
-    ${(props) =>
-      props.disable === true
-        ? `  background-image: linear-gradient(90deg, rgba(89,89,89,1) 0%, rgba(126,126,126,1) 100%);`
-        : `      background-blend-mode: screen, normal;
-        box-shadow: inset 1px 1px 9px 0  rgba(255, 255, 255, 0.75);
-        }
-  `}
   }
 `;
 const ButtonLabel = styled.span`
   text-align: center;
-  display: block;
-  margin-top: 12px;
+  margin-top: 17px;
+  text-transform: uppercase;
 `;
 const CustomSelect = withStyles((theme) => ({
   root: {
     fontSize: "14px",
-
-    color: "#818181",
+    color: "#fff",
   },
 }))(Select);
 function Activation(props) {

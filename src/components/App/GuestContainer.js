@@ -60,7 +60,7 @@ const StyledDialog = withStyles({
 
     "& .MuiPaper-root": {
       backgroundColor: "transparent",
-      borderRadius: "15px",
+      borderRadius: "50px",
     },
   },
 })(Dialog);
@@ -81,6 +81,7 @@ class GuestContainer extends Component {
     username: "",
     pass: "",
     areaCode: config.features.PhonePrefix,
+    rememberMe: false,
   };
   componentDidMount() {
     let urlParams = new URLSearchParams(this.props.location.search);
@@ -123,6 +124,10 @@ class GuestContainer extends Component {
     this.setState({ ...this.state, openDialog: false });
     this.props.showLogin(false);
     this.props.onDialogChange("");
+  };
+
+  onhandleLogin = () => {
+    this.props.showLogin(true);
   };
 
   onhandleRegister = () => {
@@ -278,7 +283,7 @@ class GuestContainer extends Component {
     this.props.showLogin(false);
   };
 
-  handleLoginClick = async (username, password) => {
+  handleLoginClick = async (username, password, rememberMe) => {
     if (username === "") {
       this.props.enqueueSnackbar(i18n.t("web.login.errorMsg.emptyUsername"), {
         variant: "warning",
@@ -290,6 +295,10 @@ class GuestContainer extends Component {
         variant: "warning",
       });
       return;
+    }
+    if(rememberMe)
+    {
+      this.setState({...this.state, rememberMe: rememberMe, username: username});
     }
     const result = await this.props.accountLogin(username, password);
 
@@ -552,6 +561,15 @@ class GuestContainer extends Component {
         this.props.getPromotion();
         this.props.getPromotionRouletteCount();
       }
+
+      if (this.state.rememberMe === true) {
+        console.log(this.state.username);
+        localStorage.setItem("remember", true);
+        localStorage.setItem("username", this.state.username);
+      } else {
+        localStorage.removeItem("remember");
+        localStorage.removeItem("username");
+      }
       // this.props.getIDCardNo();
       // this.props.getInviteLink();
       // this.props.getDepositChannel();
@@ -647,6 +665,7 @@ class GuestContainer extends Component {
               if (this.state.openDialogName === "register") {
                 return (
                   <Register
+                    onhandleLogin={this.onhandleLogin}
                     onhandleClose={this.onhandleCloseDialog}
                     onRegisterSuccess={this.handleRegisterSuccess}
                     doLogin={this.handleLoginClick}
