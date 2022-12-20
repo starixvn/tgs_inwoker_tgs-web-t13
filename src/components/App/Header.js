@@ -344,6 +344,7 @@ class Header extends Component {
   onhandleLogoClick = () => {
     this.setState({ selected: "/" });
     this.props.history.push("/" + i18n.language + "/");
+    window.scrollTo({ top: 0, behavior: "auto"});
   };
   onhandleTransfer = () => {
     if (
@@ -353,6 +354,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/transfer");
+    window.scrollTo({ top: 0, behavior: "auto"});
   };
   onhandleDeposit = () => {
     if (
@@ -362,6 +364,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/deposit");
+    window.scrollTo({ top: 0, behavior: "auto"});
   };
   handleInboxClick = () => {
     if (
@@ -371,6 +374,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/inbox");
+    window.scrollTo({ top: 0, behavior: "auto"});
   };
   handleProfileClick = () => {
     if (
@@ -380,6 +384,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/profile");
+    window.scrollTo({ top: 0, behavior: "auto"});
   };
   handleWithdrawClick = () => {
     if (
@@ -389,6 +394,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/withdrawal");
+    window.scrollTo({ top: 0, behavior: "auto"});
   };
   handleRefreshBalanceClick = () => {
     if (
@@ -407,10 +413,12 @@ class Header extends Component {
   handleDownloadAppsClick = () => {
     this.setState({ selected: "/download" });
     this.props.history.push("/" + i18n.language + "/download");
+    window.scrollTo({ top: 0, behavior: "auto"});
     //alert("敬请期待");
   };
   handleContactUsClick = () => {
     this.props.history.push("/" + i18n.language + "/aboutus/contactus");
+    window.scrollTo({ top: 0, behavior: "auto"});
   };
   HighlightLink = (link) => {};
   handleMenuMouseOver = (to) => {
@@ -428,6 +436,7 @@ class Header extends Component {
     }
     this.setState({ ...this.state, selected: path });
     this.props.history.push("/" + i18n.language + `/${path}`);
+    window.scrollTo({ top: 0, behavior: "auto"});
   };
 
   RightMenuItem = (
