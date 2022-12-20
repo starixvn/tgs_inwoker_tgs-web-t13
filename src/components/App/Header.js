@@ -23,17 +23,12 @@ import { Link } from "react-router-dom";
 import GuestContainer from "./GuestContainer";
 import MemberContainer from "./MemberContainer";
 
-import TopMenuPromoPNG_PB from "../../assets/images/top-menu-promo-pb.png";
-import TopMenuPromoPNG from "../../assets/images/top-menu-promo.png";
-import TopMenuPromoHoverPNG from "../../assets/images/top-menu-promo-hover.png";
 import IconPhonePNG from "../../assets/images/icon-mobile.png";
-import HotGameActivePNG from "../../assets/images/slot-hotgame-active.png";
 
 import { withSnackbar } from "notistack";
 import Common from "../../utils/Common";
 
 import i18n from "../../utils/i18n";
-import Slider from "react-slick";
 import LanguageChanger from "../Share/language-changer";
 import { uiAction } from "../../api-services/actions/uiAction";
 import { generalAction } from "../../api-services/actions/generalAction";
@@ -162,7 +157,7 @@ const RightMenuUL = styled.ul`
 `;
 
 const RightMenuTextSpan = styled.span`
-  font-size: ${(props) => (i18n.language === "vi-VN" ? "23px" : "24px")};
+  font-size: ${(props) => (i18n.language === "vi-VN" ? "18px" : "20px")};
   margin: 0 auto;
   display: block;
 
@@ -172,81 +167,6 @@ const RightMenuTextSpan = styled.span`
   border-bottom: solid 3px transparent;
 `;
 
-const MouseOverContainer = styled.div`
-  width: 100%;
-  height: 0px;
-
-  position: fixed;
-  left: 0;
-  top: 156px;
-  z-index: 1;
-  cursor: default;
-  transition: height 0.5s;
-`;
-const MouseOverBackground = styled.div`
-  width: 100%;
-
-  background-color: rgba(0, 0, 0, 0.75);
-  height: 155px;
-  position: absolute;
-  bottom: 30px;
-`;
-
-const RightMenuImg = styled.div`
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-
-  mask: url(${({ img }) => {
-    return img;
-  }});
-  background: rgba(255, 255, 255, 0.8);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-`;
-
-const GameImg = styled.img`
-  height: 130px;
-
-  position: absolute;
-
-  padding-bottom: 10px;
-  transition: transform 0.6s;
-  bottom: 0;
-  right: 0;
-  transform-origin: bottom center;
-  transform: translateY(-160px) scale(1);
-  animation-duration: 200ms;
-  animation-delay: ${(props) => `${100 + props.index * 100}`}ms;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-in-out;
-`;
-const GameName = styled.div`
-  color: #fff;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: ${(props) => (i18n.language === "en-US" ? "20px" : "22px")};
-  width: 100px;
-  position: absolute;
-  text-align: ${(props) => (i18n.language === "en-US" ? "left" : "right")};
-  transition: transform 0.6s;
-  top: 30px;
-  left: ${(props) => (i18n.language === "en-US" ? "50px" : "20px")};
-  transform-origin: bottom center;
-  transform: translateY(-160px) scale(1);
-  animation-duration: 200ms;
-  animation-delay: ${(props) => `${100 + props.index * 100}`}ms;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-in-out;
-`;
-const breatheAnimation = keyframes`
-
- to { transform:translateY(0px); }
-
-`;
 const RightMenuLI = styled.li`
   display: inline-block;
   width: max-content;
@@ -288,76 +208,6 @@ const CustomAppBar = styled(StyledAppBar)`
   }};
   background: ${({ theme }) => theme.pcAppBar};
   box-shadow: none;
-`;
-
-const GameFrameWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const Maintenance = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-  cursor: not-allowed;
-  pointer-event: none;
-  color: white;
-
-  text-transform: capitalize;
-
-  font-weight: bold;
-  font-size: 18px;
-  user-select: none;
-  cursor: not-allowed;
-`;
-
-const GameFrame = styled.div`
-  max-width: 255px;
-  float: left;
-  min-height: 155px;
-  position: relative;
-  transition: transform 0.6s;
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-  }
-
-  ${({ maintenance }) => {
-    return maintenance
-      ? `
-      ${GameImg}{
-        filter: brightness(40%) grayscale(200%);
-      }
-
-      ${Maintenance}{
-
-        display: flex;
-      }
-
-      ${GameName}{
-        filter: brightness(40%) grayscale(200%);
-      }
-    
-    
-    
-    `
-      : ``;
-  }}
-`;
-const HotGameIcon = styled.div`
-  background: url(${HotGameActivePNG}) no-repeat;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin: 3px 5px 0 0;
-  height: 19px;
-  width: 19px;
-  position: absolute;
-  top: 30px;
-  right: 0;
 `;
 
 const styles = {

@@ -128,7 +128,7 @@ const SlotGenerator = React.memo(({ title, type, category, commonprops, list }) 
             navigateTo();
           }}
         >
-          more
+          {i18n.t("web.slotGame.more")}
         </TitleMore>
       </TitleGapper>
       <GameList>

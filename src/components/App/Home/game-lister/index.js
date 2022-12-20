@@ -68,7 +68,7 @@ const GameMenuTitle = styled.div`
 `;
 
 const GameLister = ({ game }) => {
-  var currentPage = window.location.pathname.split("/").pop();
+  var currentPage = window.location.pathname.split("/")[2];
   return (
     <GameMenuContainer>
       {SortedMenuList.map((item, index) => {

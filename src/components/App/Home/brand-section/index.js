@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import i18n from "../../../../utils/i18n";
-
+import config from "../../../../config/config";
 const Container = styled.div`
   width: 1280px;
   height: 500px;
@@ -58,9 +58,12 @@ const BrandDescription = styled.div`
 const BrandSection = ({ logo, handleNavigateClick }) => {
   const hardcodeBrand = {
     brand: "PGG",
-    title: "Pega Gaming: A Winning Casino!",
-    description: `Pega Gaming is the leading destination for all online casino players who are looking for a touch of class and elegance in their gaming environment. Our casino provides you with over 400 online casino games – some traditional with modern twists, and some completely new, innovative, and exotic.\nWith irresistible weekly bonus promotions and attractive loyalty and VIP programs, we're sure you'll be sticking around for a while to come.\nAll of our software is developed and maintained by the industry's foremost online gaming software company, Pegasus. Because of this, we are able to offer you the newest cutting-edge games, of the highest quality and ultimate security in a sophisticated, yet engaging atmosphere.
-      `,
+    title: i18n
+      .t("T13.brandTag")
+      .replace("{brandName}", config.brandName),
+    description: i18n
+      .t("T13.brandDescription")
+      .replace("{brandName}", config.brandName),
   };
 
   return (

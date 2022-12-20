@@ -742,7 +742,7 @@ class Slots extends Component {
                   .map((row, index) => {
                     return (
                       <option key={index} value={row.abbreviation}>
-                        {i18n.t(row.abbreviation + ".slots")}
+                        {row.name}
                       </option>
                     );
                   })}

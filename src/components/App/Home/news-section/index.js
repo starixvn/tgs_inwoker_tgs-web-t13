@@ -97,7 +97,7 @@ const NewsSection = ({ news, handleNavigateClick }) => {
     <Container>
       <TitleGapper>
         <TitleIcon></TitleIcon>
-        <TitleHolder>{i18n.t("TOP NEWS")}</TitleHolder>
+        <TitleHolder>{i18n.t("T13.topNews")}</TitleHolder>
       </TitleGapper>
       <NewsContainer>
         {newsList.slice(0,3).map((item, index) => {
@@ -119,7 +119,7 @@ const NewsSection = ({ news, handleNavigateClick }) => {
           handleNavigateClick("/" + i18n.language + "/news/");
         }}
       >
-        {i18n.t("More News")}
+        {i18n.t("common.more")}
       </ButtonMore>
     </Container>
   );

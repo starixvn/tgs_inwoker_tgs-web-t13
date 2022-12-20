@@ -181,6 +181,7 @@ class Home extends Component {
 
   handleNavigateClick = (url) => {
     this.props.history.push(url);
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
 
   render() {
@@ -189,7 +190,7 @@ class Home extends Component {
         <SliderContainer>
           <Slider list={this.props.ui.board_list}></Slider>
         </SliderContainer>
-        <GameLister game={this.props.game} handleNavigateClick={this.handleNavigateClick} ></GameLister>
+        <GameLister game={this.props.game} ></GameLister>
         {!config.features.HideMarquee && (
             <MarqueeContainer>
               <Marquee text={this.props.ui.marqueeText}></Marquee>

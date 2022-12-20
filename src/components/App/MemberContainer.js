@@ -134,7 +134,7 @@ const AccountDetail = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 10px;
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 const PopoverButton = styled.div`
@@ -151,7 +151,7 @@ const PopoverButton = styled.div`
 const HeaderButton = styled.div`
   width: 141px;
   height: 54px;
-  font-size: 22px;
+  font-size: 20px;
   padding: 12.5px 0px;
   text-align: center;
   color: ${({ theme }) => theme.pcHeaderText};

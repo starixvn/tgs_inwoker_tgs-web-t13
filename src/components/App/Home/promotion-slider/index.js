@@ -99,7 +99,6 @@ const PromotionSlider = ({ promotionList, handleNavigateClick }) => {
                     handleNavigateClick(
                       "/" + i18n.language + "/promotion/" + data.id
                     );
-                    window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                 ></PromotionItem>
               </div>
