@@ -290,9 +290,9 @@ class Login extends Component {
             <ButtonLoginLabel>{i18n.t("web.login.login")}</ButtonLoginLabel>
           </ButtonLogin>
           <BottomContainer>
-            <Description>{i18n.t("Don't have an account ?")}</Description>
+            <Description>{i18n.t("T13.proceedRegister")}</Description>
             <LinkRegister onClick={this.props.onhandleRegister}>
-              {i18n.t("Sign Up")}
+              {i18n.t("wap.main.home.steps.step1")}
             </LinkRegister>
           </BottomContainer>
           {/* {(() => {

@@ -860,9 +860,9 @@ function Register(props) {
           </ButtonLoginLabel>
         </ButtonLogin>
         <BottomContainer>
-          <Text>{i18n.t("Already have an account ?")}</Text>
+          <Text>{i18n.t("T13.proceedLogin")}</Text>
           <LinkStyle onClick={props.onhandleLogin}>
-            {i18n.t("web.login.login")}
+            {i18n.t("common.login")}
           </LinkStyle>
         </BottomContainer>
       </FormContainer>

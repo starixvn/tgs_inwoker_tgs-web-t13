@@ -100,7 +100,7 @@ function Footer(props) {
 
   const AboutUs = ({ img }) => (
     <Section>
-      <SectionTitle>About Us</SectionTitle>
+      <SectionTitle>{i18n.t("T13.aboutUs")}</SectionTitle>
       <AboutUsContainer>
         <AboutUsLogo img={img}></AboutUsLogo>
         {i18n.t("web.footer.copyright")}
@@ -115,19 +115,25 @@ function Footer(props) {
   );
   const QuickLinks = ({ navigateTo }) => (
     <Section>
-      <SectionTitle>Quick Links</SectionTitle>
+      <SectionTitle>{i18n.t("T13.quickLink.title")}</SectionTitle>
       <LinkContainer>
         <Link onClick={() => props.onhandleShowCSClick()}>
-          24/7 Customer Service
+          {i18n.t("T13.quickLink.247")}
         </Link>
-        <Link onClick={() => navigateTo("faq")}>FAQs</Link>
-        <Link onClick={() => navigateTo("privacy")}>Privacy Policy</Link>
-        <Link onClick={() => navigateTo("terms")}>Terms and Conditions</Link>
+        <Link onClick={() => navigateTo("faq")}>
+          {i18n.t("T13.quickLink.faq")}
+        </Link>
+        <Link onClick={() => navigateTo("privacy")}>
+          {i18n.t("T13.quickLink.privacy")}
+        </Link>
+        <Link onClick={() => navigateTo("terms")}>
+          {i18n.t("T13.quickLink.tnc")}
+        </Link>
         <Link onClick={() => navigateTo("responsiblegaming")}>
-          Responsible Gaming
+          {i18n.t("T13.quickLink.reponsible")}
         </Link>
       </LinkContainer>
-      <SectionTitle>Follow Us</SectionTitle>
+      <SectionTitle>{i18n.t("T13.quickLink.follow")}</SectionTitle>
       <SocialMediaContainer>
         <SocialMedia
           src="facebook"
@@ -146,7 +152,7 @@ function Footer(props) {
   );
   const Partners = ({ providers }) => (
     <Section>
-      <SectionTitle>Partners</SectionTitle>
+      <SectionTitle>{i18n.t("T13.partners")}</SectionTitle>
       <ChipContainer>
         {providers
           .filter(
