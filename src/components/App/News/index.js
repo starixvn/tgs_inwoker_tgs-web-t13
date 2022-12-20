@@ -112,7 +112,7 @@ class News extends Component {
   render() {
     return (
       <Container>
-        <Title>{i18n.t("Top News")}</Title>
+        <Title>{i18n.t("T13.topNews")}</Title>
         <NewsContainer>
           {this.state.newsList.slice(0, 6).map((item, index) => {
             return (

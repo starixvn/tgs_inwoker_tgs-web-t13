@@ -166,7 +166,7 @@ class NewsDetails extends Component {
   render() {
     return (
       <Container>
-        <Title>{i18n.t("Top News")}</Title>
+        <Title>{i18n.t("T13.topNews")}</Title>
         <BannerContainer
           img={
             this.state.newsDetail &&
