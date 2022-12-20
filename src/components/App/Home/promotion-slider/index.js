@@ -53,7 +53,7 @@ const TitleHolder = styled.div`
 
 const PromotionItem = styled.div`
   background: url(${(props) => props.img});
-  background-size: contain;
+  background-size: 400px 162px;
   background-repeat: no-repeat;
   height: 162px;
   position: relative;
