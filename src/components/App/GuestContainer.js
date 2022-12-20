@@ -140,6 +140,11 @@ class GuestContainer extends Component {
     this.props.onDialogChange("register");
     this.props.showLogin(false);
   };
+
+  onhandleLogin = () => {
+    this.props.showLogin(true);
+  };
+
   onhandleActivation = (username = "", pass = "") => {
     this.setState({
       ...this.state,
