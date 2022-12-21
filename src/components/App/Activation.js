@@ -457,7 +457,7 @@ function Activation(props) {
 
           .then(async (response) => {
             if (response.IsSuccess) {
-              setSecurityKey(response.data);
+              setSecurityKey(response.data.stepResponse);
               props.enqueueSnackbar(i18n.t("common.msgTokenSent"), {
                 variant: "info",
               });
