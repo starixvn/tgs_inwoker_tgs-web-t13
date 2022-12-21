@@ -115,7 +115,9 @@ const SlotContainer = styled.div`
 
 const JackpotSection = ({ showLogin, token }) => {
   const Numbers = React.memo(({ amount }) => {
-    var display = amount && amount.split("");
+
+    var formatedAmount = Common.formatNumberWithCommas(amount);
+    var display = formatedAmount && formatedAmount.split("");
 
     return display.map((element) => {
       return (
@@ -146,10 +148,8 @@ const JackpotSection = ({ showLogin, token }) => {
     );
     return Common.formatNumberWithCommas(amount);
   };
-
-  const [jackpotAmount, setJackpotAmount] = useState(
-    generateJackpotAmount({ min: 200000, max: 5000000 })
-  );
+  const initialJackpotAmount = 1822085;
+  const [jackpotAmount, setJackpotAmount] = useState(initialJackpotAmount);
   const [homePageGameList, setHomePageGamesList] = useState([]);
   const [homePageGames, setHomePageGames] = useState({
     games: [
@@ -176,6 +176,21 @@ const JackpotSection = ({ showLogin, token }) => {
   useEffect(() => {
     getGameList();
   }, []);
+
+  useEffect(() => {
+    const updateJackpotAmount = () => {
+      if (jackpotAmount < 9999999.99) {
+        setJackpotAmount((currentJackpotAmount) => currentJackpotAmount + 0.01);
+      } else {
+        setJackpotAmount(initialJackpotAmount);
+      }
+    };
+
+    const interval = setInterval(updateJackpotAmount, 5000);
+    return () => {
+      clearInterval(interval);
+    };
+  });
 
   const checking = (variant) => {
     return homePageGameList.filter((a) => {
