@@ -6,7 +6,7 @@ include:
 variables:
   ImageName: pgtgs/lobby-t13
   components_dev: lobby-t13
-  components_staging: lobby-t13
+  components_staging: lobby-t13,lobby-gpi-php
   components_prod: lobby-t13
   GIT_STRATEGY: clone
   GIT_SUBMODULE_STRATEGY: normal
