@@ -63,7 +63,7 @@ const PromotionItem = styled.div`
 
 const PromotionSlider = ({ promotionList, handleNavigateClick }) => {
   const settings = {
-    infinite: true,
+    infinite: false,
     slidesToShow: 3,
     slidesToScroll: 1,
     arrows: true,
