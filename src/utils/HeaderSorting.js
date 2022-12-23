@@ -10,6 +10,7 @@ import TopMenueSportsPNG_PB from "../assets/images/top-menu-gun-pb.png";
 import TopMenuTigerPNG_PB from "../assets/images/top-menu-tiger-pb.png";
 import TopMenuFishPNG_PB from "../assets/images/top-menu-fish-pb.png";
 import TopMenuSlotPNG_PB from "../assets/images/top-menu-slot-pb.png";
+import TopMenuCockfightPNG_PB from "../assets/images/top-menu-cockfight-pb.png";
 
 import TopMenuLivePNG from "../assets/images/top-menu-live.png";
 import TopMenuQipaiPNG from "../assets/images/top-menu-qipai.png";
@@ -19,6 +20,7 @@ import TopMenueSportsPNG from "../assets/images/top-menu-gun.png";
 import TopMenuTigerPNG from "../assets/images/top-menu-tiger.png";
 import TopMenuFishPNG from "../assets/images/top-menu-fish.png";
 import TopMenuSlotPNG from "../assets/images/top-menu-slot.png";
+import TopMenuCockfightPNG from "../assets/images/top-menu-cockfight.png";
 
 import TopMenuLiveHoverPNG from "../assets/images/top-menu-live-hover.png";
 import TopMenuQipaiHoverPNG from "../assets/images/top-menu-qipai-hover.png";
@@ -28,6 +30,7 @@ import TopMenueSportsHoverPNG from "../assets/images/top-menu-gun-hover.png";
 import TopMenuTigerHoverPNG from "../assets/images/top-menu-tiger-hover.png";
 import TopMenuFishHoverPNG from "../assets/images/top-menu-fish-hover.png";
 import TopMenuSlotHoverPNG from "../assets/images/top-menu-slot-hover.png";
+import TopMenuCockfightHoverPNG from "../assets/images/top-menu-cockfight-hover.png";
 
 const MenuItemList = [
   {
@@ -151,6 +154,22 @@ const MenuItemList = [
     sortingSKY: 4,
     sortingWLGHK: 5,
     sortingBUNNY: 8,
+  },
+  {
+    path: `cockfight`,
+    title: "common.cockfight",
+    img: TopMenuCockfightPNG,
+    img_PB: TopMenuCockfightPNG_PB,
+    hoverImg: TopMenuCockfightHoverPNG,
+    gameType: [GameTypeEnum.COCKFIGHT],
+    sorting: 9,
+    sortingGMO: 9,
+    sortingHK28: 9,
+    sortingPB: 9,
+    sortingSKY: 9,
+    sortingWLGHK: 9,
+    sortingBUNNY: 9,
+    include: ["SM01"]
   },
 ];
 

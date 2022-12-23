@@ -27,7 +27,7 @@ import LotteryPlay from "./Lottery/Play";
 import Promotion from "./Promotion/index";
 import PromotionDetails from "./Promotion/Details";
 import Home from "./Home/index";
-
+import Cockfight from "./Cockfight/index";
 // import Maintenance from "./Maintenance";
 import Account from "./Account/index";
 
@@ -606,6 +606,15 @@ class App extends Component {
                       exact
                       path={baseRouteUrl + "/responsiblegaming"}
                       render={(props) => <ResponsibleGaming />}
+                    />
+                    <Route
+                      exact
+                      path={baseRouteUrl + "/cockfight"}
+                      render={(props) => (
+                        <Cockfight
+                          performBalanceRefresh={this.performBalanceRefresh}
+                        />
+                      )}
                     />
                     <Redirect to={"/" + i18n.language} />
                   </Switch>
