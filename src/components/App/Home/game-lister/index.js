@@ -69,11 +69,29 @@ const GameMenuTitle = styled.div`
 
 const GameLister = ({ game }) => {
   var currentPage = window.location.pathname.split("/")[2];
+
+  const filterGameList = (item) => {
+    if (
+      item.include &&
+      item.include !== undefined
+    ) {
+      game.homePageGameList.map((game) => {
+        if (item.include.indexOf(game.game_platform_name) >= 0) {
+          game.type = item.gameType[0];
+        }
+        return item;
+      });
+    }
+
+    return game.homePageGameList.filter((game) => {
+      return item.gameType.indexOf(game.type) >= 0;
+    });
+  };
+
   return (
     <GameMenuContainer>
       {SortedMenuList.map((item, index) => {
-        var list = game.homePageGameList
-          .filter((game) => item.gameType.indexOf(game.type) >= 0)
+        var list = filterGameList(item)
           .sort((a, b) => {
             if (config.features.LiveGame_Sorting_SKY) {
               var sortDGFirst = ["DG"];
