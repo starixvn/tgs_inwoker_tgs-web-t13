@@ -37,6 +37,7 @@ import ErrorSwitcher from "../../utils/ErrorSwitcher";
 import { AppHistory } from "../../history/History";
 import { SortedMenuList } from "../../utils/HeaderSorting";
 import OnlineUserDisplayer from "../Share/online-user-displayer";
+import { GameService } from "../../api-services/services/GameService";
 
 const moment = require("moment");
 
@@ -116,7 +117,6 @@ const RightContainer = styled.div`
   display: flex;
   align-items: center;
 `;
-
 
 const BottomContainer = styled.div`
   display: grid;
@@ -344,7 +344,7 @@ class Header extends Component {
   onhandleLogoClick = () => {
     this.setState({ selected: "/" });
     this.props.history.push("/" + i18n.language + "/");
-    window.scrollTo({ top: 0, behavior: "auto"});
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   onhandleTransfer = () => {
     if (
@@ -354,7 +354,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/transfer");
-    window.scrollTo({ top: 0, behavior: "auto"});
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   onhandleDeposit = () => {
     if (
@@ -364,7 +364,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/deposit");
-    window.scrollTo({ top: 0, behavior: "auto"});
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   handleInboxClick = () => {
     if (
@@ -374,7 +374,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/inbox");
-    window.scrollTo({ top: 0, behavior: "auto"});
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   handleProfileClick = () => {
     if (
@@ -384,7 +384,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/profile");
-    window.scrollTo({ top: 0, behavior: "auto"});
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   handleWithdrawClick = () => {
     if (
@@ -394,7 +394,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/withdrawal");
-    window.scrollTo({ top: 0, behavior: "auto"});
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   handleRefreshBalanceClick = () => {
     if (
@@ -413,12 +413,12 @@ class Header extends Component {
   handleDownloadAppsClick = () => {
     this.setState({ selected: "/download" });
     this.props.history.push("/" + i18n.language + "/download");
-    window.scrollTo({ top: 0, behavior: "auto"});
+    window.scrollTo({ top: 0, behavior: "auto" });
     //alert("敬请期待");
   };
   handleContactUsClick = () => {
     this.props.history.push("/" + i18n.language + "/aboutus/contactus");
-    window.scrollTo({ top: 0, behavior: "auto"});
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   HighlightLink = (link) => {};
   handleMenuMouseOver = (to) => {
@@ -436,21 +436,14 @@ class Header extends Component {
     }
     this.setState({ ...this.state, selected: path });
     this.props.history.push("/" + i18n.language + `/${path}`);
-    window.scrollTo({ top: 0, behavior: "auto"});
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
 
-  RightMenuItem = (
-    to,
-    label,
-    active
-  ) => {
+  RightMenuItem = (to, label, active) => {
     const { classes } = this.props;
 
     return (
-      <RightMenuLI
-        active={active}
-        onClick={() => this.handleClickMenu(to)}
-      >
+      <RightMenuLI active={active} onClick={() => this.handleClickMenu(to)}>
         <RightMenuTextSpan
           className={`${
             this.state.shouldShow === null
@@ -632,7 +625,20 @@ class Header extends Component {
   };
 
   consolidateJoinGame = (game, item) => {
-    if (
+    if (game.type === GameTypeEnum.COCKFIGHT) {
+      if (item.include.indexOf("SM01") >= 0) {
+        this.popup = window.open("", "Cockfight");
+        GameService.GetCockfight()
+          .then((e) => {
+            this.popup.document.write(e.data);
+            this.popup.document.close();
+            this.popup.focus();
+          })
+          .catch((e) => {
+            this.popup.close();
+          });
+      }
+    } else if (
       game.type === GameTypeEnum.LOTTERYLOBBY ||
       game.type === GameTypeEnum.LOBBY
     ) {
@@ -752,11 +758,7 @@ class Header extends Component {
                   currentPage === "promotion"
                 )}
 
-                {this.RightMenuItem(
-                  "vip",
-                  "VIP",
-                  currentPage === "vip"
-                )}
+                {this.RightMenuItem("vip", "VIP", currentPage === "vip")}
                 {this.RightMenuItem(
                   "download",
                   "APP",
@@ -765,37 +767,37 @@ class Header extends Component {
               </RightMenuUL>
             </RightMenuContainer>
             {(() => {
-                if (!this.props.general.isMaintenance) {
-                  if (
-                    this.props.account.token !== this.props.account.info.token
-                  ) {
-                    return (
-                      <GuestContainer
-                        onhandleShowCSClick={this.props.onhandleShowCSClick}
-                        onhandleContactUsClick={this.handleContactUsClick}
-                        onDialogChange={this.handleDialogChange}
-                      ></GuestContainer>
-                    );
-                  } else {
-                    return (
-                      <MemberContainer
-                        onhandleLogout={this.onhandleLogout}
-                        onhandleTransfer={this.onhandleTransfer}
-                        onhandleDeposit={this.onhandleDeposit}
-                        onhandleInboxClick={this.handleInboxClick}
-                        onhandleRefreshBalanceClick={
-                          this.handleRefreshBalanceClick
-                        }
-                        onhandleWithdraw={this.handleWithdrawClick}
-                        onhandleProfile={this.handleProfileClick}
-                        wallet={this.props.wallet}
-                        game={this.props.game}
-                        account={this.props.account}
-                      ></MemberContainer>
-                    );
-                  }
+              if (!this.props.general.isMaintenance) {
+                if (
+                  this.props.account.token !== this.props.account.info.token
+                ) {
+                  return (
+                    <GuestContainer
+                      onhandleShowCSClick={this.props.onhandleShowCSClick}
+                      onhandleContactUsClick={this.handleContactUsClick}
+                      onDialogChange={this.handleDialogChange}
+                    ></GuestContainer>
+                  );
+                } else {
+                  return (
+                    <MemberContainer
+                      onhandleLogout={this.onhandleLogout}
+                      onhandleTransfer={this.onhandleTransfer}
+                      onhandleDeposit={this.onhandleDeposit}
+                      onhandleInboxClick={this.handleInboxClick}
+                      onhandleRefreshBalanceClick={
+                        this.handleRefreshBalanceClick
+                      }
+                      onhandleWithdraw={this.handleWithdrawClick}
+                      onhandleProfile={this.handleProfileClick}
+                      wallet={this.props.wallet}
+                      game={this.props.game}
+                      account={this.props.account}
+                    ></MemberContainer>
+                  );
                 }
-              })()}
+              }
+            })()}
           </BottomContainer>
         </InnerWrap>
       </CustomAppBar>
