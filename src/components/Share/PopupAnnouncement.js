@@ -228,7 +228,7 @@ class PopupAnnouncement extends Component {
           isCustom={this.props.isCustom}
           onClose={this.props.onClose}
         >
-          <CloseIcon />
+          <CloseIcon onClick={this.props.onClose} />
           <div className="clear"></div>
           <TitleSwitcher isCustom={this.props.isCustom}>
             {this.props.header}

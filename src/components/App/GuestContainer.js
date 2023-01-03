@@ -36,7 +36,7 @@ const Container = styled.div`
 const BtnLoginRegister = styled.div`
   width: 141px;
   height: 54px;
-  font-size: 22px;
+  font-size: 20px;
   padding: 12.5px 0px;
   text-align: center;
   color: ${({ theme }) => theme.pcHeaderText};
@@ -60,7 +60,7 @@ const StyledDialog = withStyles({
 
     "& .MuiPaper-root": {
       backgroundColor: "transparent",
-      borderRadius: "15px",
+      borderRadius: "50px",
     },
   },
 })(Dialog);
@@ -84,6 +84,12 @@ class GuestContainer extends Component {
   };
   componentDidMount() {
     let urlParams = new URLSearchParams(this.props.location.search);
+    if (
+      localStorage.getItem("subid") !== "" &&
+      config.features.CustomBunnyAffiliate
+    ) {
+      this.onhandleRegister();
+    }
     if (urlParams.has("do")) {
       const doValue = urlParams.get("do");
       switch (doValue) {
@@ -134,6 +140,11 @@ class GuestContainer extends Component {
     this.props.onDialogChange("register");
     this.props.showLogin(false);
   };
+
+  onhandleLogin = () => {
+    this.props.showLogin(true);
+  };
+
   onhandleActivation = (username = "", pass = "") => {
     this.setState({
       ...this.state,
@@ -293,7 +304,6 @@ class GuestContainer extends Component {
     }
     const result = await this.props.accountLogin(username, password);
 
-    //TODO: Temporary fix modal close when found wrong password.
     if (result.code === 101 && result.IsSuccess === false) {
       this.props.showLogin(true);
     } else if (result.code === 210) {
@@ -309,7 +319,12 @@ class GuestContainer extends Component {
       });
     }
   };
-  handleLoginClickWithHp = async (username, password, phone) => {
+  handleLoginClickWithHp = async (
+    username,
+    password,
+    phone,
+    setPhoneDontCareDuplicate
+  ) => {
     if (username === "") {
       this.props.enqueueSnackbar(i18n.t("web.login.errorMsg.emptyUsername"), {
         variant: "warning",
@@ -325,50 +340,42 @@ class GuestContainer extends Component {
 
     const result = await this.props.accountLogin(username, password);
     if (result.IsSuccess) {
-      //  AccountService.Activation(
-      //    username,
-      //    password,
-      //    this.state.areaCode,
-      //    phone
-      //  ).then(async (response) => {
-      //    if (response.IsSuccess) {
-      //      this.state.securityKey = response.data;
-      //      AccountService.VerifyActivation(
-      //        this.state.securityKey,
-      //        "123456"
-      //      ).then(async (response) => {
-      //        this.handleLoginSuccess(result.data);
-      //      });
-      //    } else {
-      //      this.handleLoginSuccess(result.data);
-      //    }
-      //  });
-
-      this.props
-        .newRegister("InitPhone", {
-          input: "Init",
-          data: {
+      if (setPhoneDontCareDuplicate) {
+        await this.props
+          .newRegister("SetPhoneDontCareDuplicate", {
             areacode: this.state.areaCode,
             phone: phone,
-          },
-        })
-        .then(async (response) => {
-          if (response.IsSuccess) {
-            this.props
-              .newRegister("InitPhone", {
-                input: "Valid",
-                data: {
-                  securitykey: response.data.stepResponse,
-                  validatecode: "123456",
-                },
-              })
-              .then(async (response) => {
-                this.handleLoginSuccess(result.data);
-              });
-          } else {
+          })
+          .then(async (response) => {
             this.handleLoginSuccess(result.data);
-          }
-        });
+          });
+      } else {
+        this.props
+          .newRegister("InitPhone", {
+            input: "Init",
+            data: {
+              areacode: this.state.areaCode,
+              phone: phone,
+            },
+          })
+          .then(async (response) => {
+            if (response.IsSuccess) {
+              this.props
+                .newRegister("InitPhone", {
+                  input: "Valid",
+                  data: {
+                    securitykey: response.data.stepResponse,
+                    validatecode: "123456",
+                  },
+                })
+                .then(async (response) => {
+                  this.handleLoginSuccess(result.data);
+                });
+            } else {
+              this.handleLoginSuccess(result.data);
+            }
+          });
+      }
     }
   };
   handleLoginClickWithHpEmail = async (username, password, phone, email) => {
@@ -386,35 +393,49 @@ class GuestContainer extends Component {
     }
     const result = await this.props.accountLogin(username, password);
     if (result.IsSuccess) {
-      AccountService.Activation(
-        username,
-        password,
-        this.state.areaCode,
-        phone
-      ).then(async (response) => {
-        if (response.IsSuccess) {
-          this.state.securityKey = response.data;
-          AccountService.VerifyActivation(this.state.securityKey, "123456");
-          // .then(async (response) => {
+      this.props
+        .newRegister("InitPhone", {
+          input: "Init",
+          data: {
+            areacode: this.state.areaCode,
+            phone: phone,
+          },
+        })
 
-          // });
-        }
-        // else {
-        //   this.handleLoginSuccess(result.data);
-        // }
-      });
-      AccountService.ActivationEmail(email).then(async (response) => {
-        if (response.IsSuccess) {
-          this.state.securityKey = response.data;
-          AccountService.VerifyActivationEmail(
-            this.state.securityKey,
-            "123456"
-          );
-          // .then(async (response) => {
-          //   this.handleLoginSuccess(result.data);
-          // });
-        }
-      });
+        .then(async (response) => {
+          if (response.IsSuccess) {
+            this.state.securityKey = response.data;
+
+            AccountService.NewRegister("InitPhone", {
+              input: "Valid",
+              data: {
+                securitykey: this.state.securityKey,
+                validatecode: "123456",
+              },
+            });
+          }
+        });
+
+      this.props
+        .newRegister("InitMail", {
+          input: "Init",
+          data: {
+            email: email,
+          },
+        })
+        .then(async (response) => {
+          if (response.IsSuccess) {
+            this.state.securityKey = response.data;
+
+            this.props.newRegister("InitMail", {
+              input: "Valid",
+              data: {
+                securitykey: this.state.securityKey,
+                validatecode: "123456",
+              },
+            });
+          }
+        });
       this.handleLoginSuccess(result.data);
     }
   };
@@ -647,6 +668,7 @@ class GuestContainer extends Component {
               if (this.state.openDialogName === "register") {
                 return (
                   <Register
+                    onhandleLogin={this.onhandleLogin}
                     onhandleClose={this.onhandleCloseDialog}
                     onRegisterSuccess={this.handleRegisterSuccess}
                     doLogin={this.handleLoginClick}

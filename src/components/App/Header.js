@@ -23,17 +23,12 @@ import { Link } from "react-router-dom";
 import GuestContainer from "./GuestContainer";
 import MemberContainer from "./MemberContainer";
 
-import TopMenuPromoPNG_PB from "../../assets/images/top-menu-promo-pb.png";
-import TopMenuPromoPNG from "../../assets/images/top-menu-promo.png";
-import TopMenuPromoHoverPNG from "../../assets/images/top-menu-promo-hover.png";
 import IconPhonePNG from "../../assets/images/icon-mobile.png";
-import HotGameActivePNG from "../../assets/images/slot-hotgame-active.png";
 
 import { withSnackbar } from "notistack";
 import Common from "../../utils/Common";
 
 import i18n from "../../utils/i18n";
-import Slider from "react-slick";
 import LanguageChanger from "../Share/language-changer";
 import { uiAction } from "../../api-services/actions/uiAction";
 import { generalAction } from "../../api-services/actions/generalAction";
@@ -42,6 +37,7 @@ import ErrorSwitcher from "../../utils/ErrorSwitcher";
 import { AppHistory } from "../../history/History";
 import { SortedMenuList } from "../../utils/HeaderSorting";
 import OnlineUserDisplayer from "../Share/online-user-displayer";
+import { GameService } from "../../api-services/services/GameService";
 
 const moment = require("moment");
 
@@ -122,7 +118,6 @@ const RightContainer = styled.div`
   align-items: center;
 `;
 
-
 const BottomContainer = styled.div`
   display: grid;
   grid-template-columns: 230px auto auto;
@@ -162,96 +157,22 @@ const RightMenuUL = styled.ul`
 `;
 
 const RightMenuTextSpan = styled.span`
-  font-size: ${(props) => (i18n.language === "vi-VN" ? "23px" : "24px")};
+  font-size: ${(props) => (i18n.language === "vi-VN" ? "18px" : "20px")};
   margin: 0 auto;
   display: block;
 
-  padding-top: 6px;
+  padding: 6px 0 15px 0;
   text-align: center;
   text-transform: uppercase;
+  border-bottom: solid 3px transparent;
 `;
 
-const MouseOverContainer = styled.div`
-  width: 100%;
-  height: 0px;
-
-  position: fixed;
-  left: 0;
-  top: 156px;
-  z-index: 1;
-  cursor: default;
-  transition: height 0.5s;
-`;
-const MouseOverBackground = styled.div`
-  width: 100%;
-
-  background-color: rgba(0, 0, 0, 0.75);
-  height: 155px;
-  position: absolute;
-  bottom: 30px;
-`;
-
-const RightMenuImg = styled.div`
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-
-  mask: url(${({ img }) => {
-    return img;
-  }});
-  background: rgba(255, 255, 255, 0.8);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-`;
-
-const GameImg = styled.img`
-  height: 130px;
-
-  position: absolute;
-
-  padding-bottom: 10px;
-  transition: transform 0.6s;
-  bottom: 0;
-  right: 0;
-  transform-origin: bottom center;
-  transform: translateY(-160px) scale(1);
-  animation-duration: 200ms;
-  animation-delay: ${(props) => `${100 + props.index * 100}`}ms;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-in-out;
-`;
-const GameName = styled.div`
-  color: #fff;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: ${(props) => (i18n.language === "en-US" ? "20px" : "22px")};
-  width: 100px;
-  position: absolute;
-  text-align: ${(props) => (i18n.language === "en-US" ? "left" : "right")};
-  transition: transform 0.6s;
-  top: 30px;
-  left: ${(props) => (i18n.language === "en-US" ? "50px" : "20px")};
-  transform-origin: bottom center;
-  transform: translateY(-160px) scale(1);
-  animation-duration: 200ms;
-  animation-delay: ${(props) => `${100 + props.index * 100}`}ms;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-in-out;
-`;
-const breatheAnimation = keyframes`
-
- to { transform:translateY(0px); }
-
-`;
 const RightMenuLI = styled.li`
   display: inline-block;
   width: max-content;
   color: ${({ theme }) => theme.pcHeaderRightMenu};
   cursor: pointer;
-  border-bottom: solid 4px transparent;
+
   @media (max-width: 925px) {
     width: 100px;
   }
@@ -263,6 +184,14 @@ const RightMenuLI = styled.li`
   }
   padding: 45px 35px 0px 35px;
 
+  ${(props) =>
+    props.active
+      ? `  
+      ${RightMenuTextSpan} {
+        border-bottom: solid 3px #cf2029;
+      }
+  `
+      : ``}
 `;
 
 const StyledAppBar = withStyles((theme) => ({
@@ -279,76 +208,6 @@ const CustomAppBar = styled(StyledAppBar)`
   }};
   background: ${({ theme }) => theme.pcAppBar};
   box-shadow: none;
-`;
-
-const GameFrameWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const Maintenance = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-  cursor: not-allowed;
-  pointer-event: none;
-  color: white;
-
-  text-transform: capitalize;
-
-  font-weight: bold;
-  font-size: 18px;
-  user-select: none;
-  cursor: not-allowed;
-`;
-
-const GameFrame = styled.div`
-  max-width: 255px;
-  float: left;
-  min-height: 155px;
-  position: relative;
-  transition: transform 0.6s;
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-  }
-
-  ${({ maintenance }) => {
-    return maintenance
-      ? `
-      ${GameImg}{
-        filter: brightness(40%) grayscale(200%);
-      }
-
-      ${Maintenance}{
-
-        display: flex;
-      }
-
-      ${GameName}{
-        filter: brightness(40%) grayscale(200%);
-      }
-    
-    
-    
-    `
-      : ``;
-  }}
-`;
-const HotGameIcon = styled.div`
-  background: url(${HotGameActivePNG}) no-repeat;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin: 3px 5px 0 0;
-  height: 19px;
-  width: 19px;
-  position: absolute;
-  top: 30px;
-  right: 0;
 `;
 
 const styles = {
@@ -485,6 +344,7 @@ class Header extends Component {
   onhandleLogoClick = () => {
     this.setState({ selected: "/" });
     this.props.history.push("/" + i18n.language + "/");
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   onhandleTransfer = () => {
     if (
@@ -494,6 +354,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/transfer");
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   onhandleDeposit = () => {
     if (
@@ -503,6 +364,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/deposit");
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   handleInboxClick = () => {
     if (
@@ -512,6 +374,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/inbox");
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   handleProfileClick = () => {
     if (
@@ -521,6 +384,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/profile");
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   handleWithdrawClick = () => {
     if (
@@ -530,6 +394,7 @@ class Header extends Component {
       return;
     }
     this.props.history.push("/" + i18n.language + "/account/withdrawal");
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   handleRefreshBalanceClick = () => {
     if (
@@ -548,10 +413,12 @@ class Header extends Component {
   handleDownloadAppsClick = () => {
     this.setState({ selected: "/download" });
     this.props.history.push("/" + i18n.language + "/download");
+    window.scrollTo({ top: 0, behavior: "auto" });
     //alert("敬请期待");
   };
   handleContactUsClick = () => {
     this.props.history.push("/" + i18n.language + "/aboutus/contactus");
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
   HighlightLink = (link) => {};
   handleMenuMouseOver = (to) => {
@@ -569,20 +436,14 @@ class Header extends Component {
     }
     this.setState({ ...this.state, selected: path });
     this.props.history.push("/" + i18n.language + `/${path}`);
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
 
-  RightMenuItem = (
-    to,
-    label,
-    active
-  ) => {
+  RightMenuItem = (to, label, active) => {
     const { classes } = this.props;
 
     return (
-      <RightMenuLI
-        active={active}
-        onClick={() => this.handleClickMenu(to)}
-      >
+      <RightMenuLI active={active} onClick={() => this.handleClickMenu(to)}>
         <RightMenuTextSpan
           className={`${
             this.state.shouldShow === null
@@ -763,8 +624,29 @@ class Header extends Component {
     return false;
   };
 
+  handleCockfight = (item) => {
+    if (!this.props.account.token) {
+      this.props.showLogin(true);
+    } else {
+      if (item.include.indexOf("SM01") >= 0) {
+        this.popup = window.open("", "Cockfight");
+        GameService.GetCockfight()
+          .then((e) => {
+            this.popup.document.write(e.data);
+            this.popup.document.close();
+            this.popup.focus();
+          })
+          .catch((e) => {
+            this.popup.close();
+          });
+      }
+    }
+  };
+
   consolidateJoinGame = (game, item) => {
-    if (
+    if (game.type === GameTypeEnum.COCKFIGHT) {
+      this.handleCockfight(item);
+    } else if (
       game.type === GameTypeEnum.LOTTERYLOBBY ||
       game.type === GameTypeEnum.LOBBY
     ) {
@@ -884,45 +766,46 @@ class Header extends Component {
                   currentPage === "promotion"
                 )}
 
+                {this.RightMenuItem("vip", "VIP", currentPage === "vip")}
                 {this.RightMenuItem(
-                  "vip",
-                  "VIP",
-                  currentPage === "vip"
+                  "download",
+                  "APP",
+                  currentPage === "download"
                 )}
               </RightMenuUL>
             </RightMenuContainer>
             {(() => {
-                if (!this.props.general.isMaintenance) {
-                  if (
-                    this.props.account.token !== this.props.account.info.token
-                  ) {
-                    return (
-                      <GuestContainer
-                        onhandleShowCSClick={this.props.onhandleShowCSClick}
-                        onhandleContactUsClick={this.handleContactUsClick}
-                        onDialogChange={this.handleDialogChange}
-                      ></GuestContainer>
-                    );
-                  } else {
-                    return (
-                      <MemberContainer
-                        onhandleLogout={this.onhandleLogout}
-                        onhandleTransfer={this.onhandleTransfer}
-                        onhandleDeposit={this.onhandleDeposit}
-                        onhandleInboxClick={this.handleInboxClick}
-                        onhandleRefreshBalanceClick={
-                          this.handleRefreshBalanceClick
-                        }
-                        onhandleWithdraw={this.handleWithdrawClick}
-                        onhandleProfile={this.handleProfileClick}
-                        wallet={this.props.wallet}
-                        game={this.props.game}
-                        account={this.props.account}
-                      ></MemberContainer>
-                    );
-                  }
+              if (!this.props.general.isMaintenance) {
+                if (
+                  this.props.account.token !== this.props.account.info.token
+                ) {
+                  return (
+                    <GuestContainer
+                      onhandleShowCSClick={this.props.onhandleShowCSClick}
+                      onhandleContactUsClick={this.handleContactUsClick}
+                      onDialogChange={this.handleDialogChange}
+                    ></GuestContainer>
+                  );
+                } else {
+                  return (
+                    <MemberContainer
+                      onhandleLogout={this.onhandleLogout}
+                      onhandleTransfer={this.onhandleTransfer}
+                      onhandleDeposit={this.onhandleDeposit}
+                      onhandleInboxClick={this.handleInboxClick}
+                      onhandleRefreshBalanceClick={
+                        this.handleRefreshBalanceClick
+                      }
+                      onhandleWithdraw={this.handleWithdrawClick}
+                      onhandleProfile={this.handleProfileClick}
+                      wallet={this.props.wallet}
+                      game={this.props.game}
+                      account={this.props.account}
+                    ></MemberContainer>
+                  );
                 }
-              })()}
+              }
+            })()}
           </BottomContainer>
         </InnerWrap>
       </CustomAppBar>

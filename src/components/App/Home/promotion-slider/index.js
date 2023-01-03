@@ -53,7 +53,7 @@ const TitleHolder = styled.div`
 
 const PromotionItem = styled.div`
   background: url(${(props) => props.img});
-  background-size: contain;
+  background-size: 400px 162px;
   background-repeat: no-repeat;
   height: 162px;
   position: relative;
@@ -63,7 +63,7 @@ const PromotionItem = styled.div`
 
 const PromotionSlider = ({ promotionList, handleNavigateClick }) => {
   const settings = {
-    infinite: true,
+    infinite: false,
     slidesToShow: 3,
     slidesToScroll: 1,
     arrows: true,
@@ -99,7 +99,6 @@ const PromotionSlider = ({ promotionList, handleNavigateClick }) => {
                     handleNavigateClick(
                       "/" + i18n.language + "/promotion/" + data.id
                     );
-                    window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                 ></PromotionItem>
               </div>

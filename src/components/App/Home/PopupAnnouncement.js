@@ -73,6 +73,7 @@ const CloseButton = styled.div`
   font-size: 30px;
   border-radius: 50px;
   filter: drop-shadow(1px 1px 8px ${({ theme }) => theme.primary}ba);
+  cursor: pointer;
 `;
 const TitleContainer = styled.div`
   text-align: center;

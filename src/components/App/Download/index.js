@@ -9,13 +9,17 @@ import { utility } from "../../../utils/utility";
 
 const Container = styled.div`
   width: 100%;
-  min-height: 2000px;
+  height: 818px;
   position: relative;
-  background: url(${process.env.PUBLIC_URL + `/assets/images/download/bg.jpg`})
+  background: url(${process.env.PUBLIC_URL + `/assets/images/download/bg.png`})
     no-repeat;
+  background-position: top;
+  background-size: auto;
   position: relative;
   display: flex;
   justify-content: center;
+  color: #fff;
+  margin-bottom: 100px;
 `;
 
 const ContentPlacedHere = styled.div`
@@ -24,48 +28,59 @@ const ContentPlacedHere = styled.div`
 `;
 
 const TheFirstSection = styled.div`
-  margin-top: -100px;
   display: flex;
   min-height: 150px;
   justify-content: flex-end;
-  padding-bottom: 75px;
+  margin-top: 100px;
 `;
 
-const TheSecondSection = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 80px;
+const TheSecondSection = styled(TheFirstSection)`
+  min-height: 50px;
+  margin-top: 30px;
 `;
 
 const FirstSectionContent = styled.div`
   display: flex;
   align-items: center;
   padding-right: 175px;
-  transform: scale(1.35);
+  flex-direction: column;
+  gap: 30px;
 `;
 
 const SectionContentItem = styled.div`
   padding-left: 15px;
 `;
 
+const RowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+  justify-content: flex-start;
+  gap: 20px;
+`;
+
 const InstallationGuideButton = styled.div`
   color: #fff;
-  background: #000;
+  background: #cf2029;
   border-radius: 75px;
   padding: 10px 20px;
   cursor: pointer;
   user-select: none;
+  width: 225px;
+  text-align: center;
+  filter: drop-shadow(1px 1px 8px #cf2029ba);
 `;
 
 const Text = styled.div`
-  opacity: 0.55;
+  font-size: 21px;
+  padding-top: 4px;
 `;
 
 const Icons = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
 
-  background: #000;
+  background: #fff;
   mask: url(${({ icon }) => {
       return (
         process.env.PUBLIC_URL + `/assets/images/download/icons/${icon}.png`
@@ -81,9 +96,10 @@ const DownloadTitleSection = styled.div`
   padding-bottom: 20px;
 `;
 
-const DownloadIcon = styled(Icons)`
-  height: 50px;
-  width: 50px;
+
+const SupportIcon = styled(Icons)`
+  height: 30px;
+  width: 30px;
 `;
 
 const TitleText = styled(Text)`
@@ -101,7 +117,6 @@ const ThirdSection = styled.div`
 const ThirdSectionText = styled.div`
   font-size: 28px;
   padding: 10px 0px;
-  opacity: 0.5;
 `;
 
 const CustomModal = styled(Dialog)`
@@ -154,36 +169,37 @@ const DownloadSection = styled.div`
 const QRCodeContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 40px;
+  padding: 15px;
   align-items: center;
 `;
 
 const DeviceText = styled.div`
-  opacity: 0.55;
   padding: 20px 0px;
   font-size: 28px;
 `;
 
 const QRCodeHolder = styled.div`
-  height: 200px;
-  width: 200px;
+  height: 125px;
+  width: 125px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px;
   border-radius: 24px;
   border: solid 1px rgba(0, 0, 0, 0.5);
+  background: #fff;
 `;
 
 const DownloadButton = styled.div`
   color: #fff;
-  background: #000;
+  background: #cf2029;
   border-radius: 75px;
   padding: 5px 10px;
   cursor: pointer;
   user-select: none;
-  min-width: 100px;
+  width: 160px;
   text-align: center;
+  filter: drop-shadow(1px 1px 8px #cf2029ba);
 `;
 
 const PointlessShit = styled.div`
@@ -206,9 +222,15 @@ const DeviceName = styled.div`
 
 const Links = styled.div`
   width: 325px;
-  opacity: 0.75;
   cursor: pointer;
   font-size: 15px;
+`;
+
+
+const DownloadContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 `;
 
 const Download = () => {
@@ -260,126 +282,121 @@ const Download = () => {
   return (
     <Container>
       <ContentPlacedHere>
-        <TheSecondSection>
-          <DownloadTitleSection>
-            <DownloadIcon icon="download" />
-            <TitleText>{i18n.t("download.downloadMethod")}</TitleText>
-          </DownloadTitleSection>
-        </TheSecondSection>
-        <ThirdSection>
-          <ThirdSectionText>{i18n.t("download.scanDownload")}</ThirdSectionText>
-          <ThirdSectionText>{i18n.t("download.useQRScan")}</ThirdSectionText>
-        </ThirdSection>
-        <DownloadSection>
-          {download.map((data, index) => {
-            return (
-              <QRCodeContainer>
-                <QRCodeHolder>
-                  <QRCode size={180} value={data.link}></QRCode>
-                </QRCodeHolder>
-                <DeviceText>{data.platform}</DeviceText>
-                <DownloadButton
-                  onClick={() => {
-                    window.open(data.link, "_blank");
-                  }}
-                >
-                  {i18n.t("download.title")}
-                </DownloadButton>
-              </QRCodeContainer>
-            );
-          })}
-        </DownloadSection>
-        <HiddenDialogContainer>
-          {config.features.Download_PointlessDialog && (
-            <>
-              <QRCodeContainer>
-                <QRCodeHolder style={{ marginBottom: 20 }}>
-                  <img
-                    src={
-                      process.env.PUBLIC_URL +
-                      `/assets/images/download/brand/${logoSwitcher(
-                        config.brand
-                      )}_logo.png`
-                    }
-                    alt="download section"
-                  />
-                </QRCodeHolder>
-
-                <DownloadButton
-                  onClick={() => {
-                    setPointlessDialog(true);
-                  }}
-                >
-                  {i18n.t("pointless.link")}
-                </DownloadButton>
-              </QRCodeContainer>
-              <CustomModal
-                maxWidth="md"
-                open={pointlessDialog}
-                onClose={() => {
-                  setPointlessDialog(false);
-                }}
-              >
-                <DialogTitle2>
-                  <div>{i18n.t("pointless.download")}</div>
-                  <CloseButton
-                    onClick={() => {
-                      setPointlessDialog(false);
-                    }}
-                  >
-                    ✖
-                  </CloseButton>
-                </DialogTitle2>
-                <DialogContent>
-                  {download.map((data, index) => {
-                    return (
-                      <PointlessShit>
-                        <DeviceName>{data.platform}</DeviceName>
-                        <Links
-                          onClick={() => {
-                            copyStupidLink(data.link);
-                          }}
-                        >
-                          {data.link}
-                        </Links>
-                      </PointlessShit>
-                    );
-                  })}
-                </DialogContent>
-              </CustomModal>
-            </>
-          )}
-        </HiddenDialogContainer>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <img
-            style={{ height: 650 }}
-            src={process.env.PUBLIC_URL + `/assets/images/download/girl.png`}
-            alt="girl"
-          />
-        </div>
-
         <TheFirstSection>
           <FirstSectionContent>
-            <SectionContentItem>
+            <RowContainer>
+              <SupportIcon icon="support" />
               <Text>{i18n.t("download.supported")}:</Text>
-            </SectionContentItem>
-            <SectionContentItem>
-              <Icons icon="android" />
-            </SectionContentItem>
-            <SectionContentItem>
-              <Icons icon="ios" />
-            </SectionContentItem>
-            <SectionContentItem>
-              <InstallationGuideButton
-                onClick={() => {
-                  setOpen(true);
-                }}
-              >
-                {i18n.t("download.openGuide")}
-              </InstallationGuideButton>
-            </SectionContentItem>
+            </RowContainer>
+            <RowContainer>
+              <SectionContentItem>
+                <Icons icon="ios" />
+              </SectionContentItem>
+              <SectionContentItem>
+                <Icons icon="android" />
+              </SectionContentItem>
+              <SectionContentItem>
+                <InstallationGuideButton
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                >
+                  {i18n.t("download.openGuide")}
+                </InstallationGuideButton>
+              </SectionContentItem>
+            </RowContainer>
           </FirstSectionContent>
         </TheFirstSection>
+        <TheSecondSection>
+          <FirstSectionContent>
+            <RowContainer>
+              <Icons icon="download" />
+              <Text>{i18n.t("download.downloadMethod")}</Text>
+            </RowContainer>
+          </FirstSectionContent>
+        </TheSecondSection>
+        <DownloadContainer>
+          <DownloadSection>
+            {download.map((data, index) => {
+              return (
+                <QRCodeContainer>
+                  <QRCodeHolder>
+                    <QRCode size={100} value={data.link}></QRCode>
+                  </QRCodeHolder>
+                  <DeviceText>{data.platform}</DeviceText>
+                  <DownloadButton
+                    onClick={() => {
+                      window.open(data.link, "_blank");
+                    }}
+                  >
+                    {i18n.t("download.title")}
+                  </DownloadButton>
+                </QRCodeContainer>
+              );
+            })}
+          </DownloadSection>
+          <HiddenDialogContainer>
+            {config.features.Download_PointlessDialog && (
+              <>
+                <QRCodeContainer>
+                  <QRCodeHolder>
+                    <img
+                      src={
+                        process.env.PUBLIC_URL +
+                        `/assets/images/download/brand/${logoSwitcher(
+                          config.brand
+                        )}_logo.png`
+                      }
+                      alt="download section"
+                    />
+                  </QRCodeHolder>
+                  <DeviceText>{i18n.t("pointless.link")}</DeviceText>
+                  <DownloadButton
+                    onClick={() => {
+                      setPointlessDialog(true);
+                    }}
+                  >
+                    {i18n.t("download.title")}
+                  </DownloadButton>
+                </QRCodeContainer>
+                <CustomModal
+                  maxWidth="md"
+                  open={pointlessDialog}
+                  onClose={() => {
+                    setPointlessDialog(false);
+                  }}
+                >
+                  <DialogTitle2>
+                    <div>{i18n.t("pointless.download")}</div>
+                    <CloseButton
+                      onClick={() => {
+                        setPointlessDialog(false);
+                      }}
+                    >
+                      ✖
+                    </CloseButton>
+                  </DialogTitle2>
+                  <DialogContent>
+                    {download.map((data, index) => {
+                      return (
+                        <PointlessShit>
+                          <DeviceName>{data.platform}</DeviceName>
+                          <Links
+                            onClick={() => {
+                              copyStupidLink(data.link);
+                            }}
+                          >
+                            {data.link}
+                          </Links>
+                        </PointlessShit>
+                      );
+                    })}
+                  </DialogContent>
+                </CustomModal>
+              </>
+            )}
+          </HiddenDialogContainer>
+        </DownloadContainer>
       </ContentPlacedHere>
       <CustomModal
         open={open}

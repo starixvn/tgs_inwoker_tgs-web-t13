@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
-import { GameTypeEnum, SlotFilterType } from "../../../../api-services/utils/Enum";
+import {
+  GameTypeEnum,
+  SlotFilterType,
+} from "../../../../api-services/utils/Enum";
 import Common from "../../../../utils/Common";
 import SlotGenerator from "../slot-generator";
 import Winners from "./winners";
@@ -91,7 +94,6 @@ const TextHolder = styled.div`
 
   justify-content: center;
   margin: 7px;
-
 `;
 
 const TextContent = styled.div`
@@ -113,7 +115,9 @@ const SlotContainer = styled.div`
 
 const JackpotSection = ({ showLogin, token }) => {
   const Numbers = React.memo(({ amount }) => {
-    var display = amount && amount.split("");
+
+    var formatedAmount = Common.formatNumberWithCommas(amount);
+    var display = formatedAmount && formatedAmount.split("");
 
     return display.map((element) => {
       return (
@@ -144,30 +148,25 @@ const JackpotSection = ({ showLogin, token }) => {
     );
     return Common.formatNumberWithCommas(amount);
   };
-
-  const [jackpotAmount, setJackpotAmount] = useState(
-    generateJackpotAmount({ min: 200000, max: 5000000 })
-  );
-
+  const initialJackpotAmount = 1822085;
+  const [jackpotAmount, setJackpotAmount] = useState(initialJackpotAmount);
+  const [homePageGameList, setHomePageGamesList] = useState([]);
   const [homePageGames, setHomePageGames] = useState({
     games: [
       {
-        title: "Top Games",
+        title: "T13.topGames",
         type: "hot",
         category: SlotFilterType.Hot,
-        gameList: [],
       },
       {
-        title: "Recommended For You",
+        title: "T13.recommeneddGames",
         type: "recommend",
         category: SlotFilterType.Recommend,
-        gameList: [],
       },
       {
-        title: "New Games",
+        title: "T13.newGames",
         type: "new",
         category: SlotFilterType.New,
-        gameList: [],
       },
     ],
     type: GameTypeEnum.SLOT,
@@ -175,8 +174,29 @@ const JackpotSection = ({ showLogin, token }) => {
   });
 
   useEffect(() => {
-      getGameList();
-  },[]);
+    getGameList();
+  }, []);
+
+  useEffect(() => {
+    const updateJackpotAmount = () => {
+      if (jackpotAmount < 9999999.99) {
+        setJackpotAmount((currentJackpotAmount) => currentJackpotAmount + 0.01);
+      } else {
+        setJackpotAmount(initialJackpotAmount);
+      }
+    };
+
+    const interval = setInterval(updateJackpotAmount, 5000);
+    return () => {
+      clearInterval(interval);
+    };
+  });
+
+  const checking = (variant) => {
+    return homePageGameList.filter((a) => {
+      return a.tag[variant] === true;
+    });
+  };
 
   const getGameList = async () => {
     if (!homePageGames.isInitialized) {
@@ -184,15 +204,11 @@ const JackpotSection = ({ showLogin, token }) => {
       await GameService.GetGameList("", temp.type).then((response) => {
         if (response.IsSuccess) {
           var data = response.data;
-          temp.games.map((game, index) => {
-            game.gameList = data
-              .filter((item) => item["tag"][game.type])
-              .slice(0, 6);
-          });
+          temp.isInitialized = true;
+          setHomePageGames(temp);
+          setHomePageGamesList(data);
         }
       });
-      temp.isInitialized = true;
-      setHomePageGames(temp);
     }
   };
 
@@ -206,19 +222,19 @@ const JackpotSection = ({ showLogin, token }) => {
             <Numbers amount={jackpotAmount} />
           </TopContent>
           <BottomContent>
-              <Winners></Winners>
+            <Winners></Winners>
           </BottomContent>
         </JackpotContentWorkingSpace>
       </JackpotHolder>
       <SlotContainer>
-        {homePageGames.games.map((data, index)=>{
+        {homePageGames.games.map((data, index) => {
           return (
-              (
+            checking(data.type).length > 0 && (
               <SlotGenerator
                 title={data.title}
                 type={homePageGames.type}
                 category={data.category}
-                list={data.gameList}
+                list={checking(data.type)}
                 commonprops={commonprops}
               ></SlotGenerator>
             )

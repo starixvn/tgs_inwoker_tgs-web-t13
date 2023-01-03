@@ -9,6 +9,8 @@ import { withSnackbar } from "notistack";
 
 import i18n from "../../../utils/i18n";
 
+import { hardcodeNews } from "../../Wap/Main/Home/scene-1/template13/news/hardcoded";
+
 const Container = styled.div`
   width: 1280px;
   min-height: 800px;
@@ -67,7 +69,14 @@ const NewsContent = styled.div`
   color: white;
   font-size: 14px;
   padding: 0px 20px 10px 20px;
-  height: 100px;
+  overflow: hidden;
+`;
+
+const NewsContent2 = styled.div`
+  color: white;
+  font-size: 14px;
+  padding: 0px 20px 10px 20px;
+  height: 90px;
   overflow: hidden;
 `;
 
@@ -88,54 +97,7 @@ const ButtonMore = styled.div`
 
 class News extends Component {
   state = {
-    newsList: [
-      {
-        id: "1",
-        title: "Caesars Racebook launches on Android and desktop",
-        content:
-          "The launch is in cooperation with Nyra Bets, the official online wagering platform of the New York Racing Association.",
-        image: "1",
-      },
-      {
-        id: "2",
-        title: "Liverpool vs Manchester United final score",
-        content:
-          "Luis Diaz, Sadio Mane, and Mohamed Salah all had at least a goal and an assist in a 4-0 demolition of Manchester United at Anfield that sent Liverpool top of the Premier League.",
-        image: "2",
-      },
-      {
-        id: "3",
-        title:
-          "EVOLUTION LAUNCHES MONOPOLY BIG BALLER, A BINGO-STYLE LIVE GAMES SHOW BASED ON THE WORLD-FAMOUS BOARD GAME",
-        content:
-          "Evolution today announced the launch of MONOPOLY Big Baller, a totally new bingo-style live game show played online. The game features live automated ball drawing and a live game host, an augmented reality MR. MONOPOLY, and numerous multipliers offering players the chance of greatly increased payouts.",
-        image: "3",
-      },
-      {
-        id: "4",
-        title:
-          "Snapdragon Pro Series to host multi-title live events at DreamHack Valencia",
-        content: `The Snapdragon Pro Series, ESL Gaming’s mobile esports ecosystem, will host three live events during DreakHack Valencia, which will be taking place at the Valencia Fair from December 9th-11th.
-          Wild Circuit: Game Changers, the first championships for League of Legends: Wild Rift’s women’s scene, will take place at the gaming festival alongside Wild Rift EUR & North Africa Finals as well as Brawl Stars EUR & MENA Finals.
-          `,
-        image: "4",
-      },
-      {
-        id: "5",
-        title: "Lucky Group Wins $100k In Encore Draw",
-        content:
-          "A group of enthusiastic lottery players recently won big following their purchase of an Encore ticket from the Ontario Lottery and Gaming ",
-        image: "5",
-      },
-      {
-        id: "6",
-        title: "GET DOUBLE THE PRIZES WITH “WILD BOUNTY SHOWDOWN”!",
-        content: `Cass has heard that the bandits have hidden some gold bars in an old cellar and that they will be splitting the loot tonight. Cass wants to snatch all the gold bars from them, but she is weak in finding a good ambush spot. Can you help her?
-          PG SOFT™ has launched another new exciting game — "Wild Bounty Showdown"! Once entering the game, players will be immediately immersed in a brutal world where they have to compete against bandits for rewards. Show no mercy to the cunning bandits and keep spinning the reels to gain tremendous rewards! 
-          `,
-        image: "6",
-      },
-    ],
+    newsList: hardcodeNews,
   };
 
   componentDidMount() {}
@@ -150,7 +112,7 @@ class News extends Component {
   render() {
     return (
       <Container>
-        <Title>{i18n.t("Top News")}</Title>
+        <Title>{i18n.t("T13.topNews")}</Title>
         <NewsContainer>
           {this.state.newsList.slice(0, 6).map((item, index) => {
             return (
@@ -172,6 +134,11 @@ class News extends Component {
                 </NewsImageContainer>
                 <NewsTitle>{item.title}</NewsTitle>
                 <NewsContent>{item.content}</NewsContent>
+                <NewsContent2
+                  dangerouslySetInnerHTML={{
+                    __html: "<div>" + item.content2 + "</div>",
+                  }}
+                ></NewsContent2>
               </NewsItem>
             );
           })}

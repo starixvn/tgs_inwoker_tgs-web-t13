@@ -42,8 +42,8 @@ function CustomButton(props) {
     margin-top: ${props.small ? "5" : "10"}px;
   `;
   return (
-    <StyleButton onClick={props.handleClick}>
-      <ButtonLabel>{props.name}</ButtonLabel>
+    <StyleButton id="shared-custom-button" onClick={props.handleClick}>
+      <ButtonLabel id="shared-custom-button-label">{props.name}</ButtonLabel>
     </StyleButton>
   );
 }
