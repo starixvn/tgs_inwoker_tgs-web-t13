@@ -44,8 +44,8 @@
   "scripts": {
     "wap:get": "git submodule update --init --recursive",
     "wap:update": "git submodule update --remote",
-    "start": "env-cmd -f .env react-scripts start",
-    "build": "env-cmd -f .env react-scripts build",
+    "start": "SET NODE_OPTIONS=--openssl-legacy-provider && env-cmd -f .env react-scripts start",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && env-cmd -f .env react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start:legacyprovider": "SET NODE_OPTIONS=--openssl-legacy-provider && env-cmd -f .env react-scripts start",
