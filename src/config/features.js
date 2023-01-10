@@ -117,6 +117,7 @@ const featureList = {
     UseAccentColor: true,
     Wap_ShowProfileTransfer: true,
     HaveVIPFeature: true,
+    Withdrawal_WalletTransfer: false,
   },
 };
 export default featureList;
