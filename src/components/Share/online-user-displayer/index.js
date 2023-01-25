@@ -13,7 +13,9 @@ const OnlineDisplayerText = styled.div`
   text-align: ${({ textAlign }) => {
     return textAlign ? textAlign : "unset";
   }};
-  min-width: 125px;
+  display: flex;
+   gap: 5px;
+  min-width: fit-content;
   padding: ${({ padding }) => {
     return padding ? padding : "0 10px 0 0";
   }};
@@ -23,7 +25,19 @@ const OnlineUserText = styled.span`
   font-weight: bold;
 `;
 
-const OnlineUserDisplayer = ({ color, size, textAlign, padding }) => {
+const UserIcon = styled.div`
+  mask: url(${({ icon }) => {
+      return icon;
+    }})
+    no-repeat center;
+  mask-size: 100%;
+
+  background-color: #fff;
+  width: 20px;
+  height: 30px;
+`;
+
+const OnlineUserDisplayer = ({ color, size, textAlign, padding, iconOnly }) => {
   function randomNumberGenerator(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
@@ -64,7 +78,13 @@ const OnlineUserDisplayer = ({ color, size, textAlign, padding }) => {
       textAlign={textAlign}
       padding={padding}
     >
-      {i18next.t("common.playeronline")}:{" "}
+      {iconOnly ? (
+        <UserIcon
+          icon={process.env.PUBLIC_URL + "/assets/images/wapp/user.png"}
+        />
+      ) : (
+        i18next.t("common.playeronline") + ": "
+      )}{" "}
       <OnlineUserText>{totalPlayer}</OnlineUserText>
     </OnlineDisplayerText>
   );
