@@ -19,6 +19,7 @@ const OnlineDisplayerText = styled.div`
   padding: ${({ padding }) => {
     return padding ? padding : "0 10px 0 0";
   }};
+  ${({ iconOnly }) => (iconOnly ? `align-items: center;` : ``)}
 `;
 
 const OnlineUserText = styled.span`
@@ -77,6 +78,7 @@ const OnlineUserDisplayer = ({ color, size, textAlign, padding, iconOnly }) => {
       size={size}
       textAlign={textAlign}
       padding={padding}
+      iconOnly={iconOnly}
     >
       {iconOnly ? (
         <UserIcon

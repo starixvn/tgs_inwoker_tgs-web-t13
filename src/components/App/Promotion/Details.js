@@ -33,10 +33,10 @@ const Title = styled.div`
 `;
 
 const BannerContainer = styled.div`
-  width: 1280px;
+  width: 1200px;
   height: 486px;
   background: url(${(props) => props.img}) no-repeat;
-  background-size: 1280px 486px;
+  background-size: 1200px 486px;
   margin: 0 auto;
   border-radius: 25px;
   position: relative;
@@ -87,7 +87,7 @@ const PromotionContent = styled.div`
 `;
 
 const PromotionButton = styled.div`
-  width: 141px;
+  width: 200px;
   height: 54px;
   font-size: 22px;
   padding: 12.5px 0px;
@@ -111,10 +111,13 @@ const PromoDesc = styled.div`
   font-size: 14px;
 `;
 
+const EventDetail = styled.div`
+  display: flex;
+`;
+
 const EventTitle = styled.div`
   margin-bottom: 10px;
   font-size: 16px;
-  font-family: Arial;
   font-weight: bold;
 `;
 
@@ -435,28 +438,6 @@ class PromotionDetails extends Component {
         </BannerContainer>
         <SubTitle>{this.state.details.subSubject}</SubTitle>
         <PromotionContent>
-          <EventTitle>{i18n.t("promotion.promoTarget")}：</EventTitle>
-          <EventText>
-            {this.state.details.vipLevels
-              .sort((a, b) => {
-                return a - b;
-              })
-              .map((a, index) => {
-                return (
-                  <span key={index}>
-                    VIP{a}
-                    {index < this.state.details.vipLevels.length - 1 && ", "}
-                  </span>
-                );
-              })}
-          </EventText>
-          <EventTitle>{i18n.t("promotion.promoDate")}：</EventTitle>
-          <EventText>
-            {moment(this.state.details.from).format("YYYY/MM/DD HH:mm:ss")}
-            {" - "}
-            {moment(this.state.details.to).format("YYYY/MM/DD HH:mm:ss")} (GMT
-            +8)
-          </EventText>
           <EventText>
             <PromoDesc
               dangerouslySetInnerHTML={{
@@ -482,6 +463,15 @@ class PromotionDetails extends Component {
               }}
             ></PromoDesc>
           </EventText>
+          <EventDetail>
+            <EventTitle>{i18n.t("promotion.promoDate")}：</EventTitle>
+            <EventText>
+              {moment(this.state.details.from).format("YYYY/MM/DD HH:mm:ss")}
+              {" - "}
+              {moment(this.state.details.to).format("YYYY/MM/DD HH:mm:ss")} (GMT
+              +8)
+            </EventText>
+          </EventDetail>
         </PromotionContent>
         <BottomContainer>
           {this.state.term !== "" && (
@@ -512,7 +502,7 @@ class PromotionDetails extends Component {
                 )
               }
             >
-              {i18n.t("promotion.joinPromo")}
+              {i18n.t("T13.promo.join")}
             </PromotionButton>
           )}
         </BottomContainer>

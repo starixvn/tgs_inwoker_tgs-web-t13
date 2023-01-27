@@ -685,7 +685,7 @@ class Header extends Component {
                 />
               </LinkContainer>
               {config.features.OnlineUser && (
-                <OnlineUserDisplayer color="#fff" size="14px" />
+                <OnlineUserDisplayer color="#fff" size="14px" iconOnly={true}/>
               )}
               <TimerContainer>
                 <TimerSpan>GMT+8 {this.state.systemDateTime}</TimerSpan>

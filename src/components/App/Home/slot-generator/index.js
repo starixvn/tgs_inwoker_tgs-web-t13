@@ -133,7 +133,7 @@ const SlotGenerator = React.memo(({ title, type, category, commonprops, list }) 
       </TitleGapper>
       <GameList>
         {list &&
-          list.map((data, index) => {
+          list.slice(0,12).map((data, index) => {
             return (
               <GameContainer
                 key={index}

@@ -72,7 +72,7 @@ const NewsContent = styled.div`
   color: white;
   font-size: 14px;
   padding: 0px 20px 10px 20px;
-  height: 90px;
+  height: 55px;
   overflow: hidden;
 `;
 

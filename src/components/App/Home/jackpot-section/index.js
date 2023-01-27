@@ -17,9 +17,9 @@ const Container = styled.div`
 
 const Title = styled.div`
   width: 1280px;
-  margin: 40px auto;
+  margin: 40px auto 0 auto;
   font-size: 44px;
-  font-weight: 500;
+  font-weight: bold;
   text-transform: uppercase;
   text-align: center;
   color: #ffffff;
@@ -55,7 +55,6 @@ const TopContent = styled.div`
   font-size: 75px;
   align-items: center;
   letter-spacing: 14px;
-  gap: 4px;
   font-weight: 500;
   justify-content: space-evenly;
   font-weight: bold;
@@ -79,13 +78,13 @@ const TextHolder = styled.div`
   ${({ hide }) => {
     return hide
       ? `
-   font-size: 60px;
+   font-size: 65px;
    padding: 0 0 0 0px;
    width: 20px;
    align-items: flex-end;
   
   `
-      : ` background: #1B1D30;font-size: 55px;
+      : ` background: #1B1D30;font-size: 75px;
       align-items: center; width: 75px;`;
   }};
   color: ${({ theme }) => theme.primary};
@@ -103,7 +102,7 @@ const TextContent = styled.div`
 `;
 
 const Digit = styled.div`
-  width: 45px;
+  width: 60px;
 `;
 
 const SlotContainer = styled.div`
@@ -180,18 +179,21 @@ const JackpotSection = ({ showLogin, token }) => {
   useEffect(() => {
     const updateJackpotAmount = () => {
       if (jackpotAmount < 9999999.99) {
-        setJackpotAmount((currentJackpotAmount) => currentJackpotAmount + 0.01);
+        setJackpotAmount((currentJackpotAmount) => currentJackpotAmount + randomNumber(0.01,0.20));
       } else {
         setJackpotAmount(initialJackpotAmount);
       }
     };
 
-    const interval = setInterval(updateJackpotAmount, 5000);
+    const interval = setInterval(updateJackpotAmount, 2000);
     return () => {
       clearInterval(interval);
     };
   });
 
+  const  randomNumber = (min, max) => {
+    return (Math.random() * (min - max) + max);
+  }
   const checking = (variant) => {
     return homePageGameList.filter((a) => {
       return a.tag[variant] === true;

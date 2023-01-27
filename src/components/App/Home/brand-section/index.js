@@ -49,7 +49,7 @@ const BrandLogo = styled.div`
 const BrandDescription = styled.div`
   color: #fff;
   width: 950px;
-  font-size: 25px;
+  font-size: 16px;
   line-height: 40px;
   font-weight: lighter;
   white-space: break-spaces;

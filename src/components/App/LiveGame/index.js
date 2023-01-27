@@ -226,10 +226,10 @@ class LiveGame extends Component {
 
     return (
       <Container>
-        <Banner></Banner>
         <GameLister
           game={this.props.game}
         ></GameLister>
+        <Banner></Banner>
         <ItemContainer>
           <LeftSlide
             animateIn="fadeInLeft"

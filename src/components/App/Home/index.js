@@ -37,7 +37,7 @@ const MarqueeContainer = styled.div`
   width: 1280px;
   background-color: #27273f;
   border-radius: 25px;
-  margin: 30px auto;
+  margin: 15px auto;
 `;
 const SectionContainer = styled.div`
   width: 1280px;
@@ -187,15 +187,15 @@ class Home extends Component {
   render() {
     return (
       <HomeContainer>
-        <SliderContainer>
-          <Slider list={this.props.ui.board_list}></Slider>
-        </SliderContainer>
-        <GameLister game={this.props.game} ></GameLister>
         {!config.features.HideMarquee && (
             <MarqueeContainer>
               <Marquee text={this.props.ui.marqueeText}></Marquee>
             </MarqueeContainer>
           )}
+        <GameLister game={this.props.game} ></GameLister>
+        <SliderContainer>
+          <Slider list={this.props.ui.board_list}></Slider>
+        </SliderContainer>
         <SectionContainer>
           <JackpotSection
             showLogin={this.props.showLogin}
