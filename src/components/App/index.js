@@ -54,7 +54,12 @@ import config from "../../config/config";
 import CustomLibrary from "./Sports/CustomLibrary.js";
 import ForcedVerification from "./ForcedVerification";
 
-import { Faq, TermsAndConditions, PrivacyPolicy, ResponsibleGaming} from "../App/QuickLinks/index";
+import {
+  Faq,
+  TermsAndConditions,
+  PrivacyPolicy,
+  ResponsibleGaming,
+} from "../App/QuickLinks/index";
 
 const baseRouteUrl = Common.baseRouteUrl;
 const Main = styled.div`
@@ -390,6 +395,11 @@ class App extends Component {
   };
 
   render() {
+    const languageDetector =
+      i18n.language ||
+      localStorage.getItem("i18nextLng") ||
+      config.defaultLanguage;
+
     return (
       <Router history={AppHistory}>
         {(() => {
@@ -616,7 +626,7 @@ class App extends Component {
                         />
                       )}
                     />
-                    <Redirect to={"/" + i18n.language} />
+                    <Redirect to={"/" + languageDetector} />
                   </Switch>
                 </Main>
 

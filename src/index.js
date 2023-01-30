@@ -49,6 +49,7 @@ import JoinLotteryGame from "./components/Share/JoinLotteryGame";
 import featureList from "./config/features";
 import FeatureGetter from "./components/Share/feature-getter";
 import AudioPlayer from "./components/Share/audioplayer";
+import config from "./config/config";
 
 require("es6-promise").polyfill();
 const store = createStore(rootReducer, applyMiddleware(thunk));
@@ -172,7 +173,11 @@ const muiTheme = createMuiTheme({
 });
 const AppWrapper = () => {
   const classes = useStyles();
-  const languageFromLocalStorage = localStorage.getItem("i18nextLng");
+  const languageDetector =
+    i18n.language ||
+    localStorage.getItem("i18nextLng") ||
+    config.defaultLanguage;
+
   const [isReady, setIsReady] = React.useState(false);
   useEffect(() => {
     i18n.on("languageChanged", (lng) => {
@@ -274,7 +279,7 @@ const AppWrapper = () => {
                       path={Common.baseRouteUrl + "/"}
                       render={(props) => (isMobileOnly ? <Wap /> : <Web />)}
                     />
-                    <Redirect to={`/${i18n.language}`} />5
+                    <Redirect to={`/${languageDetector}`} />5
                   </Switch>
                 </Router>
               </SnackbarProvider>
