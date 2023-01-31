@@ -93,6 +93,28 @@ const Chip = styled.div`
 `;
 
 function Footer(props) {
+  const providers = [
+    { name: "BetConstruct" },
+    { name: "Avia" },
+    { name: "TF Sports" },
+    { name: "Joker" },
+    { name: "AE Slot" },
+    { name: "FACAI" },
+    { name: "Fast Spin" },
+    { name: "Kingmaker" },
+    { name: "PGSoft" },
+    { name: "Spadegaming" },
+    { name: "Venus" },
+    { name: "YL" },
+    { name: "WM" },
+    { name: "Netent" },
+    { name: "Red Tiger" },
+    { name: "JILI" },
+    { name: "Evolution" },
+    { name: "JDB" },
+    { name: "PHSB" },
+    { name: "Habanero" },
+  ];
   const navigateTo = (to) => {
     props.history.push("/" + i18n.language + "/" + to);
     window.scroll({ top: 0, behavior: "smooth" });
@@ -155,18 +177,6 @@ function Footer(props) {
       <SectionTitle>{i18n.t("T13.partners")}</SectionTitle>
       <ChipContainer>
         {providers
-          .filter(
-            (a) =>
-              a.abbreviation.toLowerCase() !== "wgfm" &&
-              a.abbreviation.toLowerCase() !== "wgvia"
-          )
-          .filter((gp) => {
-            if (gp.abbreviation.includes("TCG")) {
-              return gp.abbreviation === "TCG_SEA";
-            } else {
-              return gp;
-            }
-          })
           .map((item, index) => (
             <Chip key={index}>{item.name}</Chip>
           ))}
@@ -177,7 +187,7 @@ function Footer(props) {
     <Container hide={props.hide}>
       <AboutUs img={props.general.brand.desktopLogoUrl} />
       <QuickLinks navigateTo={navigateTo} />
-      <Partners providers={props.game.providerList} />
+      <Partners providers={providers} />
     </Container>
   );
 }

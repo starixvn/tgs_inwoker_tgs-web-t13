@@ -12,28 +12,16 @@ const AnnounceContainer = styled.div`
   display: flex;
   align-items: center;
 `;
-const AnnounceText = styled.div`
-  float: left;
-
-  color: #fff;
-  font-size: 14px;
-
-  margin-left: 120px;
-`;
 const MarqueeContainer = styled.div`
-  width: 890px;
   white-space: nowrap;
-
   font-size: 14px;
   color: #ffffff;
-  float: left;
   line-hight: 26px;
 `;
 
 function Marquee(props) {
   return (
     <AnnounceContainer>
-      <AnnounceText>{i18n.t("web.marquee.latestNews")}</AnnounceText>
       <MarqueeContainer>
         {props.ui.marquees && props.ui.marquees.length > 0 && (
           <marquee style={{ marginTop: "10px" }}>

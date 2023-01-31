@@ -711,8 +711,8 @@ class Slots extends Component {
 
     return (
       <Container type={this.state.type}>
-        <GameLister game={this.props.game}></GameLister>
         <Banner type={this.state.type}></Banner>
+        <GameLister game={this.props.game}></GameLister>
         <InnerWrap type={this.state.type}>
           <GameSubFilterContainer>
             {this.genCategoryItem(SlotFilterType.All, i18n.t("slot.allGame"))}

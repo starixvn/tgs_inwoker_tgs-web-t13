@@ -680,6 +680,7 @@ class Header extends Component {
             <RightContainer>
               <LinkContainer>
                 <LanguageChanger
+                  useAcronym={true}
                   language={this.props.general.brandLanguage}
                   changeLanguage={this.changeLanguage}
                 />

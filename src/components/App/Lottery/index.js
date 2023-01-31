@@ -181,10 +181,8 @@ class Lottery extends Component {
   render() {
     return (
       <Container>
-        <GameLister
-          game={this.props.game}
-        ></GameLister>
         <Banner></Banner>
+        <GameLister game={this.props.game}></GameLister>
         <ItemContainer>
           <LeftSlide
             animateIn="fadeInLeft"
