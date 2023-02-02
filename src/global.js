@@ -84,6 +84,7 @@ export const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.accent};
   }
 
+  .MuiBottomNavigationAction-label,
   .MuiInputBase-input{
    font-family: ${languageSwitcher(i18n.language)};
   }
