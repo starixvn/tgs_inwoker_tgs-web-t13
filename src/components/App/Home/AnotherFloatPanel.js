@@ -341,6 +341,8 @@ const AnotherFloatPanel = (props) => {
             <Text active={supportModal}>
               {config.features.FloatPanel_CustomTranslation
                 ? i18n.t("mess888.panel.im")
+                : config.accountTemplate === 13
+                ? i18n.t("T13.panel.im")
                 : i18n.t("panel.im")}
             </Text>
           </RotateBack>
@@ -373,7 +375,11 @@ const AnotherFloatPanel = (props) => {
 
       <CustomModal open={supportModal} onClose={performCloseSupportModal}>
         <DialogTitle2>
-          <div>{i18n.t("panel.imLong")}</div>
+          <div>
+            {config.accountTemplate === 13
+              ? i18n.t("T13.panel.im")
+              : i18n.t("panel.imLong")}
+          </div>
           <CloseButton onClick={performCloseSupportModal}>✖</CloseButton>
         </DialogTitle2>
         <QRCodeContainer>

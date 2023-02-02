@@ -82,7 +82,7 @@ const Icon = styled.img`
 Config.from = isMobileOnly ? "h5" : "h5";
 Config.isPC = isMobileOnly ? 1 : 0;
 
-var fontFamily = "'Monserrat'";
+var fontFamily = "Tahoma, Helvetica, Arial, sans-serif";
 if (i18n.language === "zh-CN") {
   fontFamily =
     "'Noto Sans SC', Microsoft Yahei, '微软雅黑', STXihei, '华文细黑'";
