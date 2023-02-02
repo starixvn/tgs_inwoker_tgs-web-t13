@@ -51,7 +51,6 @@ function Loading(props) {
       <Inner>
         <LogoImg src={props.general.brand && props.general.brand.loadingUrl} />
         <div className="clear"></div>
-        <LogoImg2 src={LoadingGIF} />
       </Inner>
     </Container>
   );

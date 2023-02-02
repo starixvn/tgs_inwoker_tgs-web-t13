@@ -186,7 +186,7 @@ const ContainerSwitcher = (props) => {
       <Container>
         {props.children}{" "}
         <CloseButton onClick={props.onClose}>
-          {i18n.t("common.confirm")}
+          {i18n.t("T13.dialog.confirm")}
         </CloseButton>
       </Container>
     );
@@ -228,7 +228,6 @@ class PopupAnnouncement extends Component {
           isCustom={this.props.isCustom}
           onClose={this.props.onClose}
         >
-          <CloseIcon onClick={this.props.onClose} />
           <div className="clear"></div>
           <TitleSwitcher isCustom={this.props.isCustom}>
             {this.props.header}

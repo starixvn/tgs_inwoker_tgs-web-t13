@@ -20,7 +20,7 @@ const TheButtonWrapper = styled.div`
   align-items: center;
 `;
 
-const LanguageChanger = ({ language, changeLanguage }) => {
+const LanguageChanger = ({ language, changeLanguage, useAcronym }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -29,6 +29,12 @@ const LanguageChanger = ({ language, changeLanguage }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const toAcronym = (language) => {
+    if (language !== "zh-TW" && language !== "zh-CN")
+      return language.slice(0, 2).toUpperCase();
+    else return i18n.t("lang." + language);
   };
   return (
     <div>
@@ -47,8 +53,8 @@ const LanguageChanger = ({ language, changeLanguage }) => {
           //     }
           //   />
         }
-        {i18n.t("lang." + i18n.language)}
-        <ArrowDownImg src={ArrowDown} />
+        { !useAcronym ? i18n.t("lang." + i18n.language) : toAcronym(i18n.language)}
+        { !useAcronym && <ArrowDownImg src={ArrowDown} />}
       </TheButtonWrapper>
       <Menu
         id="simple-menu"

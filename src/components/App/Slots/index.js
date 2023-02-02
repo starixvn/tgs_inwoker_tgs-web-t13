@@ -190,10 +190,10 @@ const CategoryContainer = styled.div`
     props.active
       ? `  
       border: 1px solid #CF2029;
-      background: #000000cc;`
+      background: #CF2029;`
       : `  
-      border: 1px solid #ffffff0D;
-      background: transparent;`
+      border: 1px solid #27273f;
+      background: #27273f;`
     }
 `;
 const CategoryText = styled.div`
@@ -204,10 +204,12 @@ const CustomFormControl = withStyles((theme) => ({
     "& .MuiSelect-select": {
       fontSize: "16px",
       color: "#ffffff",
+      fontFamily: 'Montserrat',
     },
     "& .MuiSelect-select > option": {
       fontSize: "14px",
       color: "#1b1d30",
+      fontFamily: 'Montserrat',
     },
     "& .MuiSelect-icon": {
       color: "#ffffff",
@@ -244,10 +246,12 @@ const SearchFilterItemInput = styled.input`
   color: #ffffff;
   font-size: 16px;
   width: 130px;
+  font-family: 'Montserrat';
   ::placeholder,
   ::-webkit-input-placeholder {
     color: #ffffff;
     font-size: 16px;
+    font-family: 'Montserrat';
   }
   :-ms-input-placeholder {
     color: #ffffff;
@@ -694,10 +698,10 @@ class Slots extends Component {
                   }
                 ></Bookmark>
               </GameDesc> */}
-              <GameHoverSelection>
-                <PlayButton
-                  onClick={() => this.handleJoinGameClick(el.gpcode, el.id)}
-                >Play</PlayButton>
+              <GameHoverSelection
+                onClick={() => this.handleJoinGameClick(el.gpcode, el.id)}
+              >
+                <PlayButton>Play</PlayButton>
               </GameHoverSelection>
               <Namecontainer>{el.name}</Namecontainer>
             </ItemContainer>
@@ -733,7 +737,7 @@ class Slots extends Component {
                 }}
                 IconComponent={ExpandMoreOutlined}
               >
-                <option value="">{i18n.t("slot.all")}</option>
+                <option value="">{i18n.t("T13.slot.provider")}</option>
                 {this.props.game.homePageGameList
 
                   .filter((ele) => {
@@ -754,7 +758,7 @@ class Slots extends Component {
                 type="text"
                 maxLength="15"
                 autocomplete="off"
-                placeholder={i18n.t("slot.search")}
+                placeholder={i18n.t("T13.slot.search")}
                 onChange={this.handleKeywordChange}
               ></SearchFilterItemInput>
             </SearchFilterItemContainer>

@@ -58,6 +58,8 @@ const NewsImageContainer = styled.div`
 const NewsImage = styled.img`
   width: 400px;
   height: 200px;
+  object-fit: cover;
+  object-position: top;
 `;
 
 const NewsTitle = styled.div`
@@ -72,7 +74,7 @@ const NewsContent = styled.div`
   color: white;
   font-size: 14px;
   padding: 0px 20px 10px 20px;
-  height: 90px;
+  height: 55px;
   overflow: hidden;
 `;
 

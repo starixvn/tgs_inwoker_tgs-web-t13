@@ -28,7 +28,7 @@ import ErrorSwitcher from "../../utils/ErrorSwitcher";
 import { generalAction } from "../../api-services/actions/generalAction";
 
 const Container = styled.div`
-  width: 506px;
+  width: ${({ layout }) => (layout === "horizontal" ? "800px" : "506px")};
   background: #27273f;
   background-attachment: fixed;
   background-position: center;
@@ -63,10 +63,24 @@ const SubTitleContainer = styled.div`
 const FormContainer = styled.div`
   margin: 10px 78px 0 78px;
   padding: 0 3px;
+  ${({ layout }) =>
+    layout === "horizontal"
+      ? `  
+      display: grid;
+      grid-auto-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+      "username password"
+      "invitation repassword"
+      "descriptionContent descriptionContent"
+      "buttonContent buttonContent"
+      "bottomContent bottomContent";
+      `
+      : ``}
 `;
 const CustomText = withStyles({
   root: {
-    width: "430px",
+    width: ({ layout }) => layout === "horizontal" ? "300px" : "430px",
     height: "55px",
     border: "none",
     margin: 0,
@@ -215,6 +229,7 @@ const ButtonLogin = styled.div`
   &:hover {
     cursor: pointer;
   }
+  grid-area: ${({gridArea})=> gridArea};
 `;
 const ButtonLoginLabel = styled.span`
   text-align: center;
@@ -225,10 +240,17 @@ const ButtonLoginLabel = styled.span`
 
 const DescriptionContainer = styled.div`
   padding: 12px 0 0 8px;
+  ${({ layout, gridArea }) =>
+    layout === "horizontal"
+      ? `  
+      grid-area: ${gridArea};
+      display: flex;
+      `
+      : ``}
 `;
 const Description = styled.div`
   float: left;
-  width: 380px;
+  width: ${({layout})=> layout==="horizontal" ? "100%": "380px"};
   margin-left: 5px;
   font-size: 14px;
 
@@ -339,7 +361,7 @@ const CustomInvitationContainer = styled.div`
 
 const CustomInvitationSelect = styled.select`
   position: absolute;
-  right: 10px;
+  right: ${({ layout }) => (layout === "horizontal" ? "30px" : "10px")};
   bottom: 18px;
   border: none;
   outline: none;
@@ -347,9 +369,14 @@ const CustomInvitationSelect = styled.select`
   color: #fff;
 `;
 
+const CustomOption = styled.option`
+  color: #000;
+`;
+
 const CustomTextWrapper = styled.div`
   border-radius: 6px;
   margin-top: 13px;
+  grid-area: ${({gridArea})=> gridArea};
 `;
 
 const CheckBoxUnchecked = styled.div`
@@ -379,6 +406,7 @@ const BottomContainer = styled.div`
   justify-content: center;
   margin-bottom: 20px;
   gap: 20px;
+  grid-area: ${({gridArea})=> gridArea};
 `;
 
 function Register(props) {
@@ -409,6 +437,11 @@ function Register(props) {
   );
 
   const [fromCustomDomain, setFromCustomDomain] = React.useState(false);
+  const [layout, setLayout] = React.useState(
+    config.features.Register_ShowEmail || config.features.Register_ShowPhone
+      ? "vertical"
+      : "horizontal"
+  );
   useEffect(() => {
     if (props.general.brand.hasInvitationCode) {
       props.getInvitationCode().then((result) => {
@@ -660,16 +693,17 @@ function Register(props) {
 
   const classes = useStyles();
   return (
-    <Container>
+    <Container layout={layout}>
       <CloseIconContainer
         viewBox="4 4 16 16"
         onClick={props.onhandleClose}
       ></CloseIconContainer>
       <div className="clear"></div>
       <TitleContainer>{i18n.t("web.register.registerTitle")}</TitleContainer>
-      <FormContainer>
-        <CustomTextWrapper>
+      <FormContainer layout={layout}>
+        <CustomTextWrapper gridArea="username">
           <CustomText
+            layout={layout}
             onChange={handleUsernameChange}
             id="username"
             value={username}
@@ -692,8 +726,9 @@ function Register(props) {
           />
         </CustomTextWrapper>
 
-        <CustomTextWrapper>
+        <CustomTextWrapper gridArea="password">
           <CustomText
+            layout={layout}
             onChange={handlePasswordChange}
             id="password"
             value={password}
@@ -716,12 +751,13 @@ function Register(props) {
             }}
           />
         </CustomTextWrapper>
-        <CustomTextWrapper>
+        <CustomTextWrapper gridArea="repassword">
           <CustomText
+            layout={layout}
             onChange={handlePassword2Change}
             id="password2"
             value={password2}
-            placeholder={i18n.t("web.register.confirmPassword")}
+            placeholder={i18n.t("T13.register.confirmPassword")}
             variant="outlined"
             type="password"
             autoComplete="off"
@@ -785,7 +821,6 @@ function Register(props) {
             />
           </React.Fragment>
         )}
-        <div class="clear"></div>
         {config.features.Register_ShowEmail && (
           <CustomTextWrapper>
             <CustomText
@@ -814,9 +849,10 @@ function Register(props) {
         )}
 
         {!(config.features.Register_HideInvitation && fromCustomDomain) && (
-          <CustomTextWrapper>
+          <CustomTextWrapper gridArea="invitation">
             <CustomInvitationContainer>
               <CustomText
+                layout={layout}
                 onChange={
                   promoteType === "a" ? handlePromoChange : handleUpperChange
                 }
@@ -828,20 +864,21 @@ function Register(props) {
               />
               {config.features.HaveAffiliateFeature && (
                 <CustomInvitationSelect
+                  layout={layout}
                   disabled={prefill}
                   value={promoteType}
                   selected={promoteType}
                   onChange={handleSwitchType}
                 >
-                  <option value="a">{i18n.t("usertype.agent")}</option>
-                  <option value="p">{i18n.t("usertype.player")}</option>
+                  <CustomOption value="a">{i18n.t("usertype.agent")}</CustomOption>
+                  <CustomOption value="p">{i18n.t("usertype.player")}</CustomOption>
                 </CustomInvitationSelect>
               )}
             </CustomInvitationContainer>
           </CustomTextWrapper>
         )}
 
-        <DescriptionContainer>
+        <DescriptionContainer layout={layout} gridArea="descriptionContent">
           <Checkbox
             checked={tnc}
             className={classes.checkboxRoot}
@@ -849,17 +886,17 @@ function Register(props) {
             checkedIcon={<CheckBoxChecked />}
             icon={<CheckBoxUnchecked />}
           />
-          <Description>{i18n.t("web.register.contract")}</Description>
+          <Description layout={layout}>{i18n.t("web.register.contract")}</Description>
         </DescriptionContainer>
 
-        <ButtonLogin onClick={performNewRegister}>
+        <ButtonLogin onClick={performNewRegister} gridArea="buttonContent">
           <ButtonLoginLabel>
             {config.features.Register_CustomFlow_IDR
               ? i18n.t("common.nextStep")
-              : i18n.t("web.register.btn")}
+              : i18n.t("T13.register.btn")}
           </ButtonLoginLabel>
         </ButtonLogin>
-        <BottomContainer>
+        <BottomContainer gridArea="bottomContent">
           <Text>{i18n.t("T13.proceedLogin")}</Text>
           <LinkStyle onClick={props.onhandleLogin}>
             {i18n.t("common.login")}
