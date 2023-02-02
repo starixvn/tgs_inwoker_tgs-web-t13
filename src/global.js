@@ -83,6 +83,10 @@ export const GlobalStyles = createGlobalStyle`
   .headerSubmenu .slick-next::before {
     color: ${({ theme }) => theme.accent};
   }
+
+  .MuiInputBase-input{
+   font-family: ${languageSwitcher(i18n.language)};
+  }
   
 
 
