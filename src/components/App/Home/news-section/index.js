@@ -58,6 +58,8 @@ const NewsImageContainer = styled.div`
 const NewsImage = styled.img`
   width: 400px;
   height: 200px;
+  object-fit: cover;
+  object-position: top;
 `;
 
 const NewsTitle = styled.div`
