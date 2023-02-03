@@ -4,7 +4,7 @@ import i18n from "../../../../utils/i18n";
 import { hardcodeNews } from "../../../Wap/Main/Home/scene-1/template13/news/hardcoded";
 const Container = styled.div`
   width: 1280px;
-  height: 637px;
+  height: max-content;
   margin: 0 auto;
 `;
 const TitleGapper = styled.div`
@@ -30,8 +30,9 @@ const TitleHolder = styled.div`
   text-transform: uppercase;
 `;
 const NewsContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, 400px);
+  gap: 20px;
 `;
 
 const NewsItem = styled.div`
@@ -102,7 +103,7 @@ const NewsSection = ({ news, handleNavigateClick }) => {
         <TitleHolder>{i18n.t("T13.topNews")}</TitleHolder>
       </TitleGapper>
       <NewsContainer>
-        {newsList.slice(0,3).map((item, index) => {
+        {newsList.slice(0,6).map((item, index) => {
           return (
             <NewsItem
               onClick={() => {
