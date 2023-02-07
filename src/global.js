@@ -89,6 +89,16 @@ export const GlobalStyles = createGlobalStyle`
   .MuiInputBase-input{
    font-family: ${languageSwitcher(i18n.language)};
   }
+
+
+  @media only screen and (max-width: 768px) {
+    .MuiPickersModal-dialogRoot{
+      transform: scale(1.5);
+    }
+
+  }
+
+
   
 
 
