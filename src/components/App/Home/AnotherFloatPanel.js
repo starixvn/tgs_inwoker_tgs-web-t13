@@ -94,7 +94,23 @@ const SidePanel = styled.div`
   ${({ active, theme }) => {
     return active
       ? `  
-       background-color:  #fff;`
+      background-color: #fff;
+      cursor: pointer;
+      border-color: transparent;
+      border-color: ${theme.accent};
+  
+      ${Icon} {
+        background: ${theme.accent};
+        background-size: 100%;
+        transform: translateY(-5px);
+      }
+      ${Text} {
+        opacity: 1;
+        display: block;
+        color: ${theme.accent};
+        transition: opacity 200ms;
+        transition-delay: 100ms;
+      }`
       : `  
       background-color: ${theme.accent};`;
   }}
@@ -350,20 +366,18 @@ const AnotherFloatPanel = (props) => {
 
         {config.features.HaveDownloadFeature && (
           <SidePanel
-            active={supportModal}
             onClick={() => {
               AppHistory.replace("/" + i18n.language + "/download");
             }}
             src2={PanelDownloadPNG2}
           >
-            <RotateBack active={supportModal}>
+            <RotateBack>
               <Icon
                 src={PanelDownloadPNG}
                 src2={PanelDownloadPNG2}
-                active={supportModal}
                 alt="user-cs"
               />
-              <Text active={supportModal}>
+              <Text>
                 {config.features.FloatPanel_CustomTranslation
                   ? i18n.t("mess888.panel.download")
                   : i18n.t("download.title")}{" "}
@@ -373,7 +387,11 @@ const AnotherFloatPanel = (props) => {
         )}
       </Container>
 
-      <CustomModal open={supportModal} onClose={performCloseSupportModal}>
+      <CustomModal
+        disableScrollLock={true}
+        open={supportModal}
+        onClose={performCloseSupportModal}
+      >
         <DialogTitle2>
           <div>
             {config.accountTemplate === 13
