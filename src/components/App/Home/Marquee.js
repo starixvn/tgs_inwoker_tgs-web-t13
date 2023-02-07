@@ -13,6 +13,7 @@ const AnnounceContainer = styled.div`
   align-items: center;
 `;
 const MarqueeContainer = styled.div`
+  width: 100%;
   white-space: nowrap;
   font-size: 14px;
   color: #ffffff;
