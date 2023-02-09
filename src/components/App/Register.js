@@ -617,6 +617,7 @@ function Register(props) {
         .newRegister("CreatePlayer", {
           username: username,
           pwd: password,
+          upper: upper,
           invitationcode: promotionId,
         })
         .then(async (response) => {
