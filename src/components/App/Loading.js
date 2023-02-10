@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { connect } from "react-redux";
-import LoadingGIF from "../../assets/images/loading.gif";
 
 const spinner = keyframes`
  0% { transform: rotateY(0deg);  }
@@ -38,13 +37,10 @@ const LogoImg = styled.img`
   width: 180px;
   animation-name: ${spinner};
   animation-timing-function: ease;
-  animation-iteration-count: 1;
+  animation-iteration-count: infinite;
   animation-duration: 0.6s;
 `;
-const LogoImg2 = styled.img`
-  margin: 0 auto;
-  display: block;
-`;
+
 function Loading(props) {
   return (
     <Container open={props.show} opacity={props.opacity}>
