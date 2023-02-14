@@ -100,9 +100,11 @@ function Footer(props) {
       <AboutUsContainer>
         <AboutUsLogo img={img}></AboutUsLogo>
         {i18n
-          .t("web.footer.copyrightLine2")
-          .replace(/{brand}/g, config.brandName)
-          .replace(/(All Rights Reserved)/, "\n$1")}
+          .t("T13.footer.copyright")
+          .replace(/{brand}/g, config.brandName)}
+        <br />
+        {i18n
+          .t("T13.footer.rights")}
         <br />
         Version {process.env.REACT_APP_VERSION}
       </AboutUsContainer>
