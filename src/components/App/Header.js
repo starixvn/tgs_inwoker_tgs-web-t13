@@ -772,6 +772,11 @@ class Header extends Component {
                   "APP",
                   currentPage === "download"
                 )}
+                {this.RightMenuItem(
+                  "news",
+                  i18n.t("T13.header.news"),
+                  currentPage === "news"
+                )}
               </RightMenuUL>
             </RightMenuContainer>
             {(() => {
