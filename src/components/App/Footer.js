@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 
 import config from "../../config/config";
 import i18n from "../../utils/i18n";
-
+import GamingLicensePNG from "../../assets/images/gaming-license.png";
 const Container = styled.div`
   width: 1280px;
   margin: 0 auto;
@@ -29,19 +29,15 @@ const AboutUsLogo = styled.div`
   width: 200px;
   height: 120px;
 
-  background: #ffffff;
+  background: url("${(props) => props.img}");
   background-position: left center;
   background-size: contain;
   background-repeat: no-repeat;
-
-  mask: url("${(props) => props.img}");
-  mask-position: left center;
-  mask-size: contain;
-  mask-repeat: no-repeat;
 `;
 
 const AboutUsContainer = styled.div`
   line-height: 25px;
+  white-space: pre-line;
 `;
 
 const LinkContainer = styled.div`
@@ -122,14 +118,13 @@ function Footer(props) {
 
   const AboutUs = ({ img }) => (
     <Section>
-      <SectionTitle>{i18n.t("T13.aboutUs")}</SectionTitle>
+      <SectionTitle>{i18n.t("T13.gamingLicense")}</SectionTitle>
       <AboutUsContainer>
         <AboutUsLogo img={img}></AboutUsLogo>
-        {i18n.t("web.footer.copyright")}
-        <br />
         {i18n
           .t("web.footer.copyrightLine2")
-          .replace(/{brand}/g, config.brandName)}
+          .replace(/{brand}/g, config.brandName)
+          .replace(/(All Rights Reserved)/, "\n$1")}
         <br />
         Version {process.env.REACT_APP_VERSION}
       </AboutUsContainer>
@@ -185,7 +180,7 @@ function Footer(props) {
   );
   return (
     <Container hide={props.hide}>
-      <AboutUs img={props.general.brand.desktopLogoUrl} />
+      <AboutUs img={GamingLicensePNG} />
       <QuickLinks navigateTo={navigateTo} />
       <Partners providers={providers} />
     </Container>
