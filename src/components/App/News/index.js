@@ -134,11 +134,6 @@ class News extends Component {
                 </NewsImageContainer>
                 <NewsTitle>{item.title}</NewsTitle>
                 <NewsContent>{item.content}</NewsContent>
-                <NewsContent2
-                  dangerouslySetInnerHTML={{
-                    __html: "<div>" + item.content2 + "</div>",
-                  }}
-                ></NewsContent2>
               </NewsItem>
             );
           })}
