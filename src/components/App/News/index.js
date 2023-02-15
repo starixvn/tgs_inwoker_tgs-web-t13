@@ -37,7 +37,7 @@ const NewsContainer = styled.div`
 
 const NewsItem = styled.div`
   width: 600px;
-  height: 600px;
+  height: 450px;
   position: relative;
   border-radius: 39px;
   cursor: pointer;
@@ -72,6 +72,7 @@ const NewsContent = styled.div`
   font-size: 14px;
   padding: 0px 20px 10px 20px;
   overflow: hidden;
+  height: 55px;
 `;
 
 const NewsContent2 = styled.div`
