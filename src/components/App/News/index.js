@@ -37,7 +37,7 @@ const NewsContainer = styled.div`
 
 const NewsItem = styled.div`
   width: 600px;
-  height: 600px;
+  height: 450px;
   position: relative;
   border-radius: 39px;
   cursor: pointer;
@@ -70,6 +70,8 @@ const NewsContent = styled.div`
   font-size: 14px;
   padding: 0px 20px 10px 20px;
   overflow: hidden;
+  height: 55px;
+  line-height: 18px;
 `;
 
 const NewsContent2 = styled.div`
@@ -134,11 +136,6 @@ class News extends Component {
                 </NewsImageContainer>
                 <NewsTitle>{item.title}</NewsTitle>
                 <NewsContent>{item.content}</NewsContent>
-                <NewsContent2
-                  dangerouslySetInnerHTML={{
-                    __html: "<div>" + item.content2 + "</div>",
-                  }}
-                ></NewsContent2>
               </NewsItem>
             );
           })}
