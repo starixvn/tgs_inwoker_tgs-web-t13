@@ -118,6 +118,7 @@ const featureList = {
     Wap_ShowProfileTransfer: true,
     HaveVIPFeature: true,
     Withdrawal_WalletTransfer: false,
+    Deposit_ManualDepositPassPhone: false,
   },
 };
 export default featureList;
