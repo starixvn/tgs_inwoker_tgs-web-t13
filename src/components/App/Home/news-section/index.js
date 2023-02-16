@@ -74,6 +74,7 @@ const NewsContent = styled.div`
   padding: 0px 20px 10px 20px;
   height: 90px;
   overflow: hidden;
+  line-height: 18px;
 `;
 
 const ButtonMore = styled.div`

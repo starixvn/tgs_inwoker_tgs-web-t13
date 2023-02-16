@@ -71,6 +71,7 @@ const NewsContent = styled.div`
   padding: 0px 20px 10px 20px;
   overflow: hidden;
   height: 55px;
+  line-height: 18px;
 `;
 
 const NewsContent2 = styled.div`
