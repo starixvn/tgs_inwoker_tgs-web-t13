@@ -83,6 +83,22 @@ export const GlobalStyles = createGlobalStyle`
   .headerSubmenu .slick-next::before {
     color: ${({ theme }) => theme.accent};
   }
+
+  .MuiTypography-root,
+  .MuiBottomNavigationAction-label,
+  .MuiInputBase-input{
+   font-family: ${languageSwitcher(i18n.language)};
+  }
+
+
+  @media only screen and (max-width: 768px) {
+    .MuiPickersModal-dialogRoot{
+      transform: scale(1.5);
+    }
+
+  }
+
+
   
 
 

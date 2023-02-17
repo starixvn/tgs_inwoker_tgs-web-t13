@@ -37,13 +37,9 @@ const Wrap = styled.div`
 const PromoEmptyContainer = styled.div``;
 const PromoEmptyBg = styled.div`
   background: url(${PromoEmpty}) no-repeat;
-  position: absolute;
-
-  left: 50%;
-  bottom: -155px;
-  margin-left: -240px;
-  width: 1165px;
-  height: 877px;
+  width: 1920px;
+  height: 1015px;
+  margin: 0 auto;
 `;
 const PromoEmptyText = styled.div`
   width: 673px;
@@ -166,48 +162,42 @@ class Promotion extends Component {
   render() {
     return (
       <Container>
-        <Title>{i18n.t("common.promotion")}</Title>
         {this.props.general.promotionList.items &&
         this.props.general.promotionList.items.length <= 0 ? (
           <PromoEmptyContainer>
-            <PromoEmptyText>
-              <PromoEmptyTextLine
-                style={i18n.language === "en-US" ? { fontSize: "58px" } : {}}
-              >
-                {i18n.t("promotion.emptyLine1")}
-              </PromoEmptyTextLine>
-              <PromoEmptyTextLine>
-                {i18n.t("promotion.emptyLine2")}
-              </PromoEmptyTextLine>
-            </PromoEmptyText>
             <PromoEmptyBg></PromoEmptyBg>
           </PromoEmptyContainer>
         ) : (
-          <></>
+          <>
+            {" "}
+            <Title>{i18n.t("common.promotion")}</Title>
+          </>
         )}
         <Wrap>
-            <PromotionContainer>
-              {this.props.general.promotionList.items
-                .sort((a, b) => {
-                  return a.order - b.order;
-                })
-                .map((data, index) => {
-                  const checkIfLocaleExist = data.localization !== null && data.localization[i18n.language];
-                  return (
-                    <PromotionItem
-                      key={index}
-                      img={
-                        checkIfLocaleExist
-                          ? checkIfLocaleExist.desktopBanner
-                          : data.desktopBanner
-                      }
-                      onClick={() => {
-                        this.handlePromotionClick(data.id, data.promotionType);
-                      }}
-                    ></PromotionItem>
-                  );
-                })}
-            </PromotionContainer>
+          <PromotionContainer>
+            {this.props.general.promotionList.items
+              .sort((a, b) => {
+                return a.order - b.order;
+              })
+              .map((data, index) => {
+                const checkIfLocaleExist =
+                  data.localization !== null &&
+                  data.localization[i18n.language];
+                return (
+                  <PromotionItem
+                    key={index}
+                    img={
+                      checkIfLocaleExist
+                        ? checkIfLocaleExist.desktopBanner
+                        : data.desktopBanner
+                    }
+                    onClick={() => {
+                      this.handlePromotionClick(data.id, data.promotionType);
+                    }}
+                  ></PromotionItem>
+                );
+              })}
+          </PromotionContainer>
         </Wrap>
       </Container>
     );

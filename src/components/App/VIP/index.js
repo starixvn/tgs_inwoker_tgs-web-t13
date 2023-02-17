@@ -44,18 +44,17 @@ const OuterWrap = styled.div`
 
 const VIPContent = styled.div``;
 
-const TitleContent = styled(VIPContent)``;
+const TitleContent = styled(VIPContent)`
+  white-space: pre-line;
+`;
 
 const CustomVIPContent = styled(VIPContent)`
-  border-bottom: 1px solid #ffffff26;
-  min-height: 175px;
   align-items: center;
   display: flex;
   justify-content: center;
 `;
 
 const VipEmblemContainer = styled(VIPContent)`
-  min-height: 175px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,7 +62,7 @@ const VipEmblemContainer = styled(VIPContent)`
 `;
 
 const VIPLevelImage = styled.div`
-  height: 95px;
+  height: 60px;
 `;
 
 const VIPContainer = styled.div`
@@ -99,7 +98,7 @@ const VIPRowContainer = styled(VIPHeaderRowContainer)`
   position: static;
   background: none;
   border-radius: 0px;
-  height: 200px;
+  height: 120px;
 
   &:last-child {
     ${CustomVIPContent} {
@@ -146,16 +145,17 @@ const VIP = (props) => {
   const { getVIP } = props;
   const [vipBenefit, setVipBenefits] = useState([]);
 
-  const vipContainerRef = useRef(null);
+  const lastItemRef = useRef(null);
   const [isHeaderOutside, setIsHeaderOutside] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
       if (
-        vipContainerRef &&
-        vipContainerRef.current &&
-        (vipContainerRef.current.getBoundingClientRect().y < -1500 ||
-          vipContainerRef.current.getBoundingClientRect().y > 217)
+        lastItemRef &&
+        lastItemRef.current &&
+        (document.documentElement.scrollTop < 0 ||
+          document.documentElement.scrollTop >
+          lastItemRef.current.getBoundingClientRect().height * 9)
       ) {
         setIsHeaderOutside(true);
       } else {
@@ -214,9 +214,9 @@ const VIP = (props) => {
       <InnerWrap>
         {vipBenefit.items && vipBenefit.items.length > 0 && (
           <React.Fragment>
-            <VIPContainer ref={vipContainerRef}>
+            <VIPContainer>
               <VIPHeaderRowContainer isHeaderOutside={isHeaderOutside}>
-                <VipTitle title={i18n.t("vip.level")} />
+                <VipTitle title={i18n.t("T13.vip.level")} />
                 <VipTitle title={i18n.t("vip.levelKeepAccumulateBetAmount")} />
                 <VipTitle title={i18n.t("vip.levelKeepAccumulateDeposit")} />
                 <VipTitle title={i18n.t("vip.levelUpAccumulateBetAmount")} />
@@ -227,8 +227,12 @@ const VIP = (props) => {
               </VIPHeaderRowContainer>
               <VIPListContainer isHeaderOutside={isHeaderOutside}>
                 {vipBenefitList.map((data, index) => {
+                  var isLastItem = false;
+                  if (vipBenefit.items.length - 1 === index) {
+                    isLastItem = true;
+                  }
                   return (
-                    <VIPRowContainer>
+                    <VIPRowContainer ref={isLastItem ? lastItemRef : null}>
                       <VipEmblemContainer>
                         <VIPLevelImage>
                           <img

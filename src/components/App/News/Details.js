@@ -31,7 +31,8 @@ const BannerContainer = styled.div`
   width: 1280px;
   height: 486px;
   background: url(${(props) => props.img}) no-repeat;
-  background-size: 1280px 486px;
+  background-size: cover;
+  background-position: top;
   margin: 0 auto;
   border-radius: 25px;
   position: relative;

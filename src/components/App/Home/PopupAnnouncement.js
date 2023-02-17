@@ -77,13 +77,12 @@ const CloseButton = styled.div`
 `;
 const TitleContainer = styled.div`
   text-align: center;
-  font-size: 53px;
+  font-size: 40px;
 `;
 const FormContainer = styled.div`
-  margin: 30px 60px 40px 60px;
-  padding: 0 3px;
+  margin: 30px 30px 40px 30px;
   text-align: justify;
-  font-size: 26px;
+  font-size: 20px;
 `;
 
 const ContentContainer = styled.div`
@@ -287,7 +286,7 @@ const ContainerSwitcher = (props) => {
       <Container>
         {props.children}{" "}
         <CloseButton onClick={props.onClose}>
-          {i18n.t("common.confirm")}
+          {i18n.t("T13.dialog.confirm")}
         </CloseButton>
       </Container>
     );

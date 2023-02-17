@@ -7,7 +7,7 @@ const GameMenuContainer = styled.div`
   display: flex;
   width: 1280px;
   justify-content: center;
-  margin: 50px auto 27px auto;
+  margin: 0px auto 0px auto;
   padding: 15px 10px;
 `;
 

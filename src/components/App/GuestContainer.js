@@ -57,12 +57,12 @@ const BtnLogin = styled(BtnLoginRegister)`
 const StyledDialog = withStyles({
   root: {
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-
     "& .MuiPaper-root": {
       backgroundColor: "transparent",
       borderRadius: "50px",
     },
   },
+  paper: { maxWidth: ({layout}) => layout === "horizontal" ? "800px" :"600px" }
 })(Dialog);
 
 class GuestContainer extends Component {
@@ -643,6 +643,13 @@ class GuestContainer extends Component {
         </BtnRegister>
 
         <StyledDialog
+          layout={
+            this.state.openDialogName === "register" &&
+            (config.features.Register_ShowEmail ||
+              config.features.Register_ShowPhone)
+              ? "vertical"
+              : "horizontal"
+          }
           open={this.state.openDialog || this.props.ui.showLogin}
           onClose={this.onhandleCloseDialog}
           onEntering={() => this.props.showDialog(true)}
