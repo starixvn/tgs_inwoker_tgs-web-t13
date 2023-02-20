@@ -70,7 +70,7 @@ const ContentContainer = styled.div`
 
 const ImageBanner = styled.div`
   background: url(${({ img }) => img}) no-repeat center;
-  height: 200px;
+  height: 227px;
   width: 560px;
   border-radius: 50px;
   background-size: 100%;
