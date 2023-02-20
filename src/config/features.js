@@ -17,7 +17,7 @@ const featureList = {
     HomePage_FirstSection6Widget: false,
     GamePage_SpecificBackground: false,
     Wap_SupportCustomBackground: false,
-    HaveDownloadFeature: true,
+    HaveDownloadFeature: false,
     FloatPanel_CustomTranslation: false,
     DisplayPhone: false,
     HaveAffiliateFeature: true,
