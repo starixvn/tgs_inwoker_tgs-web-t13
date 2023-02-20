@@ -768,7 +768,7 @@ class Header extends Component {
                 )}
 
                 {this.RightMenuItem("vip", "VIP", currentPage === "vip")}
-                {this.RightMenuItem(
+                {config.features.HaveDownloadFeature && this.RightMenuItem(
                   "download",
                   "APP",
                   currentPage === "download"

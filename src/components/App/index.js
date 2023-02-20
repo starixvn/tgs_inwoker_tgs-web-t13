@@ -101,6 +101,7 @@ class App extends Component {
     showCS: false,
     isIpRestrict: false,
     inbox: "",
+    openSupportModal: false,
   };
   async componentDidMount() {
     // try {
@@ -394,6 +395,13 @@ class App extends Component {
     }
   };
 
+  performOpenSupportModal = () => {
+    this.setState({openSupportModal : true});
+  };
+   performCloseSupportModal = () => {
+    this.setState({openSupportModal : false});
+  };
+
   render() {
     const languageDetector =
       i18n.language ||
@@ -643,6 +651,9 @@ class App extends Component {
                     />
                   )}
                 <AnotherFloatPanel
+                  openSupportModal={this.state.openSupportModal}
+                  performOpenSupportModal={this.performOpenSupportModal}
+                  performCloseSupportModal={this.performCloseSupportModal}
                   onhandleShowCSClick={this.handleShowCSClick}
                 ></AnotherFloatPanel>
                 <ForcedVerification
@@ -719,6 +730,7 @@ class App extends Component {
                 <Footer
                   target={"_blank"}
                   onhandleShowCSClick={this.handleShowCSClick}
+                  performOpenSupportModal={this.performOpenSupportModal}
                 ></Footer>
               </>
             );
