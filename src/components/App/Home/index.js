@@ -187,12 +187,6 @@ class Home extends Component {
   render() {
     return (
       <HomeContainer>
-        {!config.features.HideMarquee && (
-            <MarqueeContainer>
-              <Marquee text={this.props.ui.marqueeText}></Marquee>
-            </MarqueeContainer>
-          )}
-        <GameLister game={this.props.game} ></GameLister>
         <SliderContainer>
           <Slider list={this.props.ui.board_list}></Slider>
         </SliderContainer>

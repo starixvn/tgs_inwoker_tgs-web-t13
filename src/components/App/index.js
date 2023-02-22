@@ -66,7 +66,7 @@ const Main = styled.div`
   min-height: 600px;
 `;
 const EmptyHeader = styled.div`
-  height: 155px;
+  height: ${(props)=> props.displayGameListInHeader ? `384px`: `155px`};
   background: #000103;
 `;
 const RouletteFloatingPanel = styled.div`
@@ -395,6 +395,16 @@ class App extends Component {
     }
   };
 
+  displayGameListInHeader = () => {
+    const path = this.props.location.pathname;
+    const pathArray = path.split("/");
+    if (pathArray[2] === undefined || pathArray[2] === null || pathArray[2] === "") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   performOpenSupportModal = () => {
     this.setState({openSupportModal : true});
   };
@@ -425,7 +435,7 @@ class App extends Component {
                   inbox={this.state.inbox}
                   onhandleShowCSClick={this.handleShowCSClick}
                 ></Header>
-                <EmptyHeader></EmptyHeader>
+                <EmptyHeader displayGameListInHeader={this.displayGameListInHeader()}></EmptyHeader>
                 <Main>
                   <Switch>
                     <Route
