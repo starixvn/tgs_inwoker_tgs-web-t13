@@ -38,7 +38,8 @@ import { AppHistory } from "../../history/History";
 import { SortedMenuList } from "../../utils/HeaderSorting";
 import OnlineUserDisplayer from "../Share/online-user-displayer";
 import { GameService } from "../../api-services/services/GameService";
-
+import Marquee from "./Home/Marquee";
+import GameLister from "./Home/game-lister";
 const moment = require("moment");
 
 const btnCSSwitcher = () => {
@@ -64,6 +65,7 @@ const InnerWrap = styled.div`
   max-width: 1280px;
   width: 100%;
   font-size: 14px;
+  height: ${(props)=> props.displayGameListInHeader ? `384px`: `155px`};
 `;
 const TopContainer = styled.div`
   height: 45px;
@@ -254,6 +256,13 @@ const styles = {
 const LeftContent = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const MarqueeContainer = styled.div`
+  width: 1280px;
+  background-color: #27273f;
+  border-radius: 25px;
+  margin: 15px auto;
 `;
 
 class Header extends Component {
@@ -661,6 +670,16 @@ class Header extends Component {
     }
   };
 
+  displayGameListInHeader = () => {
+    const path = this.props.location.pathname;
+    const pathArray = path.split("/");
+    if (pathArray[2] === undefined || pathArray[2] === null || pathArray[2] === "") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -674,7 +693,7 @@ class Header extends Component {
 
     return (
       <CustomAppBar hide={this.props.hide}>
-        <InnerWrap>
+        <InnerWrap displayGameListInHeader={this.displayGameListInHeader()}>
           <TopContainer>
             <LeftContent></LeftContent>
             <RightContainer>
@@ -686,7 +705,7 @@ class Header extends Component {
                 />
               </LinkContainer>
               {config.features.OnlineUser && (
-                <OnlineUserDisplayer color="#fff" size="14px" iconOnly={true}/>
+                <OnlineUserDisplayer color="#fff" size="14px" iconOnly={true} />
               )}
               <TimerContainer>
                 <TimerSpan>GMT+8 {this.state.systemDateTime}</TimerSpan>
@@ -768,11 +787,12 @@ class Header extends Component {
                 )}
 
                 {this.RightMenuItem("vip", "VIP", currentPage === "vip")}
-                {this.RightMenuItem(
-                  "download",
-                  "APP",
-                  currentPage === "download"
-                )}
+                {config.features.HaveDownloadFeature &&
+                  this.RightMenuItem(
+                    "download",
+                    "APP",
+                    currentPage === "download"
+                  )}
                 {this.RightMenuItem(
                   "news",
                   i18n.t("T13.header.news"),
@@ -813,6 +833,16 @@ class Header extends Component {
               }
             })()}
           </BottomContainer>
+          {this.displayGameListInHeader() && (
+            <>
+              {!config.features.HideMarquee && (
+                <MarqueeContainer>
+                  <Marquee text={this.props.ui.marqueeText}></Marquee>
+                </MarqueeContainer>
+              )}
+              <GameLister game={this.props.game}></GameLister>
+            </>
+          )}
         </InnerWrap>
       </CustomAppBar>
     );

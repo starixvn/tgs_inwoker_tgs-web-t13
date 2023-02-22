@@ -132,11 +132,11 @@ function Footer(props) {
       </AboutUsContainer>
     </Section>
   );
-  const QuickLinks = ({ navigateTo }) => (
+  const QuickLinks = ({ navigateTo, performOpenSupportModal }) => (
     <Section>
       <SectionTitle>{i18n.t("T13.quickLink.title")}</SectionTitle>
       <LinkContainer>
-        <Link onClick={() => props.onhandleShowCSClick()}>
+        <Link onClick={performOpenSupportModal}>
           {i18n.t("T13.quickLink.247")}
         </Link>
         <Link onClick={() => navigateTo("faq")}>
@@ -183,7 +183,7 @@ function Footer(props) {
   return (
     <Container hide={props.hide}>
       <AboutUs img={GamingLicensePNG} />
-      <QuickLinks navigateTo={navigateTo} />
+      <QuickLinks navigateTo={navigateTo} performOpenSupportModal={props.performOpenSupportModal} />
       <Partners providers={providers} />
     </Container>
   );

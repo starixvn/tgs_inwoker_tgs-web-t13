@@ -66,7 +66,7 @@ const Main = styled.div`
   min-height: 600px;
 `;
 const EmptyHeader = styled.div`
-  height: 155px;
+  height: ${(props)=> props.displayGameListInHeader ? `384px`: `155px`};
   background: #000103;
 `;
 const RouletteFloatingPanel = styled.div`
@@ -101,6 +101,7 @@ class App extends Component {
     showCS: false,
     isIpRestrict: false,
     inbox: "",
+    openSupportModal: false,
   };
   async componentDidMount() {
     // try {
@@ -394,6 +395,23 @@ class App extends Component {
     }
   };
 
+  displayGameListInHeader = () => {
+    const path = this.props.location.pathname;
+    const pathArray = path.split("/");
+    if (pathArray[2] === undefined || pathArray[2] === null || pathArray[2] === "") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  performOpenSupportModal = () => {
+    this.setState({openSupportModal : true});
+  };
+   performCloseSupportModal = () => {
+    this.setState({openSupportModal : false});
+  };
+
   render() {
     const languageDetector =
       i18n.language ||
@@ -417,7 +435,7 @@ class App extends Component {
                   inbox={this.state.inbox}
                   onhandleShowCSClick={this.handleShowCSClick}
                 ></Header>
-                <EmptyHeader></EmptyHeader>
+                <EmptyHeader displayGameListInHeader={this.displayGameListInHeader()}></EmptyHeader>
                 <Main>
                   <Switch>
                     <Route
@@ -643,6 +661,9 @@ class App extends Component {
                     />
                   )}
                 <AnotherFloatPanel
+                  openSupportModal={this.state.openSupportModal}
+                  performOpenSupportModal={this.performOpenSupportModal}
+                  performCloseSupportModal={this.performCloseSupportModal}
                   onhandleShowCSClick={this.handleShowCSClick}
                 ></AnotherFloatPanel>
                 <ForcedVerification
@@ -719,6 +740,7 @@ class App extends Component {
                 <Footer
                   target={"_blank"}
                   onhandleShowCSClick={this.handleShowCSClick}
+                  performOpenSupportModal={this.performOpenSupportModal}
                 ></Footer>
               </>
             );
