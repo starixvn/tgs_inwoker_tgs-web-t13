@@ -341,20 +341,20 @@ const AnotherFloatPanel = (props) => {
         )}
 
         <SidePanel
-          active={supportModal}
+          active={props.openSupportModal}
           onClick={() => {
-            performOpenSupportModal();
+            props.performOpenSupportModal();
           }}
           src2={PanelCSPNG2}
         >
-          <RotateBack active={supportModal}>
+          <RotateBack active={props.openSupportModal}>
             <Icon
               src={PanelCSPNG}
               src2={PanelCSPNG2}
-              active={supportModal}
+              active={props.openSupportModal}
               alt="user-cs"
             />
-            <Text active={supportModal}>
+            <Text active={props.openSupportModal}>
               {config.features.FloatPanel_CustomTranslation
                 ? i18n.t("mess888.panel.im")
                 : config.accountTemplate === 13
@@ -389,8 +389,8 @@ const AnotherFloatPanel = (props) => {
 
       <CustomModal
         disableScrollLock={true}
-        open={supportModal}
-        onClose={performCloseSupportModal}
+        open={props.openSupportModal}
+        onClose={props.performCloseSupportModal}
       >
         <DialogTitle2>
           <div>
@@ -398,7 +398,7 @@ const AnotherFloatPanel = (props) => {
               ? i18n.t("T13.panel.im")
               : i18n.t("panel.imLong")}
           </div>
-          <CloseButton onClick={performCloseSupportModal}>✖</CloseButton>
+          <CloseButton onClick={props.performCloseSupportModal}>✖</CloseButton>
         </DialogTitle2>
         <QRCodeContainer>
           {props.general.brandsSupport.map((data, index) => {

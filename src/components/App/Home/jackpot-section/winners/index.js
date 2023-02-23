@@ -216,6 +216,10 @@ const Winners = React.memo(({ title }) => {
   );
 
   useEffect(() => {
+    if(winnerList<=0)
+    {
+      setWinnerList(newList);
+    }
     const updateList = () => {
       newList.pop();
 
