@@ -20,21 +20,17 @@ import { AppHistory } from "../../../history/History";
 
 const Container = styled.div`
   width: 100%;
-  border: none;
-  height: 100%;
-  background: url(${SportsBGNewPNG}) no-repeat center;
-  background-size: cover;
+  min-height: 800px;
 `;
-
 const InnerContainer = styled.div`
   margin: 35px auto;
   width: 1280px;
   height: 837px;
   overflow: hidden;
-  background-color: #eaeaea;
-
+  background-color: #1b1d30;
+  padding-bottom: 15px;
   position: relative;
-  border: solid #eaeaea 15px;
+  border: solid #1b1d30 15px;
 `;
 const LoadingContainer = styled.div`
   width: 100%;
@@ -67,7 +63,7 @@ const GameFrameHeader = styled.div`
   width: 100%;
   height: 50px;
   margin: 0 0 10px 0;
-  background-color: ${({ theme }) => theme.primary};
+  background-color: #1b1d30;
   display: flex;
   justify-content: space-between;
 `;
@@ -97,7 +93,7 @@ const Spliter = styled.div`
 `;
 const GameFrame = styled.iframe`
   width: 100%;
-  height: 100%;
+  height: 746px;
 `;
 const GameName = styled.div`
   font-size: 16px;
@@ -106,17 +102,10 @@ const GameName = styled.div`
   margin: 14px 0 0 20px;
 `;
 const StyleButton = styled.div`
-  border-radius: 4px;
-
-  border: solid 1px #ffffff;
-  background-image: linear-gradient(
-    to top,
-    ${({ theme }) => theme.primaryGradient},
-    ${({ theme }) => theme.primary}
-  );
+  border-radius: 25px;
+  background: ${({ theme }) => theme.primary};
   &:hover {
     cursor: pointer;
-    box-shadow: inset 1px 1px 9px 0 rgba(255, 255, 255, 0.75);
   }
 
   width: 96px;
@@ -127,6 +116,7 @@ const StyleButton = styled.div`
   font-size: 14px;
   color: #fff;
   float: left;
+  filter: drop-shadow(1px 1px 8px #cf2029ba);
 `;
 const ButtonLabel = styled.span`
   text-align: center;
@@ -289,7 +279,6 @@ class Play extends Component {
                         }
                       />
                       <div className="clear"></div>
-                      <LoadingLogoImg2 src={LoadingGIF} />
                     </LoadingInner>
                   </LoadingContainer>
                 );
