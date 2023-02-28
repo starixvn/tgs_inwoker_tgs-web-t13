@@ -435,7 +435,9 @@ class App extends Component {
                   inbox={this.state.inbox}
                   onhandleShowCSClick={this.handleShowCSClick}
                 ></Header>
-                <EmptyHeader displayGameListInHeader={this.displayGameListInHeader()}></EmptyHeader>
+                <EmptyHeader
+                  displayGameListInHeader={this.displayGameListInHeader()}
+                ></EmptyHeader>
                 <Main>
                   <Switch>
                     <Route
@@ -600,11 +602,13 @@ class App extends Component {
                         />
                       )}
                     />
-                    <Route
-                      exact
-                      path={baseRouteUrl + "/download"}
-                      component={Download}
-                    />
+                    {config.features.HaveDownloadFeature && (
+                      <Route
+                        exact
+                        path={baseRouteUrl + "/download"}
+                        component={Download}
+                      />
+                    )}
                     <Route
                       exact
                       path={baseRouteUrl + "/news"}
