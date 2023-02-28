@@ -120,7 +120,7 @@ class App extends Component {
       this.props.getBrand();
       this.props.getLiveChatURL();
       this.props.getPromotion();
-
+      this.props.getAffiliateStatus();
       // this.props.getVIP();
     }
     // if (response.IsSuccess) {
@@ -272,7 +272,7 @@ class App extends Component {
         this.props.getBrand();
         this.props.getLiveChatURL();
         this.props.getPromotion();
-
+        this.props.getAffiliateStatus();
         // this.props.getVIP();
       }
     }
@@ -807,6 +807,7 @@ const mapDispatchToProps = (dispatch) => {
     getPromotion: () => dispatch(generalAction.getPromotion()),
     getPromotionRouletteCount: () =>
       dispatch(generalAction.getPromotionRouletteCount()),
+    getAffiliateStatus: () => dispatch(generalAction.getAffiliateStatus()),
   };
 };
 
