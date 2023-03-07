@@ -78,7 +78,7 @@ const VIPHeaderRowContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   border-radius: 30px;
-  background: #1b1d30;
+  background: #212237;
   color: #fff;
   text-align: center;
   padding: 10px 5px;
@@ -90,7 +90,7 @@ const VIPHeaderRowContainer = styled.div`
     props.isHeaderOutside
       ? ` `
       : `position: fixed;
-      background: #1b1d3080;
+      background: #212237;
       `}
 `;
 
@@ -151,11 +151,13 @@ const VIP = (props) => {
   useEffect(() => {
     const onScroll = () => {
       if (
+        vipBenefit!==undefined &&
+        vipBenefit.items !== undefined && 
         lastItemRef &&
         lastItemRef.current &&
         (document.documentElement.scrollTop < 0 ||
           document.documentElement.scrollTop >
-          lastItemRef.current.getBoundingClientRect().height * 9)
+          (lastItemRef.current.getBoundingClientRect().height * vipBenefit.items.length))
       ) {
         setIsHeaderOutside(true);
       } else {
@@ -166,7 +168,7 @@ const VIP = (props) => {
     window.removeEventListener("scroll", onScroll);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [vipBenefit]);
 
   useEffect(() => {
     if (vipBenefit.length === 0) {
