@@ -118,6 +118,7 @@ const featureList = {
     HaveVIPFeature: true,
     Withdrawal_WalletTransfer: false,
     Deposit_ManualDepositPassPhone: false,
+    TEP_CustomProviders: false,
   },
 };
 export default featureList;
