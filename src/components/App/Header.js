@@ -132,7 +132,7 @@ const LogoContainer = styled.div`
   background-image: url("${(props) => props.img}");
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: left center;
+  background-position: center;
   width: 100%;
   height: 90px;
   margin-top: 10px;
