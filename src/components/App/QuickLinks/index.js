@@ -2213,7 +2213,7 @@ export function PrivacyPolicy(props) {
         <br />
         In addition, {getBrand()} may retain your Personal Information for
         longer periods, provided that retaining such information is necessary
-        for Pega Gaming’s legitimate interests, such as fraud prevention and
+        for {getBrand()}’s legitimate interests, such as fraud prevention and
         record keeping.
         <br />
         <br />
