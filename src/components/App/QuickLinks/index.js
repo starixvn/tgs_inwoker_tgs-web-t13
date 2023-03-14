@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import config from "../../../config/config";
 
 const Container = styled.div`
   width: 1280px;
@@ -13,23 +14,34 @@ const Container = styled.div`
     font-size: 28px;
     font-weight: 400;
   }
-  &a, & a: visited {
+  &a,&a: visited {
     color: #b6b6b6;
   }
 `;
+
+function getBrand() {
+  switch (config.brand) {
+    case "TEP":
+      return "TEP";
+    case "PGG":
+      return "Pega Gaming";
+    default:
+      return config.brand;
+  }
+}
 
 export function Faq(props) {
   return (
     <Container>
       <h1>FAQs</h1>
       <p>
-        Get the answers to your Frequently Asked Questions about Pega Gaming
+        Get the answers to your Frequently Asked Questions about {getBrand()}{" "}
         right here. Then get back to playing and having the most fun possible at
         our casino online!
       </p>
-      <h2>What features can I find in Pega Gaming?</h2>
+      <h2>What features can I find in {getBrand()}?</h2>
       <p>
-        Pega Gaming is the start of your online casino experience. When you log
+        {getBrand()} is the start of your online casino experience. When you log
         in, the online casino provides an easy way for you to stay in the know
         about daily promotions, most popular games or browse through top news
         and trends. You’ll see different gaming categories like slots, live
@@ -53,9 +65,9 @@ export function Faq(props) {
         have a main game and special bonus features that award things like win
         multipliers and free spins.
       </p>
-      <h2>Can I play online slots at Pega Gaming?</h2>
+      <h2>Can I play online slots at {getBrand()}?</h2>
       <p>
-        Yes! Players can enjoy a wider range of online slots at Pega Gaming.
+        Yes! Players can enjoy a wider range of online slots at {getBrand()}.
         Titles range from classic three-reel slots that emulate the original
         Vegas-style land-based cabinet slots to online video slots that draw on
         state-of-the-art graphics, sounds and animation for immersive,
@@ -65,23 +77,23 @@ export function Faq(props) {
       <p>
         Ultimately, the player decides which are the best online slots for their
         particular preferences and style of play. All players are sure to find
-        the best slots for them at Pega Gaming because there are over 500 online
-        slots to choose from.
+        the best slots for them at {getBrand()} because there are over 500
+        online slots to choose from.
       </p>
       <h2>Are all online casinos legal and fair?</h2>
       <p>
-        Some online casinos carry a bad reputation, but Pega Gaming operates
+        Some online casinos carry a bad reputation, but {getBrand()} operates
         fairly and legally as it is regulated by the PAGCOR and has earned the
         prestigious independent seal of approval for safety and fairness. This
         casino guarantees online safety and has received accreditation to
-        operate annually since 2018. Pega Gaming ensures strict rules and
+        operate annually since 2018. {getBrand()} ensures strict rules and
         protocols are followed in order to fulfill the high standards that the
         industry has set.
       </p>
       <h2>Can you win real money with online casinos?</h2>
       <p>
-        Yes, you can win real money when you play with certain online casinos.
-        Pega Gaming offers a wide variety of online slots, table games, live
+        Yes, you can win real money when you play with certain online casinos.{" "}
+        {getBrand()} offers a wide variety of online slots, table games, live
         dealer games and progressive jackpots to all its players. These
         life-changing progressives often start at $1 Million and can be won with
         one lucky spin. The games can be enjoyed at any time with bets starting
@@ -89,12 +101,12 @@ export function Faq(props) {
       </p>
       <h2>What type of online casino games payout the most?</h2>
       <p>
-        Pega Gaming’s progressive jackpots pay out the most and can be won at
+        {getBrand()}’s progressive jackpots pay out the most and can be won at
         any time. Online slots and table games are also popular for lucrative
         payouts, and depositing and withdrawing is hassle-free thanks to the
         efficient range of banking methods available.
       </p>
-      <h2>Which payment methods does Pega Gaming offer?</h2>
+      <h2>Which payment methods does {getBrand()} offer?</h2>
       <p>
         Players can deposit and withdraw via several seamless options, including
         bank transfers and web wallets like GCash. Once logged in, simply follow
@@ -105,7 +117,7 @@ export function Faq(props) {
       </p>
       <h2>Can online casinos provide a realistic experience?</h2>
       <p>
-        Yes, Pega Gaming’s innovative slot and live dealer selection is
+        Yes, {getBrand()}’s innovative slot and live dealer selection is
         ultra-realistic and allows players to stream live table games online or
         via mobile. Their portfolio includes classic slots, video poker, table
         games, sportsbook, cockfighting, casual games, multiplayer titles and
@@ -113,24 +125,24 @@ export function Faq(props) {
         intelligent HD-technology, and you can interact with other players from
         all around the world.
       </p>
-      <h2>What kind of bonuses does Pega Gaming offer?</h2>
+      <h2>What kind of bonuses does {getBrand()} offer?</h2>
       <p>
-        Pega Gaming offers generous match bonuses on your first four deposits to
-        make sure you get the best start at the casino. Pega Gaming also
+        {getBrand()} offers generous match bonuses on your first four deposits
+        to make sure you get the best start at the casino. {getBrand()} also
         regularly offers a variety of other promotions to all customers, such as
         deposit bonus and daily rebate.
       </p>
       <h2>Which online casino is the best?</h2>
       <p>
-        Players rate Pega Gaming the best out of all available options because
-        Pega Gaming hosts over 500 different casino games. With something for
-        everyone, players can enjoy the games with complete peace of mind as
-        Pega Gaming is licensed by PAGCOR. To ensure the best player experience,
-        there’s 24-hour support available via live chat.
+        Players rate {getBrand()} the best out of all available options because{" "}
+        {getBrand()} hosts over 500 different casino games. With something for
+        everyone, players can enjoy the games with complete peace of mind as{" "}
+        {getBrand()} is licensed by PAGCOR. To ensure the best player
+        experience, there’s 24-hour support available via live chat.
       </p>
-      <h2>How do you start playing at Pega Gaming?</h2>
+      <h2>How do you start playing at {getBrand()}?</h2>
       <p>
-        In order to play at Pega Gaming, you need to create an account and make
+        In order to play at {getBrand()}, you need to create an account and make
         a deposit. Once the deposit has successfully loaded to your account,
         you’re ready to bet on any of the over 500 casino games available. To
         deposit, simply follow the instruction, select a deposit method and fill
@@ -155,7 +167,7 @@ export function Faq(props) {
       <h2>How Do I Login to My Account?</h2>
       <p>
         To login to your account make sure that your device is connected to the
-        Internet and open the Pega Gaming homepage. Click the “Login” button,
+        Internet and open the {getBrand()} homepage. Click the “Login” button,
         enter your username and password, and let the fun begin!
       </p>
       <h2>Help, I Forgot My Account Info…</h2>
@@ -167,33 +179,33 @@ export function Faq(props) {
       </p>
       <h2>How Do I Know Gaming is Safe and Fair?</h2>
       <p>
-        Pega Gaming has been running since 2018, so we have a trusted brand with
-        many years of experience behind us. We are also fully licensed by the
-        PAGCOR. This means our security measures, game fairness and overall
+        {getBrand()} has been running since 2018, so we have a trusted brand
+        with many years of experience behind us. We are also fully licensed by
+        the PAGCOR. This means our security measures, game fairness and overall
         service have all been checked and found to meet high international
         standards.
       </p>
-      <h2>Does Pega Gaming Support Responsible Gaming?</h2>
+      <h2>Does {getBrand()} Support Responsible Gaming?</h2>
       <p>
         “Responsible gaming” is one of the most frequently heard gambling terms
-        right now. At Pega Gaming we take the well-being of our players very
+        right now. At {getBrand()} we take the well-being of our players very
         seriously, so we definitely support gaming responsibly. We provide
         general information on problem gambling, including a self-assessment
         questionnaire, and give players the option of setting self-exclusion
         periods and deposit limits. You can learn more on our Responsible Gaming
         page.
       </p>
-      <h2>Does Pega Gaming Offer Bonuses?</h2>
+      <h2>Does {getBrand()} Offer Bonuses?</h2>
       <p>
         Yes, of course! Every respectable casino online offers bonuses and
-        promotions, and Pega Gaming is more worthwhile than most. After you’ve
+        promotions, and {getBrand()} is more worthwhile than most. After you’ve
         made your first real money deposit you’ll be awarded our exceptional
         Welcome Bonus. Thereafter, look out for regular promotions that will
         keep your account topped up.
       </p>
       <h2>How Do I Place Bets?</h2>
       <p>
-        At Pega Gaming, online real money bets are very easy to place. Choose
+        At {getBrand()}, online real money bets are very easy to place. Choose
         the game you are interested in, and click or tap “Play Now”. You’ll see
         controls to set your bet type and amount, and once you’ve done this you
         can start your real money round.
@@ -223,7 +235,7 @@ export function Faq(props) {
       </p>
       <h2>Is There a VIP Loyalty Program?</h2>
       <p>
-        Pega Gaming offers every kind of reward that you could wish for from an
+        {getBrand()} offers every kind of reward that you could wish for from an
         online casino, including a lucrative VIP Loyalty Program. Every time you
         place a real money bet, you’ll be closer to the next VIP level and also
         the exclusive benefits! Check our “VIP” page for more details.
@@ -245,7 +257,7 @@ export function Faq(props) {
       </p>
       <h2>How do I make Withdrawals?</h2>
       <p>
-        At Pega Gaming the process of cash withdrawals is also easy: 1. Go to
+        At {getBrand()} the process of cash withdrawals is also easy: 1. Go to
         the “Withdrawal” page. 2. Choose the existing bank card you wish to
         receive the cash, or add a new one. 3. Enter the amount you want to cash
         out. 4. Check that all details are correct and click to confirm your
@@ -256,8 +268,8 @@ export function Faq(props) {
       <h2>Why My Deposit Failed/ Missing?</h2>
       <p>
         Usually your deposit fails/ missing if you have insufficient funds, or
-        if there is a technical connection problem between your device and the
-        Pega Gaming site. Check that you have enough money available and that
+        if there is a technical connection problem between your device and the{" "}
+        {getBrand()} site. Check that you have enough money available and that
         your Internet connection is working. If you’re still having trouble, try
         exiting the website and then logging back in. If you still don’t come
         right, contact our Customer Service via Live Chat.
@@ -275,7 +287,7 @@ export function Faq(props) {
       <h2>Can I Play on My Mobile?</h2>
       <p>
         You don’t have to worry about how to play casino games when you’re busy
-        and on the go, because Pega Gaming works just as well on tablets and
+        and on the go, because {getBrand()} works just as well on tablets and
         smartphones as it does on desktops! Our flexible software works
         perfectly on whatever device you want to use, including iOS and Android.
         You’ll also use the same login information to access the same account as
@@ -284,7 +296,7 @@ export function Faq(props) {
       <h2>I Need More Help…</h2>
       <p>
         If you haven’t found the answers you need on this FAQs page, you can get
-        in touch with the Pega Gaming online Customer Service Agents at any
+        in touch with the {getBrand()} online Customer Service Agents at any
         time. They’re available via live chat 24 hours a day, 7 days a week.
         They’ll help you resolve any problem quickly and efficiently, from
         explaining gambling terms to dealing with deposit issues and everything
@@ -323,7 +335,7 @@ export function TermsAndConditions(props) {
         "Casino Group" means collectively all the online casinos proprietary to
         us.
         <br />
-        "Casino Website" Pega Gaming or any derivative thereof;
+        "Casino Website" {getBrand()} or any derivative thereof;
         <br />
         "Charge-back" means when you, or a credit card issuing bank, or any
         other third party payment solutions provider effects a reversal of
@@ -363,13 +375,13 @@ export function TermsAndConditions(props) {
         <br />
         For users in Philippine, all transactions between the Player and Pega
         Gaming take place in Philippine where the principal servers are based.
-        The Player's gaming contract is with Pega Gaming. Pega Gaming is the
+        The Player's gaming contract is with {getBrand()}. {getBrand()} is the
         company who provides the gaming services to the Player.
         <br />
-        For users elsewhere, all transactions between the Player and Pega Gaming
-        take place in Philippines where the principal servers are based. The
-        Player's gaming contract is with Pega Gaming. Pega Gaming is the company
-        who provides the gaming services to the Player.
+        For users elsewhere, all transactions between the Player and{" "}
+        {getBrand()} take place in Philippines where the principal servers are
+        based. The Player's gaming contract is with {getBrand()}. {getBrand()}{" "}
+        is the company who provides the gaming services to the Player.
         <br />
         "Your Jurisdiction" means the jurisdiction in which you are domiciled,
         reside or work.
@@ -1789,23 +1801,23 @@ export function PrivacyPolicy(props) {
       <p>Last revised: 2022/12/09</p>
       <h2>INTRODUCTION</h2>
       <p>
-        Pega Gaming, including its affiliates (collectively, the "Pega Gaming"),
-        offers online gambling services through websites, mobile apps and other
-        online properties (collectively, the “Services”).
+        {getBrand()}, including its affiliates (collectively, the "{getBrand()}
+        "), offers online gambling services through websites, mobile apps and
+        other online properties (collectively, the “Services”).
         <br />
         <br />
-        Pega Gaming is deeply committed to safeguarding the privacy expectations
-        of its users (“User(s)”, “you” or “your”). Accordingly, we have put in
-        place this Privacy Policy, which outlines our data protection practices,
-        including how we collect, use, disclose and protect your Personal
-        Information, as well as your rights with respect to your Personal
-        Information.
+        {getBrand()} is deeply committed to safeguarding the privacy
+        expectations of its users (“User(s)”, “you” or “your”). Accordingly, we
+        have put in place this Privacy Policy, which outlines our data
+        protection practices, including how we collect, use, disclose and
+        protect your Personal Information, as well as your rights with respect
+        to your Personal Information.
         <br />
         <br />
         We encourage you to read the Privacy Policy carefully and use it to make
-        informed decisions. By visiting the Pega Gaming’s websites, mobile apps
-        or other online properties, or by creating an account through our
-        Services, you hereby agree to the Privacy Policy.
+        informed decisions. By visiting the {getBrand()}
+        ’s websites, mobile apps or other online properties, or by creating an
+        account through our Services, you hereby agree to the Privacy Policy.
         <br />
         <br />
         If you have any questions (or comments) concerning your information, or
@@ -2010,7 +2022,7 @@ export function PrivacyPolicy(props) {
       <h2>MARKETING</h2>
 
       <p>
-        Pega Gaming will use your Personal Information, such as your name, home
+        {getBrand()} will use your Personal Information, such as your name, home
         address, email address, telephone number etc., ourselves or by using our
         third party subcontractors for the purpose of providing you with
         promotional materials, concerning the Services as well as products,
@@ -2055,7 +2067,7 @@ export function PrivacyPolicy(props) {
         White Label Brand may engage to operate the White Label Brands (if
         applicable);
         <br />
-        Companies within Pega Gaming and other affiliated companies;
+        Companies within {getBrand()} and other affiliated companies;
         <br />
         Subcontractors and third party service providers, as well as their
         subcontractors, which by way of example include (but is not limited to)
@@ -2071,12 +2083,12 @@ export function PrivacyPolicy(props) {
         (if applicable);
         <br />
         To any third parties who organize offline events or tournaments on
-        behalf of or in conjunction with any companies within Pega Gaming;
+        behalf of or in conjunction with any companies within {getBrand()};
         <br />
         To hotels and flight companies (such as in the context of offline events
         and promotions);
         <br />
-        Auditors, contractors or advisers of any of Pega Gaming’s business
+        Auditors, contractors or advisers of any of {getBrand()}’s business
         processes;
         <br />
         To any third parties who investigate, detect or prevent fraudulent or
@@ -2091,7 +2103,7 @@ export function PrivacyPolicy(props) {
         corporate transaction (e.g. sale of a substantial part of our business,
         merger, reorganization, bankruptcy, consolidation or asset sale of an
         asset or transfer in the operation thereof) in relation to any company
-        within Pega Gaming (in such event, the acquiring company or transferee
+        within {getBrand()} (in such event, the acquiring company or transferee
         will assume the rights and obligations as described in this Privacy
         Policy).
         <br />
@@ -2169,7 +2181,7 @@ export function PrivacyPolicy(props) {
         <br />
         <br />
         Please be advised that such third party websites, services or
-        applications are independent from Pega Gaming. We assume no
+        applications are independent from {getBrand()}. We assume no
         responsibility or liability whatsoever with regard to privacy matters or
         any other legal matter with respect to such third party websites and/or
         services. We encourage you to carefully read the privacy policies and
@@ -2190,18 +2202,19 @@ export function PrivacyPolicy(props) {
 
       <h2>RETENTION OF PERSONAL INFORMATION</h2>
       <p>
-        If you have registered with an account through our Services, Pega Gaming
-        will retain your Personal Information during the period your account is
-        active. In addition, Pega Gaming will retain your Personal Data for
-        additional periods, to enable Pega Gaming to meet its legal obligations
-        under applicable laws or regulations, such as the applicable gambling
-        regulations, Know-Your-Customer and Anti-Money Laundering regulations.
+        If you have registered with an account through our Services,{" "}
+        {getBrand()} will retain your Personal Information during the period
+        your account is active. In addition, {getBrand()} will retain your
+        Personal Data for additional periods, to enable {getBrand()} to meet its
+        legal obligations under applicable laws or regulations, such as the
+        applicable gambling regulations, Know-Your-Customer and Anti-Money
+        Laundering regulations.
         <br />
         <br />
-        In addition, Pega Gaming may retain your Personal Information for longer
-        periods, provided that retaining such information is necessary for Pega
-        Gaming’s legitimate interests, such as fraud prevention and record
-        keeping.
+        In addition, {getBrand()} may retain your Personal Information for
+        longer periods, provided that retaining such information is necessary
+        for Pega Gaming’s legitimate interests, such as fraud prevention and
+        record keeping.
         <br />
         <br />
         If for any reason you wish to delete your Personal Information, please
@@ -2285,12 +2298,12 @@ export function ResponsibleGaming(props) {
     <Container>
       <h1>Responsible Gaming</h1>
       <p>
-        Pega Gaming is committed to being the very best online entertainment
+        {getBrand()} is committed to being the very best online entertainment
         group in the world. This means doing everything possible to give our
         players an enjoyable, responsible and safe gaming experience.
         <br />
         <br />
-        Pega Gaming fully supports responsible gaming and to ensure that you
+        {getBrand()} fully supports responsible gaming and to ensure that you
         continue to enjoy safe and manageable play, please bear the following in
         mind:
         <br />
