@@ -373,8 +373,8 @@ export function TermsAndConditions(props) {
         Flash Games versions of the software that do not need to be downloaded;
         <br />
         <br />
-        For users in Philippine, all transactions between the Player and Pega
-        Gaming take place in Philippine where the principal servers are based.
+        For users in Philippine, all transactions between the Player and {getBrand()}{" "} 
+        take place in Philippine where the principal servers are based.
         The Player's gaming contract is with {getBrand()}. {getBrand()} is the
         company who provides the gaming services to the Player.
         <br />
