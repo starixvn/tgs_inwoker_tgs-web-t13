@@ -89,61 +89,10 @@ const Chip = styled.div`
 `;
 
 function Footer(props) {
-  const providers = [
-    { name: "BetConstruct" },
-    { name: "Avia" },
-    { name: "TF Sports" },
-    { name: "Joker" },
-    { name: "AE Slot" },
-    { name: "FACAI" },
-    { name: "Fast Spin" },
-    { name: "Kingmaker" },
-    { name: "PGSoft" },
-    { name: "Spadegaming" },
-    { name: "Venus" },
-    { name: "YL" },
-    { name: "WM" },
-    { name: "Netent" },
-    { name: "Red Tiger" },
-    { name: "JILI" },
-    { name: "Evolution" },
-    { name: "JDB" },
-    { name: "PHSB" },
-    { name: "Habanero" },
-  ];
-  const providers_TEP = [
-    { name: "BetConstruct" },
-    { name: "TF Sports" },
-    { name: "Joker" },
-    { name: "FACAI" },
-    { name: "Fast Spin" },
-    { name: "Kingmaker" },
-    { name: "PGSoft" },
-    { name: "Venus" },
-    { name: "YL" },
-    { name: "WM" },
-    { name: "Netent" },
-    { name: "Red Tiger" },
-    { name: "JILI" },
-    { name: "Evolution" },
-    { name: "JDB" },
-    { name: "PHSB" },
-    { name: "NLC" },
-    { name: "BTG" },
-    { name: "DG" },
-    { name: "SexyGaming" },
-  ];
   const navigateTo = (to) => {
     props.history.push("/" + i18n.language + "/" + to);
     window.scroll({ top: 0, behavior: "smooth" });
   };
-
-  const getProviders = () => {
-    if(config.features.TEP_CustomProviders)
-      return providers_TEP;
-    else
-      return providers;
-  }
 
   const AboutUs = ({ img }) => (
     <Section>
@@ -213,7 +162,7 @@ function Footer(props) {
     <Container hide={props.hide}>
       <AboutUs img={GamingLicensePNG} />
       <QuickLinks navigateTo={navigateTo} performOpenSupportModal={props.performOpenSupportModal} />
-      <Partners providers={getProviders()} />
+      <Partners providers={props.game.providerList} />
     </Container>
   );
 }
