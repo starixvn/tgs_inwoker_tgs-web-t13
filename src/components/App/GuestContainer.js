@@ -62,7 +62,9 @@ const StyledDialog = withStyles({
       borderRadius: "50px",
     },
   },
-  paper: { maxWidth: ({layout}) => layout === "horizontal" ? "800px" :"600px" }
+  paper: {
+    maxWidth: ({ layout }) => (layout === "horizontal" ? "800px" : "600px"),
+  },
 })(Dialog);
 
 class GuestContainer extends Component {
@@ -537,9 +539,9 @@ class GuestContainer extends Component {
       // }
     } else {
       if (config.features.HomePage_PromoRoulette) {
-        this.props.getPromotionRouletteStatus(
-          "18fa2258-8101-0000-0001-0000c19227bd"
-        );
+        //  this.props.getPromotionRouletteStatus(
+        //    "18fa2258-8101-0000-0001-0000c19227bd"
+        //  );
       }
       // this.props.checkGame();
       var bankInfoAuthentication = null;
