@@ -66,7 +66,7 @@ const Main = styled.div`
   min-height: 600px;
 `;
 const EmptyHeader = styled.div`
-  height: ${(props)=> props.displayGameListInHeader ? `384px`: `155px`};
+  height: ${(props) => (props.displayGameListInHeader ? `384px` : `155px`)};
   background: #000103;
 `;
 const RouletteFloatingPanel = styled.div`
@@ -330,10 +330,36 @@ class App extends Component {
           (a) => a.culturecode === i18n.language
         ).length <= 0
       ) {
-        window.location.href = window.location.pathname.replace(
-          i18n.language,
-          this.props.general.brandLanguage[0].culturecode
-        );
+        if (
+          this.props.general.brandLanguage.filter((a) => {
+            return a.culturecode === i18n.language;
+          })
+        ) {
+          i18n.changeLanguage(this.props.general.brandLanguage[0].culturecode);
+          AppHistory.push(
+            "/" + this.props.general.brandLanguage[0].culturecode
+          );
+
+          window.location.reload();
+        }
+      } else {
+        if (
+          this.props.general.brandLanguage.filter(
+            (a) => a.culturecode === i18n.language
+          )
+        ) {
+          if (
+            window.location.pathname.split("/")[1] !== i18n.language ||
+            window.location.pathname.split("/").length > 3
+          ) {
+            i18n.changeLanguage(i18n.language);
+            AppHistory.push(
+              "/" +
+                i18n.language +
+                window.location.pathname.split("/").slice(2).join("/")
+            );
+          }
+        }
       }
     }
   }
@@ -398,7 +424,11 @@ class App extends Component {
   displayGameListInHeader = () => {
     const path = this.props.location.pathname;
     const pathArray = path.split("/");
-    if (pathArray[2] === undefined || pathArray[2] === null || pathArray[2] === "") {
+    if (
+      pathArray[2] === undefined ||
+      pathArray[2] === null ||
+      pathArray[2] === ""
+    ) {
       return true;
     } else {
       return false;
@@ -406,10 +436,10 @@ class App extends Component {
   };
 
   performOpenSupportModal = () => {
-    this.setState({openSupportModal : true});
+    this.setState({ openSupportModal: true });
   };
-   performCloseSupportModal = () => {
-    this.setState({openSupportModal : false});
+  performCloseSupportModal = () => {
+    this.setState({ openSupportModal: false });
   };
 
   render() {
@@ -435,7 +465,9 @@ class App extends Component {
                   inbox={this.state.inbox}
                   onhandleShowCSClick={this.handleShowCSClick}
                 ></Header>
-                <EmptyHeader displayGameListInHeader={this.displayGameListInHeader()}></EmptyHeader>
+                <EmptyHeader
+                  displayGameListInHeader={this.displayGameListInHeader()}
+                ></EmptyHeader>
                 <Main>
                   <Switch>
                     <Route
