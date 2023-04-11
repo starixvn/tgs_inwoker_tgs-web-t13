@@ -193,12 +193,7 @@ class LiveGame extends Component {
       Common.closePreviousPopup();
       // this.props.performBalanceRefresh();
       Common.PopupCenter(
-        "/" +
-          i18n.language +
-          "/joingame/" +
-          GameTypeEnum.LIVELOBBY +
-          "/" +
-          params.toUpperCase(),
+        "/joingame/" + GameTypeEnum.LIVELOBBY + "/" + params.toUpperCase(),
         params.toUpperCase(),
         1280,
         720

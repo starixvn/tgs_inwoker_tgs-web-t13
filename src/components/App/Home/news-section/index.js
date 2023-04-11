@@ -104,14 +104,24 @@ const NewsSection = ({ news, handleNavigateClick }) => {
         <TitleHolder>{i18n.t("T13.topNews")}</TitleHolder>
       </TitleGapper>
       <NewsContainer>
-        {newsList.slice(0,6).map((item, index) => {
+        {newsList.slice(0, 6).map((item, index) => {
           return (
             <NewsItem
               onClick={() => {
-                handleNavigateClick("/" + i18n.language + "/news/" + item.id);
+                handleNavigateClick("/news/" + item.id);
               }}
             >
-              <NewsImageContainer><NewsImage alt={item.image} src={process.env.PUBLIC_URL + "/assets/images/news/" + item.image + ".jpg"}></NewsImage></NewsImageContainer>
+              <NewsImageContainer>
+                <NewsImage
+                  alt={item.image}
+                  src={
+                    process.env.PUBLIC_URL +
+                    "/assets/images/news/" +
+                    item.image +
+                    ".jpg"
+                  }
+                ></NewsImage>
+              </NewsImageContainer>
               <NewsTitle>{item.title}</NewsTitle>
               <NewsContent>{item.content}</NewsContent>
             </NewsItem>
@@ -120,7 +130,7 @@ const NewsSection = ({ news, handleNavigateClick }) => {
       </NewsContainer>
       <ButtonMore
         onClick={() => {
-          handleNavigateClick("/" + i18n.language + "/news/");
+          handleNavigateClick("/news/");
         }}
       >
         {i18n.t("common.more")}

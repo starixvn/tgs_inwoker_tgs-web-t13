@@ -183,7 +183,7 @@ const Maintenance = (props) => {
 
   useEffect(() => {
     if (!props.general.isMaintenance && props.isGameMaintenance !== true) {
-      AppHistory.push("/" + i18n.language);
+      AppHistory.push("/");
     }
   });
   const handleCSClick = (userid, name = "", question, email = "") => {
@@ -338,13 +338,13 @@ const Maintenance = (props) => {
               );
             }
           })()}
-                     <Button
-                  onClick={() => {
-                    setOpen(true);
-                  }}
-                >
-                  {i18n.t("panel.im")}
-                </Button>
+          <Button
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            {i18n.t("panel.im")}
+          </Button>
         </ButtonContainer>
 
         <CustomModal open={open}>
