@@ -90,7 +90,7 @@ const Chip = styled.div`
 
 function Footer(props) {
   const navigateTo = (to) => {
-    props.history.push("/" + i18n.language + "/" + to);
+    props.history.push("/" + to);
     window.scroll({ top: 0, behavior: "smooth" });
   };
 
@@ -99,12 +99,9 @@ function Footer(props) {
       <SectionTitle>{i18n.t("T13.gamingLicense")}</SectionTitle>
       <AboutUsContainer>
         <AboutUsLogo img={img}></AboutUsLogo>
-        {i18n
-          .t("T13.footer.copyright")
-          .replace(/{brand}/g, config.brandName)}
+        {i18n.t("T13.footer.copyright").replace(/{brand}/g, config.brandName)}
         <br />
-        {i18n
-          .t("T13.footer.rights")}
+        {i18n.t("T13.footer.rights")}
         <br />
         Version {process.env.REACT_APP_VERSION}
       </AboutUsContainer>
@@ -151,17 +148,19 @@ function Footer(props) {
     <Section>
       <SectionTitle>{i18n.t("T13.partners")}</SectionTitle>
       <ChipContainer>
-        {providers
-          .map((item, index) => (
-            <Chip key={index}>{item.name}</Chip>
-          ))}
+        {providers.map((item, index) => (
+          <Chip key={index}>{item.name}</Chip>
+        ))}
       </ChipContainer>
     </Section>
   );
   return (
     <Container hide={props.hide}>
       <AboutUs img={GamingLicensePNG} />
-      <QuickLinks navigateTo={navigateTo} performOpenSupportModal={props.performOpenSupportModal} />
+      <QuickLinks
+        navigateTo={navigateTo}
+        performOpenSupportModal={props.performOpenSupportModal}
+      />
       <Partners providers={props.game.providerList} />
     </Container>
   );
