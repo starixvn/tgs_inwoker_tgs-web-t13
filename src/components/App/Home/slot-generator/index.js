@@ -2,7 +2,10 @@ import React, { useRef } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 
-import { GameTypeEnum, SlotFilterType } from "../../../../api-services/utils/Enum";
+import {
+  GameTypeEnum,
+  SlotFilterType,
+} from "../../../../api-services/utils/Enum";
 import config from "../../../../config/config";
 import { AppHistory } from "../../../../history/History";
 import Common from "../../../../utils/Common";
@@ -48,7 +51,7 @@ const TitleMore = styled.div`
     width: 30px;
     height: 30px;
     background: url(${process.env.PUBLIC_URL +
-      "/assets/images/pcHomePage/right-arrow.svg"});
+    "/assets/images/pcHomePage/right-arrow.svg"});
     background-repeat: no-repeat;
     background-size: contain;
   }
@@ -80,78 +83,79 @@ const GameList = styled.div`
   grid-template-columns: repeat(6, 1fr);
 `;
 
-
-const SlotGenerator = React.memo(({ title, type, category, commonprops, list }) => {
-  const GameContainer = ({ name, img, trigger }) => {
-    return (
-      <ImagePiece onClick={trigger}>
+const SlotGenerator = React.memo(
+  ({ title, type, category, commonprops, list }) => {
+    const GameContainer = ({ name, img, trigger }) => {
+      return (
+        <ImagePiece onClick={trigger}>
           <GameImage img={img} />
-      </ImagePiece>
+        </ImagePiece>
+      );
+    };
+
+    const handleJoinGameClick = (gpcode, gpid, gametype) => {
+      const type =
+        gametype === GameTypeEnum.FISH
+          ? "fish"
+          : gametype === GameTypeEnum.SLOT
+          ? "slots"
+          : "electron";
+      if (commonprops.token) {
+        Common.closePreviousPopup();
+
+        AppHistory.push(`/${type}/play/${gpcode}/${gpid}`);
+      } else {
+        commonprops.showLogin(true);
+      }
+    };
+
+    const navigateTo = () => {
+      const gametype =
+        type === GameTypeEnum.FISH
+          ? "fish"
+          : type === GameTypeEnum.SLOT
+          ? "slots"
+          : "electron";
+      AppHistory.push(`/${gametype}`, {
+        category: category,
+      });
+    };
+
+    return (
+      <SlotContent>
+        <TitleGapper>
+          <TitleIcon></TitleIcon>
+          <TitleHolder>{i18n.t(title)}</TitleHolder>
+          <TitleMore
+            onClick={() => {
+              navigateTo();
+            }}
+          >
+            {i18n.t("web.slotGame.more")}
+          </TitleMore>
+        </TitleGapper>
+        <GameList>
+          {list &&
+            list.slice(0, 12).map((data, index) => {
+              return (
+                <GameContainer
+                  key={index}
+                  name={data.name}
+                  img={`${
+                    config.sourceUrl
+                  }${data.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
+                    data.code
+                  }.jpg`}
+                  trigger={() =>
+                    handleJoinGameClick(data.gpcode, data.id, data.type)
+                  }
+                />
+              );
+            })}
+        </GameList>
+      </SlotContent>
     );
-  };
-
-  const handleJoinGameClick = (gpcode, gpid, gametype) => {
-    const type =
-      gametype === GameTypeEnum.FISH
-        ? "fish"
-        : gametype === GameTypeEnum.SLOT
-        ? "slots"
-        : "electron";
-    if (commonprops.token) {
-      Common.closePreviousPopup();
-
-      AppHistory.push(`/${i18n.language}/${type}/play/${gpcode}/${gpid}`);
-    } else {
-      commonprops.showLogin(true);
-    }
-  };
-
-  const navigateTo = () => {
-    const gametype =
-      type === GameTypeEnum.FISH
-        ? "fish"
-        : type === GameTypeEnum.SLOT
-        ? "slots"
-        : "electron";
-    AppHistory.push(`/${i18n.language}/${gametype}`, {
-      category: category,
-    });
-  };
-
-  return (
-    <SlotContent>
-      <TitleGapper>
-        <TitleIcon></TitleIcon>
-        <TitleHolder>{i18n.t(title)}</TitleHolder>
-        <TitleMore
-          onClick={() => {
-            navigateTo();
-          }}
-        >
-          {i18n.t("web.slotGame.more")}
-        </TitleMore>
-      </TitleGapper>
-      <GameList>
-        {list &&
-          list.slice(0,12).map((data, index) => {
-            return (
-              <GameContainer
-                key={index}
-                name={data.name}
-                img={`${
-                  config.sourceUrl
-                }${data.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
-                  data.code
-                }.jpg`}
-                trigger={() =>
-                  handleJoinGameClick(data.gpcode, data.id, data.type)
-                }
-              />
-            );
-          })}
-      </GameList>
-    </SlotContent>
-  );
-});
+  }
+);
 
 export default SlotGenerator;
