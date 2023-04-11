@@ -406,9 +406,9 @@ class App extends Component {
     const path = this.props.location.pathname;
     const pathArray = path.split("/");
     if (
-      pathArray[2] === undefined ||
-      pathArray[2] === null ||
-      pathArray[2] === ""
+      pathArray[1] === undefined ||
+      pathArray[1] === null ||
+      pathArray[1] === ""
     ) {
       return true;
     } else {
