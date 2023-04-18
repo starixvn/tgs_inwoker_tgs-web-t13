@@ -285,14 +285,7 @@ class Fishing extends Component {
     if (this.props.token) {
       Common.closePreviousPopup();
       Common.PopupCenter(
-        "/" +
-          i18n.language +
-          "/joingame/" +
-          GameTypeEnum.FISH +
-          "/" +
-          GameEnum.JDB +
-          "/" +
-          gid,
+        "/joingame/" + GameTypeEnum.FISH + "/" + GameEnum.JDB + "/" + gid,
         1280,
         720
       );

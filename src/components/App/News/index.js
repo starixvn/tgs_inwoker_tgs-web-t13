@@ -109,7 +109,7 @@ class News extends Component {
 
   handleNavigateClick = (id) => {
     AppHistory.push({
-      pathname: "/" + i18n.language + "/news/" + id,
+      pathname: "/news/" + id,
     });
   };
 

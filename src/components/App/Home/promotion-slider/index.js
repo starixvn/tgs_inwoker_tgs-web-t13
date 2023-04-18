@@ -58,7 +58,7 @@ const PromotionItem = styled.div`
   height: 162px;
   position: relative;
   border-radius: 25px;
-  cursor: pointer;  
+  cursor: pointer;
 `;
 
 const PromotionSlider = ({ promotionList, handleNavigateClick }) => {
@@ -69,7 +69,7 @@ const PromotionSlider = ({ promotionList, handleNavigateClick }) => {
     arrows: true,
     variableWidth: true,
     centerPadding: "20px",
-    autoplay: true
+    autoplay: true,
   };
   return (
     <Container>
@@ -96,9 +96,7 @@ const PromotionSlider = ({ promotionList, handleNavigateClick }) => {
                     checkLocale ? checkLocale.desktopBanner : data.desktopBanner
                   }
                   onClick={() => {
-                    handleNavigateClick(
-                      "/" + i18n.language + "/promotion/" + data.id
-                    );
+                    handleNavigateClick("/promotion/" + data.id);
                   }}
                 ></PromotionItem>
               </div>
