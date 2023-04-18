@@ -109,7 +109,7 @@ class NewsDetails extends Component {
       }
     }
     if (index === -1) {
-      AppHistory.replace("/" + i18n.language + "/news");
+      AppHistory.replace("/news");
     }
 
     this.state = {
@@ -121,7 +121,7 @@ class NewsDetails extends Component {
 
   componentDidMount() {
     if (this.props.match.params.id == null) {
-      AppHistory.replace("/" + i18n.language + "/news");
+      AppHistory.replace("/news");
     }
   }
 
@@ -160,7 +160,7 @@ class NewsDetails extends Component {
       newId = this.state.newsList[newIndex].id;
     }
     if (newId !== "") {
-      AppHistory.push("/" + i18n.language + "/news/" + newId);
+      AppHistory.push("/news/" + newId);
     }
   };
 

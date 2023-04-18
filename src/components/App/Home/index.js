@@ -164,12 +164,10 @@ class Home extends Component {
           if (!this.props.token) {
             this.props.showLogin(true);
           } else {
-            this.props.history.push(
-              `/${i18n.language}/sports/play/${gameCode}/${gameType}`
-            );
+            this.props.history.push(`/sports/play/${gameCode}/${gameType}`);
           }
         } else {
-          this.props.history.push(`/${i18n.language}/${path}/${gameCode}`);
+          this.props.history.push(`/${path}/${gameCode}`);
         }
       } else {
         // Common.PopupCenter(url, gameCode, 1280, 720);
@@ -197,10 +195,17 @@ class Home extends Component {
           />
         </SectionContainer>
         <SliderContainer>
-          <PromotionSlider promotionList={this.props.general.promotionList.items} handleNavigateClick={this.handleNavigateClick}></PromotionSlider>
+          <PromotionSlider
+            promotionList={this.props.general.promotionList.items}
+            handleNavigateClick={this.handleNavigateClick}
+          ></PromotionSlider>
         </SliderContainer>
-        <NewsSection handleNavigateClick={this.handleNavigateClick}></NewsSection>
-        <BrandSection logo={this.props.general.brand.desktopLogoUrl}></BrandSection>
+        <NewsSection
+          handleNavigateClick={this.handleNavigateClick}
+        ></NewsSection>
+        <BrandSection
+          logo={this.props.general.brand.desktopLogoUrl}
+        ></BrandSection>
         {(() => {
           if (
             config.features.PopupAnnouncement &&

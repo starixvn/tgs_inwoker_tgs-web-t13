@@ -23,8 +23,8 @@ import Common from "../../../utils/Common";
 import GameLister from "../Home/game-lister";
 import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
-import ExpandMoreOutlined from '@material-ui/icons/ExpandMoreOutlined';
-import SearchOutlined from '@material-ui/icons/SearchOutlined';
+import ExpandMoreOutlined from "@material-ui/icons/ExpandMoreOutlined";
+import SearchOutlined from "@material-ui/icons/SearchOutlined";
 
 const Container = styled.div`
   width: 100%;
@@ -36,13 +36,15 @@ const Banner = styled.div`
   width: 1920px;
   height: 600px;
   background: url(${(props) =>
-      process.env.PUBLIC_URL + `/assets/images/pcGamePage/slots/background-` + (props.type === GameTypeEnum.FISH
-      ? "fish.png"
-      : props.type === GameTypeEnum.SLOT
-      ? "slots.png"
-      : props.type === GameTypeEnum.TABLEGAME
-      ? "electron.jpg"
-      : " ")})
+      process.env.PUBLIC_URL +
+      `/assets/images/pcGamePage/slots/background-` +
+      (props.type === GameTypeEnum.FISH
+        ? "fish.png"
+        : props.type === GameTypeEnum.SLOT
+        ? "slots.png"
+        : props.type === GameTypeEnum.TABLEGAME
+        ? "electron.jpg"
+        : " ")})
     no-repeat center;
   margin: 0 auto;
 `;
@@ -193,8 +195,7 @@ const CategoryContainer = styled.div`
       background: #CF2029;`
       : `  
       border: 1px solid #27273f;
-      background: #27273f;`
-    }
+      background: #27273f;`}
 `;
 const CategoryText = styled.div`
   margin-top: 8px;
@@ -204,12 +205,12 @@ const CustomFormControl = withStyles((theme) => ({
     "& .MuiSelect-select": {
       fontSize: "16px",
       color: "#ffffff",
-      fontFamily: 'Montserrat',
+      fontFamily: "Montserrat",
     },
     "& .MuiSelect-select > option": {
       fontSize: "14px",
       color: "#1b1d30",
-      fontFamily: 'Montserrat',
+      fontFamily: "Montserrat",
     },
     "& .MuiSelect-icon": {
       color: "#ffffff",
@@ -227,7 +228,7 @@ const CustomFormControl = withStyles((theme) => ({
 }))(FormControl);
 
 const SearchFilterItemContainer = styled.div`
-  display: flex;  
+  display: flex;
   width: 185px;
   height: 40px;
   border-radius: 25px;
@@ -246,12 +247,12 @@ const SearchFilterItemInput = styled.input`
   color: #ffffff;
   font-size: 16px;
   width: 130px;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   ::placeholder,
   ::-webkit-input-placeholder {
     color: #ffffff;
     font-size: 16px;
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
   }
   :-ms-input-placeholder {
     color: #ffffff;
@@ -453,7 +454,7 @@ class Slots extends Component {
       this.props.location.state !== undefined &&
       this.props.location.state !== null &&
       this.props.location.state.category !== undefined &&
-      this.props.location.state.category !== null 
+      this.props.location.state.category !== null
     ) {
       this.props.history.replace(this.props.location.pathname, null);
       window.scrollTo({ top: 200, behavior: "smooth" });
@@ -527,7 +528,7 @@ class Slots extends Component {
         : this.props.match.url.indexOf("slots") >= 0
         ? "slots"
         : "electron";
-    AppHistory.push(`/${i18n.language}/${type}/${platform}`);
+    AppHistory.push(`/${type}/${platform}`);
   };
   handleFilterGameClick = (filterType) => {
     this.setState({ ...this.state, filterGame: filterType, page: 1 });
@@ -594,9 +595,7 @@ class Slots extends Component {
     if (this.props.token) {
       Common.closePreviousPopup();
       // this.props.performBalanceRefresh();
-      this.props.history.push(
-        `/${i18n.language}/${type}/play/${gpcode}/${gpid}`
-      );
+      this.props.history.push(`/${type}/play/${gpcode}/${gpid}`);
     } else {
       this.props.showLogin(true);
     }

@@ -75,7 +75,7 @@ const PromotionItem = styled.div`
   transition: all 1s;
   &:hover {
     transform: scale(1.1);
-    filter: drop-shadow(1px 10px 10px #000000C4);
+    filter: drop-shadow(1px 10px 10px #000000c4);
   }
 `;
 
@@ -149,14 +149,14 @@ class Promotion extends Component {
         ].indexOf(promotionType) >= 0
       ) {
         AppHistory.push({
-          pathname: "/" + i18n.language + "/account/deposit/" + id,
+          pathname: "/account/deposit/" + id,
         });
       }
     }
   };
   handlePromotionClick = (id, promotionType) => {
     AppHistory.push({
-      pathname: "/" + i18n.language + "/promotion/" + id,
+      pathname: "/promotion/" + id,
     });
   };
   render() {

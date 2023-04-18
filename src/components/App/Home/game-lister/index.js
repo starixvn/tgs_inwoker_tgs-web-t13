@@ -71,10 +71,7 @@ const GameLister = ({ game }) => {
   var currentPage = window.location.pathname.split("/")[2];
 
   const filterGameList = (item) => {
-    if (
-      item.include &&
-      item.include !== undefined
-    ) {
+    if (item.include && item.include !== undefined) {
       game.homePageGameList.map((game) => {
         if (item.include.indexOf(game.game_platform_name) >= 0) {
           game.type = item.gameType[0];
@@ -91,23 +88,22 @@ const GameLister = ({ game }) => {
   return (
     <GameMenuContainer>
       {SortedMenuList.map((item, index) => {
-        var list = filterGameList(item)
-          .sort((a, b) => {
-            if (config.features.LiveGame_Sorting_SKY) {
-              var sortDGFirst = ["DG"];
-              return (
-                sortDGFirst.indexOf(b.abbreviation) -
-                sortDGFirst.indexOf(a.abbreviation)
-              );
-            } else return b - a;
-          });
+        var list = filterGameList(item).sort((a, b) => {
+          if (config.features.LiveGame_Sorting_SKY) {
+            var sortDGFirst = ["DG"];
+            return (
+              sortDGFirst.indexOf(b.abbreviation) -
+              sortDGFirst.indexOf(a.abbreviation)
+            );
+          } else return b - a;
+        });
 
         if (list.length > 0) {
           return (
             <GameMenu
               active={currentPage === item.path}
               onClick={() => {
-                AppHistory.push("/" + i18n.language + "/" + item.path);
+                AppHistory.push("/" + item.path);
               }}
             >
               <GameMenuIcon src={item.gameType}></GameMenuIcon>

@@ -367,7 +367,7 @@ const AnotherFloatPanel = (props) => {
         {config.features.HaveDownloadFeature && (
           <SidePanel
             onClick={() => {
-              AppHistory.replace("/" + i18n.language + "/download");
+              AppHistory.replace("/download");
             }}
             src2={PanelDownloadPNG2}
           >
