@@ -241,7 +241,7 @@ class LiveGame extends Component {
                       process.env.PUBLIC_URL +
                       "/assets/images/pcGamePage/live/" +
                       item.abbreviation.toLowerCase() +
-                      ".jpg"
+                      ".png"
                     }
                     onClick={() => {
                       this.handleJoinGameClick(item.abbreviation);
