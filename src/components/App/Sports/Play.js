@@ -145,12 +145,14 @@ class Play extends Component {
       loading: true,
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.updateIframeLanguage = this.updateIframeLanguage.bind(this);
     this.myRef = React.createRef();
   }
 
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions);
+    window.addEventListener("message", this.updateIframeLanguage);
     // document.getElementsByTagName("body")[0].style.overflow = "hidden";
     window.scrollTo(0, 0);
     this.JoinGame(this.props.match.params.params);
@@ -174,6 +176,7 @@ class Play extends Component {
   componentWillUnmount() {
     document.getElementsByTagName("body")[0].style.overflow = "";
     window.removeEventListener("resize", this.updateWindowDimensions);
+    window.removeEventListener("message", this.updateIframeLanguage);
     if (document.getElementById("audio") != null)
       document.getElementById("audio").volume = 1.0;
   }
@@ -243,6 +246,22 @@ class Play extends Component {
         }
       );
   };
+  updateIframeLanguage(event) {
+    // use these param to control change accordingly
+    console.log(event.data.module); // Sport.SetLanguage
+    console.log(event.data.params); // { language: 'language-code') // en, zh-cn, th-th, id-id, jp, ko-kr, vi-vn
+    if (event.data.module && event.data.params) {
+      if (
+        event.data.module === "Sport.SetLanguage" &&
+        event.data.params.language
+      ) {
+        const url = new URL(this.myRef.current.src);
+        const searchParams = url.searchParams;
+        searchParams.set("lang", event.data.params.language);
+        this.myRef.current.src = url.href;
+      }
+    }
+  }
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
