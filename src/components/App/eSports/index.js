@@ -181,7 +181,7 @@ class ESports extends Component {
                       process.env.PUBLIC_URL +
                       "/assets/images/pcGamePage/esports/" +
                       item.abbreviation.toLowerCase() +
-                      ".jpg"
+                      ".png"
                     }
                     onClick={() => {
                       this.handleJoinGameClick(item.abbreviation);
