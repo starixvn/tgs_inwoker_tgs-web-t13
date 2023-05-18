@@ -199,7 +199,7 @@ class Cockfight extends Component {
                       process.env.PUBLIC_URL +
                       "/assets/images/pcGamePage/cockfight/" +
                       item.abbreviation.toLowerCase() +
-                      ".jpg"
+                      ".png"
                     }
                     onClick={() => {
                       this.handleJoinGameClick(item.gpcode, item.type);

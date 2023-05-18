@@ -196,7 +196,7 @@ class Sports extends Component {
                       process.env.PUBLIC_URL +
                       "/assets/images/pcGamePage/sports/" +
                       item.abbreviation.toLowerCase() +
-                      ".jpg"
+                      ".png"
                     }
                     onClick={() => {
                       this.handleJoinGameClick(item.gpcode, item.type);
