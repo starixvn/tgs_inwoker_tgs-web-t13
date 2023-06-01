@@ -10,7 +10,7 @@ import GamingLicensePNG from "../../assets/images/gaming-license.png";
 const Container = styled.div`
   width: 1280px;
   margin: 0 auto;
-  height: 577px;
+  min-height: 577px;
   display: flex;
   justify-content: space-between;
 `;
