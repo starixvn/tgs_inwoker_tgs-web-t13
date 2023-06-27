@@ -35,11 +35,9 @@ export function downloadImage(url, name) {
     })
     .catch((e) => console.log("Error: " + e.message));
 }
-
 function removeSpace(str) {
-  return str.replace(/^\s+|\s+$/g, "");
+  return str && str.replace(/^\s+|\s+$/g, "");
 }
-
 export const utility = {
   imagePathGenerator,
   copy,
