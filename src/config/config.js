@@ -24,6 +24,7 @@ const config = {
     : "zh-CN",
   affiliateId: window?.env?.affiliateId || "",
   features: featureList["default"],
+  configUrl: window?.env?.configUrl || "https://app12.srvptt.com/",
 };
 
 export default config;
