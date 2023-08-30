@@ -49,6 +49,7 @@ export const wapT13 = {
   buttonWapBoxShadow: "none",
 
   inputBackground: "transparent",
+  wapBorderRadius: "50px",
 };
 
 export const wapT14 = {
