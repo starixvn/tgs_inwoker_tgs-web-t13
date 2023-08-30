@@ -20,6 +20,18 @@ const languageSwitcher = (language) => {
 export const GlobalStyles = createGlobalStyle`
 
 
+input:-webkit-autofill {
+  -webkit-text-fill-color: ${({ theme }) => {
+    return theme.textfieldColor ? theme.textfieldColor : "#fff";
+  }};
+}
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color:  ${({ theme }) => {
+    return theme.textfieldColor ? theme.textfieldColor : "#fff";
+  }};
+}
+
+
 @font-face {
   font-family: 'Montserrat';
   src: URL(${
