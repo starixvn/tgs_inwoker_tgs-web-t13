@@ -47,6 +47,9 @@ export const wapT13 = {
   wapPrimary: "#fff",
   wapSecondary: "#fff",
   buttonWapBoxShadow: "none",
+
+  wapBorderRadius: "50px",
+  inputBackground: "transparent",
 };
 
 export const themeList = {
