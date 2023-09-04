@@ -5,6 +5,7 @@ const config = {
   baseUrl:
     window?.env?.apiUrl ||
     (window?.env ? "/api/" : "https://stg-t1.rpgp.cc/api/"),
+    // (window?.env ? "/api/" : "https://dev-t1.rpgp.cc/api/"),
   client:
     window?.env?.client ||
     "uc0C5tXKanr6gN9P7HqlTQ1AGwUFJhg8jEzuFhCuHEC0E1QcCfZYrH",
@@ -13,7 +14,8 @@ const config = {
   brandName: window?.env?.brandName
     ? window?.env?.brandName
     : window?.env?.brand || "GPI",
-  theme: window?.env?.theme || "wapT13",
+  // theme: window?.env?.theme || "wapT13",
+  theme: window?.env?.theme || "wapT13v2",
   wapVersion: template,
   accountTemplate: 13,
   sourceUrl: window?.env?.sourceUrl || "https://images.srvptt.com/",

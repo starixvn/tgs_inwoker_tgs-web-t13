@@ -11,6 +11,7 @@ const ArrowDownImg = styled.img`
   height: 8px;
   margin-left: 10px;
   margin-right: 10px;
+  flex: 1;
 `;
 
 const TheButtonWrapper = styled.div`
@@ -18,6 +19,18 @@ const TheButtonWrapper = styled.div`
   user-select: none;
   display: flex;
   align-items: center;
+  justify-content: flex-between;
+  height: 54px;
+  width: 94px;
+`;
+
+const Flags = styled.div`
+  height: 54px;
+  width: 54px;
+  border-radius: 50%;
+  background: no-repeat center/cover
+    ${({ lang }) =>
+      `url(${process.env.PUBLIC_URL + `/assets/images/flag/${lang}.png`})`};
 `;
 
 const LanguageChanger = ({ language, changeLanguage, useAcronym }) => {
@@ -43,18 +56,12 @@ const LanguageChanger = ({ language, changeLanguage, useAcronym }) => {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        {
-          //     <Flags
-          //     src={
-          //       process.env.PUBLIC_URL +
-          //       `/assets/images/language/` +
-          //       i18n.language +
-          //       ".png"
-          //     }
-          //   />
-        }
-        { !useAcronym ? i18n.t("lang." + i18n.language) : toAcronym(i18n.language)}
-        { !useAcronym && <ArrowDownImg src={ArrowDown} />}
+        <Flags lang={i18n.language} />
+        <ArrowDownImg src={ArrowDown} />
+        {/* {!useAcronym
+          ? i18n.t("lang." + i18n.language)
+          : toAcronym(i18n.language)}
+        {!useAcronym && <ArrowDownImg src={ArrowDown} />} */}
       </TheButtonWrapper>
       <Menu
         id="simple-menu"

@@ -1,4 +1,5 @@
 import { copyImageToClipboard } from "copy-image-clipboard";
+import { GameTypeEnum } from "../api-services/utils/Enum";
 
 function imagePathGenerator(path) {
   return `${process.env.PUBLIC_URL}/assets/images/${path}`;
@@ -38,10 +39,43 @@ export function downloadImage(url, name) {
 function removeSpace(str) {
   return str && str.replace(/^\s+|\s+$/g, "");
 }
+
+function getGameTypeStr(num) {
+  switch (num) {
+    case GameTypeEnum.FISH:
+      return "fish";
+    case GameTypeEnum.LIVE:
+    case GameTypeEnum.LIVELOBBY:
+      return "live";
+    case GameTypeEnum.LOTTERY:
+    case GameTypeEnum.LOTTERYLOBBY:
+      return "lottery";
+    case GameTypeEnum.QIPAI:
+    case GameTypeEnum.QIPAILOBBY:
+      return "chess";
+    case GameTypeEnum.SLOT:
+      return "slot";
+    case GameTypeEnum.RNGSPORTS:
+    case GameTypeEnum.SPORTS:
+      return "sports";
+    case GameTypeEnum.ESPORTS:
+      return "esports";
+    case GameTypeEnum.TIGERSLOT:
+      return "slot";
+    case GameTypeEnum.TABLEGAME:
+      return "table";
+    case GameTypeEnum.COCKFIGHT:
+      return "cockfight";
+    default:
+      return "";
+  }
+}
+
 export const utility = {
   imagePathGenerator,
   copy,
   copyImage,
   downloadImage,
   removeSpace,
+  getGameTypeStr,
 };

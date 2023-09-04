@@ -12,17 +12,18 @@ import GameLister from "../Home/game-lister";
 import { GameService } from "../../../api-services/services/GameService";
 import { AppHistory } from "../../../history/History";
 const Container = styled.div`
-  width: 100%;
+  width: 1280px;
   height: auto;
   min-height: 770px;
   position: relative;
 `;
 const Banner = styled.div`
-  width: 1920px;
+  width: 1280px;
   height: 600px;
   background: url(${(props) =>
       process.env.PUBLIC_URL}/assets/images/pcGamePage/cockfight/background.png)
     no-repeat center;
+  background-size: 100% 100%;
   margin: 0 auto;
 `;
 const GPLogo = styled.div`

@@ -24,10 +24,11 @@ import GameLister from "./game-lister";
 import PromotionSlider from "./promotion-slider";
 import NewsSection from "./news-section";
 import BrandSection from "./brand-section";
+import GameGenerator from "./game-generator";
 
 const HomeContainer = styled.div`
-  width: 100%;
   overflow: hidden;
+  width: 1280px;
 `;
 const SliderContainer = styled.div`
   position: relative;
@@ -35,6 +36,7 @@ const SliderContainer = styled.div`
 
 const MarqueeContainer = styled.div`
   width: 1280px;
+  height: 50px;
   background-color: #27273f;
   border-radius: 25px;
   margin: 15px auto;
@@ -51,7 +53,6 @@ const SectionContainer = styled.div`
 class Home extends Component {
   constructor(props) {
     super(props);
-
     var displayGame = this.getHomePageDisplayGame();
 
     this.state = {
@@ -63,7 +64,6 @@ class Home extends Component {
       showPromotion: false,
     };
   }
-
   componentDidMount() {
     // let promotionId = "";
     // let promotionChannelId = "";
@@ -110,6 +110,7 @@ class Home extends Component {
       this.props.game.homePageGameList.length > 0
     ) {
       var displayGame = this.getHomePageDisplayGame();
+      // setState() : this component and its children need to be re-rendered with the updated state.
       this.setState({
         ...this.state,
         wm: displayGame.wm,
@@ -188,21 +189,25 @@ class Home extends Component {
         <SliderContainer>
           <Slider list={this.props.ui.board_list}></Slider>
         </SliderContainer>
+        {!config.features.HideMarquee && (
+          <MarqueeContainer>
+            <Marquee></Marquee>
+          </MarqueeContainer>
+        )}
+        <GameLister game={this.props.game}></GameLister>
         <SectionContainer>
           <JackpotSection
             showLogin={this.props.showLogin}
             token={this.props.token}
           />
         </SectionContainer>
-        <SliderContainer>
-          <PromotionSlider
-            promotionList={this.props.general.promotionList.items}
-            handleNavigateClick={this.handleNavigateClick}
-          ></PromotionSlider>
-        </SliderContainer>
-        <NewsSection
+        <GameGenerator
+          showLogin={this.props.showLogin}
+          token={this.props.token}
+          game={this.props.game}
+          gameType={GameTypeEnum.LIVELOBBY}
           handleNavigateClick={this.handleNavigateClick}
-        ></NewsSection>
+        ></GameGenerator>
         <BrandSection
           logo={this.props.general.brand.desktopLogoUrl}
         ></BrandSection>

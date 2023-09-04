@@ -2,10 +2,16 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Common from "../../../../../utils/Common";
 import config from "../../../../../config/config";
+import { AppHistory } from "../../../../../history/History";
 const ContentHolder = styled.div`
   display: flex;
-  flex-direction: row;
-  gap: 40px;
+  flex-direction: column;
+  align-items: center;
+  height: 415px;
+
+  & > div:nth-child(even) {
+    background: ${({ theme }) => theme.pcGameWinnerListSecondary};
+  }
 `;
 
 const Title = styled.div`
@@ -51,41 +57,81 @@ const TableData = styled(TableLayout)`
 
 const WinnerListItem = styled.div`
   display: grid;
-  grid-template-columns: 120px 1fr 1fr;
+  grid-template-columns: 120px 1fr 1fr 120px;
   justify-content: space-evenly;
   align-items: center;
-  background: #27273f;
+  background: ${({ theme }) => theme.pcGameWinnerListPrimary};
   color: #fff;
-  width: 400px;
-  height: 120px;
-  border-radius: 25px;
+  width: 100%;
+  max-height: 100px;
+  padding: 10px 10px;
 `;
 
 const WinnerListItemImage = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   background-image: url(${(props) => props.img});
   background-size: contain;
   background-repeat: no-repeat;
-  border-radius: 20px;
-  margin: auto;
+  border-radius: 50%;
+  border: 1px solid white;
 `;
 const WinnerListItemDescription = styled.div`
   display: flex;
   flex-direction: column;
   align-self: center;
-  & > div{
+  & > div {
     font-size: 16px;
+  }
+
+  & .name {
+    font-weight: 700;
+    font-size: 20px;
+    padding: 10px 0;
   }
 `;
 const WinnerListItemPrize = styled.div`
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.primaryText};
   font-weight: 600;
-  font-size: 22px;
   align-self: center;
+
+  & p {
+    margin: 0;
+  }
+
+  & .prize {
+    font-size: 25px;
+  }
+
+  & .currency-code {
+    color: ${({ theme }) => theme.pcGameListerPrimary};
+    padding-right: 12px;
+  }
 `;
 
-const Winners = React.memo(({ title }) => {
+const PlayButtonContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PlayButton = styled.button`
+  color: ${({ theme }) => theme.primaryText};
+  background: transparent;
+  border: 1px solid ${({ theme }) => theme.pcGameListerPrimary}}
+  height: 30px;
+  padding: 5px 20px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  &:hover {
+    background: ${({ theme }) => theme.pcGameListerPrimary};
+  }
+`;
+
+const Winners = React.memo(({ commonprops }) => {
   const playerName = [
     "kin9123***",
     "morisp***",
@@ -207,7 +253,7 @@ const Winners = React.memo(({ title }) => {
   const [winnerList, setWinnerList] = useState([]);
   var newList = [...winnerList];
 
-  Array.from({ length: 3 }, () =>
+  Array.from({ length: 5 }, () =>
     newList.push({
       name: randomize(playerName),
       game: randomize(gameList),
@@ -216,8 +262,7 @@ const Winners = React.memo(({ title }) => {
   );
 
   useEffect(() => {
-    if(winnerList<=0)
-    {
+    if (winnerList <= 0) {
       setWinnerList(newList);
     }
     const updateList = () => {
@@ -247,9 +292,17 @@ const Winners = React.memo(({ title }) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
+  const handleJoinGameClick = () => {
+    if (!commonprops.token) {
+      commonprops.showLogin(true);
+    } else {
+      AppHistory.push("/slots");
+    }
+  };
+
   return (
     <ContentHolder>
-      {winnerList.slice(0, 3).map((data, index) => {
+      {winnerList.slice(0, 5).map((data, index) => {
         return (
           <WinnerListItem>
             <WinnerListItemImage
@@ -260,10 +313,23 @@ const Winners = React.memo(({ title }) => {
               }.jpg`}
             ></WinnerListItemImage>
             <WinnerListItemDescription>
-              <div>{data.name}</div>
+              <div class="name">{data.name}</div>
               <div>{data.game.name}</div>
             </WinnerListItemDescription>
-            <WinnerListItemPrize>₱ {data.amount}</WinnerListItemPrize>
+            <WinnerListItemPrize>
+              <div>
+                <p>just won</p>
+                <p class="prize">
+                  <span class="currency-code">PHP</span>
+                  {data.amount}
+                </p>
+              </div>
+            </WinnerListItemPrize>
+            <PlayButtonContainer>
+              <PlayButton onClick={() => handleJoinGameClick()}>
+                PLAY
+              </PlayButton>
+            </PlayButtonContainer>
           </WinnerListItem>
         );
       })}

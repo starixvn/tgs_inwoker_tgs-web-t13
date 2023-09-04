@@ -15,7 +15,7 @@ import i18n from "../../utils/i18n";
 
 const Container = styled.div`
   width: 506px;
-  background: #27273f;
+  background: ${({ theme }) => theme.pcLoginBody};
   background-attachment: fixed;
   background-position: center;
   display: table;
@@ -29,6 +29,16 @@ const CloseIconContainer = styled.div`
   &:hover {
     cursor: pointer;
   }
+`;
+
+const LogoContainer = styled.div`
+  background-image: url("${({ img }) => img}");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 200px;
+  height: 90px;
+  margin: 0 auto;
 `;
 const TitleContainer = styled.div`
   text-align: center;
@@ -50,57 +60,36 @@ const FormContainer = styled.div`
   margin: 10px 78px 0 78px;
   padding: 0 3px;
 `;
-const CustomText = withStyles({
-  root: {
-    width: "350px",
-    height: "55px",
-    border: "none",
-    boxShadow: "0px 3px 8px -2px rgba(0,0,0,0.75)",
-    margin: 0,
-    marginTop: "13px",
-    WebkitTextFillColor: "#b6b6b6",
-    "& .MuiOutlinedInput-input": {
-      fontSize: "16px",
-    },
-    "& .MuiInputBase-input::-webkit-input-placeholder": {
-      fontSize: "16px",
-    },
-    "& label.Mui-focused": {
-      color: "#b6b6b6",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#b6b6b6",
-    },
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "15px",
-      "& fieldset": {
-        borderColor: "#b6b6b6",
-      },
-      "&:hover fieldset": {
-        borderColor: "#b6b6b6",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#b6b6b6",
-        borderWidth: "1px",
-      },
-    },
-    "& .PrivateNotchedOutline-root-19": {
-      top: "-4px",
-    },
-    "& .MuiInputBase-root": {
-      color: "#b6b6b6 !important",
-    },
-  },
-})(TextField);
+
+const FormInputWrap = styled.div`
+  width: 350px;
+  height: 55px;
+  border: none;
+  box-shadow: 0px 3px 8px -2px rgba(0, 0, 0, 0.75);
+  margin: 0;
+  margin-top: 13px;
+  -webkit-text-fill-color: #b6b6b6;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.pcLoginInputBackground};
+  overflow: hidden;
+  box-sizing: content-box;
+`;
+const FormInput = styled.input`
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.pcLoginInputBackground} !important;
+  padding: 0 15px;
+  border: 1px solid transparent;
+`;
 
 const ButtonLogin = styled.div`
-  margin: 35px auto 0 auto;
-  width: 250px;
-  height: 60px;
+  margin: 0 auto 0 auto;
+  width: 350px;
+  height: 55px;
   color: #fff;
   font-size: 20px;
-  border-radius: 30px;
-  background: #cf2029;
+  border-radius: 10px;
+  background: ${({ theme }) => theme.pcLoginButtonColor};
   filter: drop-shadow(1px 1px 8px #cf2029ba);
   &:hover {
     cursor: pointer;
@@ -120,20 +109,21 @@ const LinkStyle = styled.a`
   }
 `;
 const LinkRegister = styled(LinkStyle)`
-  font-weight: bold;
-  text-transform: uppercase;
+  color: ${({ theme }) => theme.pcLoginLinkColor};
 `;
 const LinkForgotPassword = styled(LinkStyle)`
-  float: right;
+  display: block;
+  padding: 15px 0;
+  color: ${({ theme }) => theme.pcLoginLinkColor};
 `;
 const EmptyBlock = styled.div`
   clear: both;
   height: 30px;
 `;
 const Description = styled.p`
-  text-align: center;
   font-size: 14px;
   color: #fff;
+  margin: 0;
 `;
 const OnlineSupportLink = styled(LinkStyle)`
   font-size: 13px;
@@ -147,8 +137,6 @@ const MiddleContainer = styled.div`
 `;
 
 const BottomContainer = styled.div`
-  display: flex;
-  height: 50px;
   align-items: center;
   justify-content: center;
   margin-bottom: 50px;
@@ -156,35 +144,24 @@ const BottomContainer = styled.div`
 `;
 
 const RememberMe = styled.div`
+  padding: 20px 0;
+`;
+
+const ProcessRegisterContainer = styled.div`
   display: flex;
-  align-items: center;
-`;
-const CustomCheck = withStyles({
-  root: {
-    width: "25px",
-    height: "25px",
-    float: "left",
-  },
-})(Checkbox);
-
-const CheckBoxUnchecked = styled.div`
-  width: 20px;
-  height: 20px;
-
-  background: ${() => {
-    return `url(${IconUncheckedPNG}) no-repeat center /
-    contain;`;
-  }};
+  gap: 10px;
 `;
 
-const CheckBoxChecked = styled.div`
-  width: 20px;
-  height: 20px;
+const CheckBoxLabel = styled.label`
+  font-size: 14px;
+  padding: 5px;
+  color: ${({ theme }) => theme.pcLoginCheckBoxLabelColor};
+`;
 
-  background: ${() => {
-    return `url(${IconCheckedPNG}) no-repeat center /
-    contain;`;
-  }};
+const CheckBoxInput = styled.input`
+  &:checked {
+    background: ${({ theme }) => theme.pcLoginCheckBoxCheckedBackground};
+  }
 `;
 
 class Login extends Component {
@@ -222,61 +199,45 @@ class Login extends Component {
           onClick={this.props.onhandleClose}
         ></CloseIconContainer>
         <div className="clear"></div>
-        <TitleContainer>{i18n.t("web.login.login")}</TitleContainer>
+        <LogoContainer
+          img={this.props.brand && this.props.brand.desktopLogoUrl}
+        ></LogoContainer>
+        {/* <TitleContainer>{i18n.t("web.login.login")}</TitleContainer> */}
         <FormContainer>
-          <CustomText
-            value={this.state.username}
-            onChange={this.handleTextFieldChange}
-            id="username"
-            placeholder={i18n.t("common.username")}
-            variant="outlined"
-            inputProps={{
-              maxLength: 16,
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment
-                  position="start"
-                  style={{ height: "30px", width: "40px" }}
-                >
-                  <img src={UserIconPNG} alt=""></img>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <CustomText
-            onChange={this.handleTextFieldChange}
-            id="password"
-            placeholder={i18n.t("common.password")}
-            variant="outlined"
-            type="password"
-            inputProps={{
-              maxLength: 20,
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment
-                  position="start"
-                  style={{ height: "30px", width: "40px" }}
-                >
-                  <img src={Password1IconPNG} alt=""></img>
-                </InputAdornment>
-              ),
-            }}
-          />
+          <FormInputWrap>
+            <FormInput
+              type="text"
+              value={this.state.username}
+              onChange={(e) => {
+                this.handleTextFieldChange(e);
+              }}
+              id="username"
+              placeholder={i18n.t("common.username")}
+              maxLength="16"
+            ></FormInput>
+          </FormInputWrap>
+          <FormInputWrap>
+            <FormInput
+              type="password"
+              value={this.state.password}
+              onChange={(e) => this.handleTextFieldChange(e)}
+              id="password"
+              placeholder={i18n.t("common.password")}
+              maxLength="20"
+            ></FormInput>
+          </FormInputWrap>
           <MiddleContainer>
             <RememberMe>
-              <CustomCheck
+              <CheckBoxInput
+                id="rememberMe"
+                type="checkbox"
                 checked={this.state.rememberMe}
-                onClick={this.handleRememberMeChange}
-                checkedIcon={<CheckBoxChecked />}
-                icon={<CheckBoxUnchecked />}
-              />
-              <LinkStyle>{i18n.t("web.login.rememberMe")}</LinkStyle>
+                onChange={(e) => this.handleRememberMeChange(e)}
+              ></CheckBoxInput>
+              <CheckBoxLabel htmlFor="rememberMe">
+                {i18n.t("web.login.rememberMe")}
+              </CheckBoxLabel>
             </RememberMe>
-            <LinkForgotPassword onClick={this.props.onhandleForgotPassword}>
-              {i18n.t("web.login.forgetPass")}
-            </LinkForgotPassword>
           </MiddleContainer>
           <ButtonLogin
             onClick={() =>
@@ -290,10 +251,15 @@ class Login extends Component {
             <ButtonLoginLabel>{i18n.t("web.login.login")}</ButtonLoginLabel>
           </ButtonLogin>
           <BottomContainer>
-            <Description>{i18n.t("T13.proceedRegister")}</Description>
-            <LinkRegister onClick={this.props.onhandleRegister}>
-              {i18n.t("wap.main.home.steps.step1")}
-            </LinkRegister>
+            <LinkForgotPassword onClick={this.props.onhandleForgotPassword}>
+              {i18n.t("web.login.forgetPass") + "?"}
+            </LinkForgotPassword>
+            <ProcessRegisterContainer>
+              <Description>{i18n.t("T13.proceedRegister")}</Description>
+              <LinkRegister onClick={this.props.onhandleRegister}>
+                Create Account
+              </LinkRegister>
+            </ProcessRegisterContainer>
           </BottomContainer>
           {/* {(() => {
             var brand = ["HK28", "21GEN", "21gen", "MESS8", "PISO", "BUNNY"];

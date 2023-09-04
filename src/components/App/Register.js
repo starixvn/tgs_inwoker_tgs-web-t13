@@ -29,7 +29,7 @@ import { generalAction } from "../../api-services/actions/generalAction";
 
 const Container = styled.div`
   width: ${({ layout }) => (layout === "horizontal" ? "800px" : "506px")};
-  background: #27273f;
+  background: ${({ theme }) => theme.pcRegBodyBackground};
   background-attachment: fixed;
   background-position: center;
   display: table;
@@ -78,158 +78,56 @@ const FormContainer = styled.div`
       `
       : ``}
 `;
-const CustomText = withStyles({
-  root: {
-    width: ({ layout }) => layout === "horizontal" ? "300px" : "430px",
-    height: "55px",
-    border: "none",
-    margin: 0,
-    marginTop: "13px",
-    WebkitTextFillColor: "#b6b6b6",
-    "& .MuiOutlinedInput-input": {
-      fontSize: "16px",
-    },
-    "& .MuiInputBase-input::-webkit-input-placeholder": {
-      fontSize: "16px",
-    },
-    "& label.Mui-focused": {
-      color: "#b6b6b6",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#b6b6b6",
-    },
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "15px",
-      "& fieldset": {
-        borderColor: "#b6b6b6",
-      },
-      "&:hover fieldset": {
-        borderColor: "#b6b6b6",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#b6b6b6",
-        borderWidth: "1px",
-      },
-    },
-    "& .PrivateNotchedOutline-root-19": {
-      top: "-4px",
-    },
-    "& .MuiInputBase-root": {
-      color: "#b6b6b6 !important",
-    },
-  },
-})(TextField);
 
-const CustomText2 = withStyles({
-  root: {
-    marginLeft: "8px",
-    width: "320px",
-    height: "55px",
-    borderRadius: "6px",
-    border: "none",
-    margin: 0,
-    marginTop: "20px",
-    WebkitTextFillColor: "#b6b6b6",
-    "& .MuiOutlinedInput-input": {
-      fontSize: "16px",
-    },
-    "& .MuiInputBase-input::-webkit-input-placeholder": {
-      fontSize: "16px",
-    },
-    "& label.Mui-focused": {
-      color: "#b6b6b6",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#b6b6b6",
-    },
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "15px",
-      "& fieldset": {
-        borderColor: "#b6b6b6",
-      },
-      "&:hover fieldset": {
-        borderColor: "#b6b6b6",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#b6b6b6",
-        borderWidth: "1px",
-      },
-    },
-    "& .PrivateNotchedOutline-root-19": {
-      top: "-4px",
-    },
-    "& .MuiInputBase-root": {
-      color: "#b6b6b6 !important",
-    },
-  },
-})(CustomText);
+const CheckBoxInput = styled.input``;
 
-const CustomFormControl = withStyles((theme) => ({
-  root: {
-    width: "100px",
-    height: "55px",
-    border: "none",
-    marginTop: "20px",
-    float: "left",
-    backgroundColor: "none",
-    padding: 0,
-    "&:before": {
-      content: '"\\00a0"',
-      position: "absolute",
-      top: "1px",
-      right: "36px",
-      zIndex: " 1",
-      display: "block",
-      height: "100%",
-    },
-    "& .MuiSelect-icon": {
-      color: "#fff",
-    },
-    "& label.Mui-focused": {
-      color: "#b6b6b6",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#b6b6b6",
-    },
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "15px",
-      "& fieldset": {
-        borderColor: "#b6b6b6",
-        marginTop: "1px",
-      },
-      "&:hover fieldset": {
-        borderColor: "#b6b6b6",
-        marginTop: "1px",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#b6b6b6",
-        borderWidth: "1px",
-        marginTop: "1px",
-      },
-    },
-  },
-}))(FormControl);
+const FormInputWrap = styled.div`
+  width: 100%;
+  height: 55px;
+  border: none;
+  box-shadow: 0px 3px 8px -2px rgba(0,0,0,0.75);
+  margin: 0;
+  margin-top: 13px;
+  -webkit-text-fill-color: #b6b6b6;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.pcRegInputBackground}
+  overflow: hidden;
+  box-sizing: content-box;
+`;
+const SelectContainer = styled.div`
+  display: flex
+  height: 100%;
+  width: 100%;
+`;
 
-const CustomSelect = withStyles((theme) => ({
-  root: {
-    fontSize: "14px",
-    color: "#fff",
-  },
-}))(Select);
+const FormInput = styled.input`
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.pcRegInputBackground} !important;
+  padding: 0 15px;
+  border: 1px solid transparent;
+`;
+
+const FormSelect = styled.select`
+  padding-left: 10px;
+  color: transparent;
+  background: transparent;
+  border: 1px solid transparent;
+`;
 
 const ButtonLogin = styled.div`
-  margin: 20px auto 0 auto;
-  width: 250px;
+  margin: 20px auto 40px auto;
+  width: 100%;
   height: 60px;
   color: #fff;
   font-size: 20px;
-  border-radius: 30px;
-  background: #cf2029;
+  border-radius: 10px;
+  background: ${({ theme }) => theme.pcRegJoinButtonBackground};
   filter: drop-shadow(1px 1px 8px #cf2029ba);
   &:hover {
     cursor: pointer;
   }
-  grid-area: ${({gridArea})=> gridArea};
+  grid-area: ${({ gridArea }) => gridArea};
 `;
 const ButtonLoginLabel = styled.span`
   text-align: center;
@@ -250,7 +148,7 @@ const DescriptionContainer = styled.div`
 `;
 const Description = styled.div`
   float: left;
-  width: ${({layout})=> layout==="horizontal" ? "100%": "380px"};
+  width: ${({ layout }) => (layout === "horizontal" ? "100%" : "380px")};
   margin-left: 5px;
   font-size: 14px;
 
@@ -376,7 +274,7 @@ const CustomOption = styled.option`
 const CustomTextWrapper = styled.div`
   border-radius: 6px;
   margin-top: 13px;
-  grid-area: ${({gridArea})=> gridArea};
+  grid-area: ${({ gridArea }) => gridArea};
 `;
 
 const CheckBoxUnchecked = styled.div`
@@ -406,12 +304,21 @@ const BottomContainer = styled.div`
   justify-content: center;
   margin-bottom: 20px;
   gap: 20px;
-  grid-area: ${({gridArea})=> gridArea};
+  grid-area: ${({ gridArea }) => gridArea};
+`;
+
+const LogoContainer = styled.div`
+  background-image: url("${({ img }) => img}");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 200px;
+  height: 90px;
+  margin: 0 auto;
 `;
 
 function Register(props) {
   const [username, setUsername] = React.useState("");
-
   const [password, setPassword] = React.useState("");
   const [password2, setPassword2] = React.useState("");
   const [areacode, setAreacode] = React.useState(config.features.PhonePrefix);
@@ -646,7 +553,12 @@ function Register(props) {
                 setPhoneDontCareDuplicate
               );
             } else if (config.features.Register_ShowPhone) {
-              props.doLoginWithHp(username, password, phone, setPhoneDontCareDuplicate);
+              props.doLoginWithHp(
+                username,
+                password,
+                phone,
+                setPhoneDontCareDuplicate
+              );
             } else {
               props.doLogin(username, password);
             }
@@ -691,203 +603,98 @@ function Register(props) {
     setUpper("");
     setPromotionId("");
   };
+  const handlePhoneChange = (e) => {
+    setPhone(e.target.value);
+  };
 
   const classes = useStyles();
   return (
-    <Container layout={layout}>
+    <Container ner layout={layout}>
       <CloseIconContainer
         viewBox="4 4 16 16"
         onClick={props.onhandleClose}
       ></CloseIconContainer>
       <div className="clear"></div>
-      <TitleContainer>{i18n.t("web.register.registerTitle")}</TitleContainer>
-      <FormContainer layout={layout}>
-        <CustomTextWrapper gridArea="username">
-          <CustomText
-            layout={layout}
-            onChange={handleUsernameChange}
+      <LogoContainer
+        img={props.brand && props.brand.desktopLogoUrl}
+      ></LogoContainer>
+      <FormContainer>
+        <FormInputWrap>
+          <FormInput
+            type="text"
+            placeholder={i18n.t("web.register.username")}
             id="username"
             value={username}
-            placeholder={i18n.t("web.register.username")}
-            variant="outlined"
-            autoComplete="off"
-            inputProps={{
-              maxLength: 16,
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment
-                  position="start"
-                  style={{ height: "30px", width: "40px" }}
-                >
-                  <img src={UserIconPNG} alt=""></img>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </CustomTextWrapper>
-
-        <CustomTextWrapper gridArea="password">
-          <CustomText
-            layout={layout}
-            onChange={handlePasswordChange}
+            onChange={(e) => handleUsernameChange(e)}
+            maxlength="16"
+            autocomplete="off"
+          ></FormInput>
+        </FormInputWrap>
+        <FormInputWrap>
+          <FormInput
+            type="password"
+            placeholder={i18n.t("web.register.password")}
             id="password"
             value={password}
-            placeholder={i18n.t("web.register.password")}
-            variant="outlined"
-            type="password"
-            autoComplete="off"
-            inputProps={{
-              maxLength: 20,
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment
-                  position="start"
-                  style={{ height: "30px", width: "40px" }}
-                >
-                  <img src={Password1IconPNG} alt=""></img>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </CustomTextWrapper>
-        <CustomTextWrapper gridArea="repassword">
-          <CustomText
-            layout={layout}
-            onChange={handlePassword2Change}
+            onChange={(e) => handlePasswordChange(e)}
+            maxlength="20"
+            autocomplete="off"
+          ></FormInput>
+        </FormInputWrap>
+        <FormInputWrap>
+          <FormInput
+            type="email"
+            placeholder={i18n.t("web.register.confirmPassword")}
             id="password2"
             value={password2}
-            placeholder={i18n.t("T13.register.confirmPassword")}
-            variant="outlined"
-            type="password"
-            autoComplete="off"
-            inputProps={{
-              maxLength: 20,
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment
-                  position="start"
-                  style={{ height: "30px", width: "40px" }}
-                >
-                  <img src={Password2IconPNG} alt=""></img>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </CustomTextWrapper>
-
-        {config.features.Register_ShowPhone && (
-          <React.Fragment>
-            <CustomFormControl>
-              <CustomSelect
-                native
-                variant="outlined"
-                value={areacode}
-                displayEmpty
-                onChange={(e) => {
-                  setAreacode(e.target.value);
-                }}
-                IconComponent={KeyboardArrowDown}
-              >
-                <option value={config.features.PhonePrefix}>
-                  {config.features.PhonePrefix}
-                </option>
-              </CustomSelect>
-            </CustomFormControl>
-            <CustomText2
+            onChange={(e) => handlePassword2Change(e)}
+            maxlength="20"
+            autocomplete="off"
+          ></FormInput>
+        </FormInputWrap>
+        <FormInputWrap>
+          <FormInput
+            type="email"
+            placeholder="Email"
+            id="email"
+            value={email}
+            onChange={(e) => handleEmailChange(e)}
+            maxlength="50"
+            autocomplete="off"
+          ></FormInput>
+        </FormInputWrap>
+        <FormInputWrap>
+          <SelectContainer>
+            <FormSelect
+              value={areacode}
               onChange={(e) => {
-                setPhone(e.target.value);
+                setAreacode(e.target.value);
               }}
-              id="phone"
-              value={phone}
-              placeholder={i18n.t("forgotPassword.plsEnterPhoneNumber")}
-              variant="outlined"
+            >
+              <option value={config.features.PhonePrefix}>
+                {config.features.PhonePrefix}
+              </option>
+            </FormSelect>
+            <FormInput
               type="text"
+              value={phone}
+              placeholder="Mobile Number"
               autoComplete="off"
-              inputProps={{
-                maxLength: config.features.MAX_PHONE_LENGTH || 10,
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment
-                    position="start"
-                    style={{ height: "26px", width: "30px" }}
-                  >
-                    <img src={IconMobilePNG} alt=""></img>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </React.Fragment>
-        )}
-        {config.features.Register_ShowEmail && (
-          <CustomTextWrapper>
-            <CustomText
-              onChange={handleEmailChange}
-              id="email"
-              value={email}
-              placeholder={i18n.t("web.register.email")}
-              variant="outlined"
-              type="email"
-              autoComplete="off"
-              inputProps={{
-                maxLength: 50,
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment
-                    position="start"
-                    style={{ height: "26px", width: "30px" }}
-                  >
-                    <img src={IconEmailPNG} alt=""></img>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </CustomTextWrapper>
-        )}
-
-        {!(config.features.Register_HideInvitation && fromCustomDomain) && (
-          <CustomTextWrapper gridArea="invitation">
-            <CustomInvitationContainer>
-              <CustomText
-                layout={layout}
-                onChange={
-                  promoteType === "a" ? handlePromoChange : handleUpperChange
-                }
-                value={promoteType === "a" ? promotionId : upper}
-                id="code"
-                placeholder={i18n.t("web.register.promoteCode")}
-                variant="outlined"
-                inputProps={{ disabled: prefill }}
-              />
-              {props.general.haveAffiliate && (
-                <CustomInvitationSelect
-                  layout={layout}
-                  disabled={prefill}
-                  value={promoteType}
-                  selected={promoteType}
-                  onChange={handleSwitchType}
-                >
-                  <CustomOption value="a">{i18n.t("usertype.agent")}</CustomOption>
-                  <CustomOption value="p">{i18n.t("usertype.player")}</CustomOption>
-                </CustomInvitationSelect>
-              )}
-            </CustomInvitationContainer>
-          </CustomTextWrapper>
-        )}
-
+              maxlength={config.features.MAX_PHONE_LENGTH || "10"}
+              onChange={(e) => handlePhoneChange(e)}
+            ></FormInput>
+          </SelectContainer>
+        </FormInputWrap>
         <DescriptionContainer layout={layout} gridArea="descriptionContent">
-          <Checkbox
+          <CheckBoxInput
+            type="checkbox"
             checked={tnc}
             className={classes.checkboxRoot}
             onClick={handleTncClick}
-            checkedIcon={<CheckBoxChecked />}
-            icon={<CheckBoxUnchecked />}
-          />
-          <Description layout={layout}>{i18n.t("web.register.contract")}</Description>
+          ></CheckBoxInput>
+          <Description layout={layout}>
+            I agree to Terms & Condition and Privacy Policy
+          </Description>
         </DescriptionContainer>
 
         <ButtonLogin onClick={performNewRegister} gridArea="buttonContent">
@@ -897,12 +704,6 @@ function Register(props) {
               : i18n.t("T13.register.btn")}
           </ButtonLoginLabel>
         </ButtonLogin>
-        <BottomContainer gridArea="bottomContent">
-          <Text>{i18n.t("T13.proceedLogin")}</Text>
-          <LinkStyle onClick={props.onhandleLogin}>
-            {i18n.t("common.login")}
-          </LinkStyle>
-        </BottomContainer>
       </FormContainer>
     </Container>
   );

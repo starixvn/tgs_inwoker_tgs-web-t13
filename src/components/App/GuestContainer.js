@@ -31,7 +31,6 @@ const Container = styled.div`
   justify-content: flex-end;
   align-items: center;
   gap: 10px;
-  padding-right: 10px;
 `;
 const BtnLoginRegister = styled.div`
   width: 141px;
@@ -39,19 +38,18 @@ const BtnLoginRegister = styled.div`
   font-size: 20px;
   padding: 12.5px 0px;
   text-align: center;
-  color: ${({ theme }) => theme.pcHeaderText};
+  color: ${({ theme }) => theme.primaryText};
   cursor: pointer;
   border: 1px solid ${({ theme }) => theme.pcHeaderText};
-  border-radius: 30px;
+  border-radius: 10px;
   text-transform: uppercase;
 `;
 const BtnRegister = styled(BtnLoginRegister)`
   background: ${({ theme }) => theme.primary};
-  border-color: ${({ theme }) => theme.primary};
 `;
 
 const BtnLogin = styled(BtnLoginRegister)`
-  background: transparent;
+  background: ${({ theme }) => theme.pcHeaderLoginButtonBackground};
 `;
 
 const StyledDialog = withStyles({
@@ -658,6 +656,7 @@ class GuestContainer extends Component {
             ) {
               return (
                 <Login
+                  brand={this.props.brand}
                   onhandleClose={this.onhandleCloseDialog}
                   onhandleLogin={this.onhandleLogin}
                   onhandleRegister={this.onhandleRegister}
@@ -671,6 +670,7 @@ class GuestContainer extends Component {
               if (this.state.openDialogName === "register") {
                 return (
                   <Register
+                    brand={this.props.brand}
                     onhandleLogin={this.onhandleLogin}
                     onhandleClose={this.onhandleCloseDialog}
                     onRegisterSuccess={this.handleRegisterSuccess}

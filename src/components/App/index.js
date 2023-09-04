@@ -32,6 +32,7 @@ import Cockfight from "./Cockfight/index";
 import Account from "./Account/index";
 
 import Header from "./Header";
+// import HeaderV2 from "./HeaderV2";
 import Common from "../../utils/Common";
 import Footer from "./Footer";
 import Loading from "./Loading";
@@ -54,6 +55,8 @@ import config from "../../config/config";
 import CustomLibrary from "./Sports/CustomLibrary.js";
 import ForcedVerification from "./ForcedVerification";
 
+import Menu from "./Home/menu-section";
+
 import {
   Faq,
   TermsAndConditions,
@@ -63,7 +66,20 @@ import {
 
 const baseRouteUrl = Common.baseRouteUrl;
 const Main = styled.div`
+  display: flex;
   min-height: 600px;
+  justify-content: center;
+  margin-top: 200px;
+`;
+
+const MenuContainer = styled.div`
+  margin: 0 30px 0 0;
+  height: 800px;
+  width: ${({ showSideBar }) => (showSideBar ? "auto" : "0")};
+`;
+
+const ContentContainer = styled.div`
+  width: 1280px;
 `;
 const EmptyHeader = styled.div`
   height: ${(props) => (props.displayGameListInHeader ? `384px` : `155px`)};
@@ -102,6 +118,7 @@ class App extends Component {
     isIpRestrict: false,
     inbox: "",
     openSupportModal: false,
+    showSideBar: false,
   };
   async componentDidMount() {
     // try {
@@ -133,7 +150,7 @@ class App extends Component {
     //this.props.getHomePageGameList();
     const urlpath = this.props.location.pathname.split("/");
 
-     if (urlpath.length === 3) {
+    if (urlpath.length === 3) {
       if (urlpath[1] === "a") {
         localStorage.setItem("promotionId", urlpath[2] || "");
         localStorage.setItem("upper", ""); //reset
@@ -376,6 +393,10 @@ class App extends Component {
     }
   };
 
+  handleShowSideBarClick = (toggleMenu) => {
+    this.setState({ showSideBar: toggleMenu });
+  };
+
   performBalanceRefresh = () => {
     this.props.updateBalanceList();
     this.props.game.providerList
@@ -446,206 +467,212 @@ class App extends Component {
                 <Header
                   inbox={this.state.inbox}
                   onhandleShowCSClick={this.handleShowCSClick}
+                  onhandleShowSideBarClick={this.handleShowSideBarClick}
                 ></Header>
-                <EmptyHeader
-                  displayGameListInHeader={this.displayGameListInHeader()}
-                ></EmptyHeader>
                 <Main>
-                  <Switch>
-                    <Route
-                      exact
-                      path={[
-                        "/",
-                        "/a/:promotionid",
-                        "/t/:promotionid",
-                        "/f/:promotionid",
-                        "/p/:playername",
-                      ]}
-                      render={(props) => (
-                        <Home
-                          onhandleShowCSClick={this.handleShowCSClick}
-                          onhandleDepositClick={this.handleDepositClick}
-                        />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path={"/live"}
-                      render={(props) => (
-                        <LiveGame
-                          performBalanceRefresh={this.performBalanceRefresh}
-                        />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path={"/chess"}
-                      render={(props) => (
-                        <Qipai
-                          performBalanceRefresh={this.performBalanceRefresh}
-                        />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path={"/sports"}
-                      render={(props) => (
-                        <Sports
-                          performBalanceRefresh={this.performBalanceRefresh}
-                        />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path={"/esports"}
-                      render={(props) => (
-                        <ESports
-                          performBalanceRefresh={this.performBalanceRefresh}
-                        />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path={"/sports/play/:params/:type"}
-                      component={SportsPlay}
-                    />
-                    <Route
-                      exact
-                      path={"/sports/:platform"}
-                      render={(props) => (
-                        <CustomLibrary
-                          {...props}
-                          performBalanceRefresh={this.performBalanceRefresh}
-                        />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path={"/sports/c/:type/:params"}
-                      component={SlotPlay}
-                    />
-                    <Route
-                      exact
-                      path={"/lottery"}
-                      render={(props) => (
-                        <Lottery
-                          performBalanceRefresh={this.performBalanceRefresh}
-                        />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path={"/lottery/play/:params?"}
-                      component={LotteryPlay}
-                    />
-                    <Route
-                      exact
-                      path={[
-                        "/slots/:platform?",
-                        "/electron/:platform?",
-                        "/fish/:platform?",
-                      ]}
-                      render={(props) => (
-                        <Slots
-                          {...props}
-                          performBalanceRefresh={this.performBalanceRefresh}
-                        />
-                      )}
-                    />
+                  <MenuContainer showSideBar={this.state.showSideBar}>
+                    <Menu
+                      token={this.props.account.token}
+                      showLogin={this.props.showLogin}
+                    ></Menu>
+                  </MenuContainer>
+                  <ContentContainer>
+                    <Switch>
+                      <Route
+                        exact
+                        path={[
+                          "/",
+                          "/a/:promotionid",
+                          "/t/:promotionid",
+                          "/f/:promotionid",
+                          "/p/:playername",
+                        ]}
+                        render={(props) => (
+                          <Home
+                            onhandleShowCSClick={this.handleShowCSClick}
+                            onhandleDepositClick={this.handleDepositClick}
+                          />
+                        )}
+                      />
+                      <Route
+                        exact
+                        path={"/live"}
+                        render={(props) => (
+                          <LiveGame
+                            performBalanceRefresh={this.performBalanceRefresh}
+                          />
+                        )}
+                      />
+                      <Route
+                        exact
+                        path={"/chess"}
+                        render={(props) => (
+                          <Qipai
+                            performBalanceRefresh={this.performBalanceRefresh}
+                          />
+                        )}
+                      />
+                      <Route
+                        exact
+                        path={"/sports"}
+                        render={(props) => (
+                          <Sports
+                            performBalanceRefresh={this.performBalanceRefresh}
+                          />
+                        )}
+                      />
+                      <Route
+                        exact
+                        path={"/esports"}
+                        render={(props) => (
+                          <ESports
+                            performBalanceRefresh={this.performBalanceRefresh}
+                          />
+                        )}
+                      />
+                      <Route
+                        exact
+                        path={"/sports/play/:params/:type"}
+                        component={SportsPlay}
+                      />
+                      <Route
+                        exact
+                        path={"/sports/:platform"}
+                        render={(props) => (
+                          <CustomLibrary
+                            {...props}
+                            performBalanceRefresh={this.performBalanceRefresh}
+                          />
+                        )}
+                      />
+                      <Route
+                        exact
+                        path={"/sports/c/:type/:params"}
+                        component={SlotPlay}
+                      />
+                      <Route
+                        exact
+                        path={"/lottery"}
+                        render={(props) => (
+                          <Lottery
+                            performBalanceRefresh={this.performBalanceRefresh}
+                          />
+                        )}
+                      />
+                      <Route
+                        exact
+                        path={"/lottery/play/:params?"}
+                        component={LotteryPlay}
+                      />
+                      <Route
+                        exact
+                        path={[
+                          "/slots/:platform?",
+                          "/electron/:platform?",
+                          "/fish/:platform?",
+                        ]}
+                        render={(props) => (
+                          <Slots
+                            {...props}
+                            performBalanceRefresh={this.performBalanceRefresh}
+                          />
+                        )}
+                      />
 
-                    <Route
-                      exact
-                      path={[
-                        "/slots/play/:type/:params",
-                        "/electron/play/:type/:params",
-                        "/fish/play/:type/:params",
-                      ]}
-                      component={SlotPlay}
-                    />
+                      <Route
+                        exact
+                        path={[
+                          "/slots/play/:type/:params",
+                          "/electron/play/:type/:params",
+                          "/fish/play/:type/:params",
+                        ]}
+                        component={SlotPlay}
+                      />
 
-                    <Route
-                      exact
-                      path={"/promotion"}
-                      render={(props) => (
-                        <Promotion token={this.props.account.token} />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path={"/promotion/:id"}
-                      render={(props) => <PromotionDetails />}
-                    />
-                    <Route exact path={"/vip"} render={(props) => <VIP />} />
-                    {/* <Route
+                      <Route
+                        exact
+                        path={"/promotion"}
+                        render={(props) => (
+                          <Promotion token={this.props.account.token} />
+                        )}
+                      />
+                      <Route
+                        exact
+                        path={"/promotion/:id"}
+                        render={(props) => <PromotionDetails />}
+                      />
+                      <Route exact path={"/vip"} render={(props) => <VIP />} />
+                      {/* <Route
                       exact
                       path={ "/registersuccess/:username"}
                       component={RegisterSuccess}
                     /> */}
-                    <Route
-                      exact
-                      path={"/maintenance"}
-                      render={(props) => (
-                        <Maintenance
-                          onhandleCSClick={this.GetSupportUrl}
-                          brandComm={this.props.getBrandCommunicationList}
-                          alert={this.props.enqueueSnackbar}
-                        />
+                      <Route
+                        exact
+                        path={"/maintenance"}
+                        render={(props) => (
+                          <Maintenance
+                            onhandleCSClick={this.GetSupportUrl}
+                            brandComm={this.props.getBrandCommunicationList}
+                            alert={this.props.enqueueSnackbar}
+                          />
+                        )}
+                      />
+                      <Route
+                        exact
+                        path={"/banned"}
+                        render={(props) => (
+                          <Banned onhandleCSClick={this.GetSupportUrl} />
+                        )}
+                      />
+                      <Route
+                        exact
+                        path={"/account/:tab/:popup?"}
+                        render={(props) => (
+                          <Account
+                            token={this.props.account.token}
+                            onhandleCSClick={this.GetSupportUrl}
+                            inbox={this.state.inbox}
+                          />
+                        )}
+                      />
+                      {config.features.HaveDownloadFeature && (
+                        <Route exact path={"/download"} component={Download} />
                       )}
-                    />
-                    <Route
-                      exact
-                      path={"/banned"}
-                      render={(props) => (
-                        <Banned onhandleCSClick={this.GetSupportUrl} />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path={"/account/:tab/:popup?"}
-                      render={(props) => (
-                        <Account
-                          token={this.props.account.token}
-                          onhandleCSClick={this.GetSupportUrl}
-                          inbox={this.state.inbox}
-                        />
-                      )}
-                    />
-                    {config.features.HaveDownloadFeature && (
-                      <Route exact path={"/download"} component={Download} />
-                    )}
-                    <Route exact path={"/news"} component={News} />
-                    <Route
-                      exact
-                      path={"/news/:id"}
-                      render={(props) => <NewsDetails />}
-                    />
-                    <Route exact path={"/faq"} render={(props) => <Faq />} />
-                    <Route
-                      exact
-                      path={"/terms"}
-                      render={(props) => <TermsAndConditions />}
-                    />
-                    <Route
-                      exact
-                      path={"/privacy"}
-                      render={(props) => <PrivacyPolicy />}
-                    />
-                    <Route
-                      exact
-                      path={"/responsiblegaming"}
-                      render={(props) => <ResponsibleGaming />}
-                    />
-                    <Route
-                      exact
-                      path={"/cockfight"}
-                      render={(props) => (
-                        <Cockfight
-                          performBalanceRefresh={this.performBalanceRefresh}
-                        />
-                      )}
-                    />
-                    <Redirect to={"/"} />
-                  </Switch>
+                      <Route exact path={"/news"} component={News} />
+                      <Route
+                        exact
+                        path={"/news/:id"}
+                        render={(props) => <NewsDetails />}
+                      />
+                      <Route exact path={"/faq"} render={(props) => <Faq />} />
+                      <Route
+                        exact
+                        path={"/terms"}
+                        render={(props) => <TermsAndConditions />}
+                      />
+                      <Route
+                        exact
+                        path={"/privacy"}
+                        render={(props) => <PrivacyPolicy />}
+                      />
+                      <Route
+                        exact
+                        path={"/responsiblegaming"}
+                        render={(props) => <ResponsibleGaming />}
+                      />
+                      <Route
+                        exact
+                        path={"/cockfight"}
+                        render={(props) => (
+                          <Cockfight
+                            performBalanceRefresh={this.performBalanceRefresh}
+                          />
+                        )}
+                      />
+                      <Redirect to={"/"} />
+                    </Switch>
+                  </ContentContainer>
                 </Main>
 
                 {config.features.LiveChatVendor.brand &&

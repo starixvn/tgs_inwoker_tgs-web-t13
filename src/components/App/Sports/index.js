@@ -10,17 +10,18 @@ import ScrollAnimation from "react-animate-on-scroll";
 import Common from "../../../utils/Common";
 import GameLister from "../Home/game-lister";
 const Container = styled.div`
-  width: 100%;
+  width: 1280px;
   height: auto;
   min-height: 770px;
   position: relative;
 `;
 const Banner = styled.div`
-  width: 1920px;
+  width: 1280px;
   height: 600px;
   background: url(${(props) =>
       process.env.PUBLIC_URL}/assets/images/pcGamePage/sports/background.png)
     no-repeat center;
+  background-size: 100% 100%;
   margin: 0 auto;
 `;
 const GPLogo = styled.div`

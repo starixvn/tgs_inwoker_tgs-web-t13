@@ -8,6 +8,8 @@ import {
 import Common from "../../../../utils/Common";
 import SlotGenerator from "../slot-generator";
 import Winners from "./winners";
+import config from "../../../../config/config";
+import i18n from "../../../../utils/i18n";
 
 import { GameService } from "../../../../api-services/services/GameService";
 
@@ -15,15 +17,15 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const Title = styled.div`
-  width: 1280px;
-  margin: 40px auto 0 auto;
-  font-size: 44px;
-  font-weight: bold;
-  text-transform: uppercase;
-  text-align: center;
-  color: #ffffff;
-`;
+// const Title = styled.div`
+//   width: 1280px;
+//   margin: 40px auto 0 auto;
+//   font-size: 44px;
+//   font-weight: bold;
+//   text-transform: uppercase;
+//   text-align: center;
+//   color: #ffffff;
+// `;
 
 const JackpotHolder = styled.div`
   position: relative;
@@ -112,9 +114,67 @@ const SlotContainer = styled.div`
   flex-direction: column;
 `;
 
-const JackpotSection = ({ showLogin, token }) => {
-  const Numbers = React.memo(({ amount }) => {
+const JackPotBanner = styled.div`
+  width: 1280px;
+  height: 500px;
+  background: ${({ lang }) =>
+    `url(${
+      process.env.PUBLIC_URL + `/assets/images/banner/${lang}/HKJP/1.jpg`
+    })`};
+`;
 
+const JackPotBottomWrap = styled.div`
+  width: 100%;
+  display: flex;
+  margin: 20px 0;
+  gap: 20px;
+`;
+
+const FlexLeft = styled.div`
+  flex: 1;
+`;
+
+const FlexRight = styled.div`
+  flex: 1;
+`;
+
+const JackPotSideBanner = styled.div`
+  width: 100%;
+  height: 100%;
+  background: ${({ lang }) =>
+      `url(${
+        process.env.PUBLIC_URL + `/assets/images/banner/${lang}/HKJP/2.jpg`
+      })`}
+    no-repeat center center;
+  background-size: cover;
+`;
+
+const AdvertismentContainer = styled.div`
+  display: flex;
+  gap: 30px;
+`;
+
+const AdsImg = styled.div`
+  width: 100%;
+  min-height: 300px;
+  background: ${({ index, lang }) =>
+      `url(
+      ${
+        process.env.PUBLIC_URL + `assets/images/banner/${lang}/BIN/${index}.jpg`
+      }
+    )`}
+    no-repeat top left;
+  background-size: cover;
+  object-fit: cover;
+`;
+
+const JackpotSection = ({ showLogin, token }) => {
+  const languageDetector =
+    i18n.language ||
+    localStorage.getItem("i18nextLng") ||
+    config.defaultLanguage;
+
+  const Numbers = React.memo(({ amount }) => {
     var formatedAmount = Common.formatNumberWithCommas(amount);
     var display = formatedAmount && formatedAmount.split("");
 
@@ -179,7 +239,10 @@ const JackpotSection = ({ showLogin, token }) => {
   useEffect(() => {
     const updateJackpotAmount = () => {
       if (jackpotAmount < 9999999.99) {
-        setJackpotAmount((currentJackpotAmount) => currentJackpotAmount + randomNumber(0.01,0.20));
+        setJackpotAmount(
+          (currentJackpotAmount) =>
+            currentJackpotAmount + randomNumber(0.01, 0.2)
+        );
       } else {
         setJackpotAmount(initialJackpotAmount);
       }
@@ -191,9 +254,9 @@ const JackpotSection = ({ showLogin, token }) => {
     };
   });
 
-  const  randomNumber = (min, max) => {
-    return (Math.random() * (min - max) + max);
-  }
+  const randomNumber = (min, max) => {
+    return Math.random() * (min - max) + max;
+  };
   const checking = (variant) => {
     return homePageGameList.filter((a) => {
       return a.tag[variant] === true;
@@ -213,20 +276,18 @@ const JackpotSection = ({ showLogin, token }) => {
       });
     }
   };
-
   return (
     <Container>
-      <Title>MEGA JACKPOT</Title>
       <JackpotHolder>
-        <JackpotContentWorkingSpace>
-          <TopContent>
-            <Numbers amount="PHP "></Numbers>
-            <Numbers amount={jackpotAmount} />
-          </TopContent>
-          <BottomContent>
-            <Winners></Winners>
-          </BottomContent>
-        </JackpotContentWorkingSpace>
+        <JackPotBanner lang={languageDetector}></JackPotBanner>
+        <JackPotBottomWrap>
+          <FlexLeft>
+            <JackPotSideBanner lang={languageDetector}></JackPotSideBanner>
+          </FlexLeft>
+          <FlexRight>
+            <Winners commonprops={commonprops}></Winners>
+          </FlexRight>
+        </JackPotBottomWrap>
       </JackpotHolder>
       <SlotContainer>
         {homePageGames.games.map((data, index) => {
@@ -243,6 +304,14 @@ const JackpotSection = ({ showLogin, token }) => {
           );
         })}
       </SlotContainer>
+      <AdvertismentContainer>
+        <FlexLeft>
+          <AdsImg index={1} lang={languageDetector}></AdsImg>
+        </FlexLeft>
+        <FlexRight>
+          <AdsImg index={2} lang={languageDetector}></AdsImg>
+        </FlexRight>
+      </AdvertismentContainer>
     </Container>
   );
 };

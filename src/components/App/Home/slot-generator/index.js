@@ -13,56 +13,18 @@ import i18n from "../../../../utils/i18n";
 
 const SlotContent = styled.div`
   width: 1280px;
-  padding-bottom: 30px;
   user-select: none;
-`;
-
-const TitleIcon = styled.div`
-  width: 45px;
-  height: 45px;
-  background: url(${process.env.PUBLIC_URL +
-  "/assets/images/pcHomePage/crown.svg"});
-  background-repeat: no-repeat;
-  background-size: contain;
-`;
-const TitleHolder = styled.div`
-  padding: 5px 20px;
-  border-radius: 10px;
-  width: 100%;
-  color: white;
-  font-size: 30px;
-  font-weight: 500;
-  text-transform: uppercase;
-`;
-
-const TitleMore = styled.div`
-  color: #fff;
-  position: relative;
-  display: flex;
-  padding: 5px 20px;
-  font-size: 26px;
-  font-weight: 500;
-  width: 185px;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  &:after {
-    content: " ";
-    width: 30px;
-    height: 30px;
-    background: url(${process.env.PUBLIC_URL +
-    "/assets/images/pcHomePage/right-arrow.svg"});
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
 `;
 
 const ImagePiece = styled.div`
   color: white;
   position: relative;
   cursor: pointer;
-  margin: 10px;
-  border-radius: 25px;
+  box-sizing: border-box;
+
+  &:nth-child(n + 2) {
+    margin-left: 20px;
+  }
 `;
 
 const GameImage = styled.div`
@@ -70,26 +32,47 @@ const GameImage = styled.div`
   background-size: 100%;
   background-repeat: no-repeat;
   aspect-ratio: 1;
-`;
-
-const TitleGapper = styled.div`
-  padding: 10px 0px 10px 0px;
-  display: flex;
+  border-radius: 8px;
 `;
 
 const GameList = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 20px;
+  gap: 10px;
 `;
+
+const GamePlay = styled.div`
+  background: ${({ theme }) => theme.pcGamePlayBtnBackground};
+  color: ${({ theme }) => theme.pcGameListerPrimary};
+  border: 1px solid ${({ theme }) => theme.pcGameListerSecondary};
+  height: 50px;
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 8px;
+
+  &:hover {
+    background: ${({ theme }) => theme.pcGamePlayBtnHover};
+    border: 1px solid ${({ theme }) => theme.pcGamePlayBtnHover};
+    color: ${({ theme }) => theme.primaryText};
+  }
+`;
+
+const Wrapper = styled.div``;
 
 const SlotGenerator = React.memo(
   ({ title, type, category, commonprops, list }) => {
     const GameContainer = ({ name, img, trigger }) => {
       return (
-        <ImagePiece onClick={trigger}>
-          <GameImage img={img} />
-        </ImagePiece>
+        <Wrapper>
+          <ImagePiece onClick={trigger}>
+            <GameImage img={img} />
+            <GamePlay>Play Now</GamePlay>
+          </ImagePiece>
+        </Wrapper>
       );
     };
 
@@ -109,6 +92,7 @@ const SlotGenerator = React.memo(
       }
     };
 
+    // navigate reference
     const navigateTo = () => {
       const gametype =
         type === GameTypeEnum.FISH
@@ -123,17 +107,6 @@ const SlotGenerator = React.memo(
 
     return (
       <SlotContent>
-        <TitleGapper>
-          <TitleIcon></TitleIcon>
-          <TitleHolder>{i18n.t(title)}</TitleHolder>
-          <TitleMore
-            onClick={() => {
-              navigateTo();
-            }}
-          >
-            {i18n.t("web.slotGame.more")}
-          </TitleMore>
-        </TitleGapper>
         <GameList>
           {list &&
             list.slice(0, 12).map((data, index) => {

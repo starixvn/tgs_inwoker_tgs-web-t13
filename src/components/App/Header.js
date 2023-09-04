@@ -68,11 +68,20 @@ const InnerWrap = styled.div`
   height: ${(props) => (props.displayGameListInHeader ? `384px` : `155px`)};
 `;
 const TopContainer = styled.div`
+  width: 100%;
   height: 45px;
+  padding-right: 10px;
+  border-bottom: 1px solid ${({ theme }) => theme.pcHeaderRightMenuHover};
+  background-color: ${({ theme }) => theme.pcOnlineUserBackground};
+`;
+
+const TopContainerInnerWrap = styled.div`
+  width: 1280px;
+  height: 100%;
+  margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid ${({ theme }) => theme.pcHeaderRightMenuHover};
+  justify-content: flex-end;
 `;
 const TimerContainer = styled.div`
   font-family: arial;
@@ -83,7 +92,7 @@ const TimerContainer = styled.div`
 `;
 
 const TimerSpan = styled.span`
-  color: ${({ theme }) => theme.pcHeaderText};
+  color: ${({ theme }) => theme.primaryText};
   float: left;
   min-width: 100px;
 `;
@@ -99,9 +108,8 @@ const IconPhone = styled.div`
   height: 20px;
 `;
 const LinkContainer = styled.div`
-  color: ${({ theme }) => theme.pcHeaderText};
-  float: left;
-  padding: 0px 10px;
+  color: ${({ theme }) => theme.primaryText};
+  margin-left: 10px;
   @media (max-width: 950px) {
     display: none;
   }
@@ -121,21 +129,19 @@ const RightContainer = styled.div`
 `;
 
 const BottomContainer = styled.div`
-  display: grid;
-  grid-template-columns: 230px auto auto;
-  grid-gap: 5px;
-  @media (max-width: 1279px) {
-    grid-template-columns: auto;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
 `;
 const LogoContainer = styled.div`
   background-image: url("${(props) => props.img}");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  width: 100%;
+  width: 150px;
   height: 90px;
-  margin-top: 10px;
+  margin: 10px 0 0 20px;
   float: left;
   &:hover {
     cursor: pointer;
@@ -146,34 +152,52 @@ const LogoContainer = styled.div`
 `;
 
 const RightMenuContainer = styled.div`
-  float: right;
+  flex: 2;
 `;
 const RightMenuUL = styled.ul`
   display: flex;
+  box-sizing: border-box;
   align-items: stretch; /* Default */
   width: 100%;
   list-style: none;
-  padding: 0;
   margin: 0;
-  height: 110px;
+  align-items: center;
+`;
+const RightMenuMask = styled.div`
+  display: ${({ icon }) => (icon ? "block" : "none")}
+  height: 32px;
+  width: 32px;
+  background-color: ${({ theme, highlight }) => {
+    return highlight ? theme.rightMenuFirstItem : theme.rightMenuItem;
+  }};
+  -webkit-mask: ${({ icon }) => {
+    return `url(${
+      process.env.PUBLIC_URL + `/assets/images/wapp/${icon}.png`
+    }) no-repeat center / contain;`;
+  }};
+  }}
 `;
 
 const RightMenuTextSpan = styled.span`
   font-size: ${(props) => (i18n.language === "vi-VN" ? "18px" : "20px")};
   margin: 0 auto;
-  display: block;
-
-  padding: 6px 0 15px 0;
+  padding-left: 10px;
   text-align: center;
-  text-transform: uppercase;
   border-bottom: solid 3px transparent;
 `;
 
 const RightMenuLI = styled.li`
-  display: inline-block;
-  width: max-content;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 54px;
+  line-height: 54px;
+  padding: 0px 35px;
+  margin-right: 10px;
   color: ${({ theme }) => theme.pcHeaderRightMenu};
   cursor: pointer;
+  border: 1px solid #6c7b92;
+  border-radius: 10px;
 
   @media (max-width: 925px) {
     width: 100px;
@@ -184,7 +208,11 @@ const RightMenuLI = styled.li`
   @media (max-width: 650px) {
     width: 100px;
   }
-  padding: 45px 35px 0px 35px;
+
+  :first-child {
+    border: 1px solid #da573a;
+    color: #e08144;
+  }
 
   ${(props) =>
     props.active
@@ -194,6 +222,15 @@ const RightMenuLI = styled.li`
       }
   `
       : ``}
+`;
+
+const MenuContainer = styled.div`
+  height: 40px;
+  width: 40px;
+  mask: url(${process.env.PUBLIC_URL + `/assets/images/icon/menu.png`});
+  background: ${({ theme }) => theme.primaryText};
+  mask-size: contain;
+  border: 1px solid pink;
 `;
 
 const StyledAppBar = withStyles((theme) => ({
@@ -253,11 +290,6 @@ const styles = {
   },
 };
 
-const LeftContent = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const MarqueeContainer = styled.div`
   width: 1280px;
   background-color: #27273f;
@@ -265,6 +297,30 @@ const MarqueeContainer = styled.div`
   margin: 15px auto;
 `;
 
+const rightMenuItemList = [
+  {
+    to: "slots",
+    label: "slot",
+    active: "slots",
+    icon: "copy",
+    display: true,
+    highlight: true,
+  },
+  {
+    to: "sports",
+    label: "sports",
+    active: "sports",
+    icon: "bookmark-full",
+    display: true,
+  },
+  {
+    to: "download",
+    label: "APP",
+    active: "download",
+    icon: "copy",
+    display: config.features.HaveDownloadFeature,
+  },
+];
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -278,6 +334,7 @@ class Header extends Component {
       open: false,
       dialog: "",
       systemDateTime: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+      toggleSidebar: false,
     };
     this.lastScroll = null;
 
@@ -448,11 +505,18 @@ class Header extends Component {
     window.scrollTo({ top: 0, behavior: "auto" });
   };
 
-  RightMenuItem = (to, label, active) => {
-    const { classes } = this.props;
+  handleSidebarClick = () => {
+    const { toggleSidebar } = this.state;
+    if (!toggleSidebar) window.scrollTo({ top: 0, behavior: "smooth" });
+    this.setState({ toggleSidebar: !toggleSidebar });
+    this.props.onhandleShowSideBarClick(!toggleSidebar);
+  };
 
+  RightMenuItem = (to, label, active, icon, highlight) => {
+    const { classes } = this.props;
     return (
       <RightMenuLI active={active} onClick={() => this.handleClickMenu(to)}>
+        <RightMenuMask icon={icon} highlight={highlight}></RightMenuMask>
         <RightMenuTextSpan
           className={`${
             this.state.shouldShow === null
@@ -690,17 +754,9 @@ class Header extends Component {
 
     return (
       <CustomAppBar hide={this.props.hide}>
-        <InnerWrap displayGameListInHeader={this.displayGameListInHeader()}>
-          <TopContainer>
-            <LeftContent></LeftContent>
+        <TopContainer>
+          <TopContainerInnerWrap>
             <RightContainer>
-              <LinkContainer>
-                <LanguageChanger
-                  useAcronym={true}
-                  language={this.props.general.brandLanguage}
-                  changeLanguage={this.changeLanguage}
-                />
-              </LinkContainer>
               {config.features.OnlineUser && (
                 <OnlineUserDisplayer color="#fff" size="14px" iconOnly={true} />
               )}
@@ -751,8 +807,11 @@ class Header extends Component {
                 <CSIcon /> {i18n.t("common.cs")}
               </NewButtonCs> */}
             </RightContainer>
-          </TopContainer>
+          </TopContainerInnerWrap>
+        </TopContainer>
+        <InnerWrap>
           <BottomContainer>
+            <MenuContainer onClick={this.handleSidebarClick}></MenuContainer>
             <LogoContainer
               img={
                 this.props.general.brand &&
@@ -768,33 +827,23 @@ class Header extends Component {
               }`}
             ></LogoContainer>
             <RightMenuContainer>
-              <RightMenuUL
-                className={`${
-                  this.state.shouldShow === null
-                    ? classes.maxMenu
-                    : this.state.shouldShow
-                    ? classes.maxMenu
-                    : classes.minMenu
-                }`}
-              >
-                {this.RightMenuItem(
-                  "promotion",
-                  i18n.t("common.promotion"),
-                  currentPage === "promotion"
-                )}
-
-                {this.RightMenuItem("vip", "VIP", currentPage === "vip")}
-                {config.features.HaveDownloadFeature &&
-                  this.RightMenuItem(
-                    "download",
-                    "APP",
-                    currentPage === "download"
-                  )}
-                {this.RightMenuItem(
-                  "news",
-                  i18n.t("T13.header.news"),
-                  currentPage === "news"
-                )}
+              <RightMenuUL>
+                {rightMenuItemList.map((item) => {
+                  const returnLabel =
+                    item.label === "APP"
+                      ? "App"
+                      : i18n.t(`${"common." + item.label}`);
+                  return (
+                    item.display &&
+                    this.RightMenuItem(
+                      item.to,
+                      returnLabel,
+                      currentPage === item.active,
+                      item.icon,
+                      item.highlight
+                    )
+                  );
+                })}
               </RightMenuUL>
             </RightMenuContainer>
             {(() => {
@@ -804,6 +853,7 @@ class Header extends Component {
                 ) {
                   return (
                     <GuestContainer
+                      brand={this.props.general.brand}
                       onhandleShowCSClick={this.props.onhandleShowCSClick}
                       onhandleContactUsClick={this.handleContactUsClick}
                       onDialogChange={this.handleDialogChange}
@@ -829,8 +879,15 @@ class Header extends Component {
                 }
               }
             })()}
+            <LinkContainer>
+              <LanguageChanger
+                useAcronym={true}
+                language={this.props.general.brandLanguage}
+                changeLanguage={this.changeLanguage}
+              />
+            </LinkContainer>
           </BottomContainer>
-          {this.displayGameListInHeader() && (
+          {/* {this.displayGameListInHeader() && (
             <>
               {!config.features.HideMarquee && (
                 <MarqueeContainer>
@@ -839,7 +896,7 @@ class Header extends Component {
               )}
               <GameLister game={this.props.game}></GameLister>
             </>
-          )}
+          )} */}
         </InnerWrap>
       </CustomAppBar>
     );

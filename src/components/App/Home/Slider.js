@@ -18,12 +18,9 @@ const ATag = styled.a`
 `;
 const Img = styled.img`
   border: none;
-  width: 1920px;
+  width: 1280px;
   height: 600px;
-
-  margin: 0 auto 0 -960px;
   position: relative;
-  left: 50%;
 `;
 
 class Slider extends React.Component {

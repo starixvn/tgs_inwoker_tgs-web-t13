@@ -22,7 +22,6 @@ const Section = styled.div`
 
 const SectionTitle = styled.div`
   font-size: 34px;
-  text-transform: uppercase;
 `;
 
 const AboutUsLogo = styled.div`
