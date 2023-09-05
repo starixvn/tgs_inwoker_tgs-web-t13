@@ -47,7 +47,7 @@ export const wapT13 = {
   wapPrimary: "#fff",
   wapSecondary: "#fff",
   buttonWapBoxShadow: "none",
-
+  darkMode: true,
   inputBackground: "transparent",
   wapBorderRadius: "50px",
 };
@@ -97,7 +97,7 @@ export const wapT14 = {
   containerBg1: "#181c42",
   containerBg2: "#252958",
   containerBg3: "#0F1029",
-
+  darkMode: true,
   wapMarqueeBg: "#00032675",
   wapMarqueeText: "#fff",
   accent: "#242958",
