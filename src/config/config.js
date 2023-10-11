@@ -9,7 +9,7 @@ const config = {
     window?.env?.client ||
     "uc0C5tXKanr6gN9P7HqlTQ1AGwUFJhg8jEzuFhCuHEC0E1QcCfZYrH",
   currency: window?.env?.currency || "PHP",
-  brand: window?.env?.brand || process.env.REACT_APP_BRAND || "xxxxxx",
+  brand: window?.env?.brand || process.env.REACT_APP_BRAND || "stg_PB",
   brandName: window?.env?.brandName
     ? window?.env?.brandName
     : window?.env?.brand || "GPI",
@@ -24,6 +24,7 @@ const config = {
     : "zh-CN",
   affiliateId: window?.env?.affiliateId || "",
   features: featureList["default"],
+  configUrl: window?.env?.configUrl || "https://app12.srvptt.com/",
 };
 
 export default config;
