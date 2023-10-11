@@ -170,14 +170,7 @@ class Cockfight extends Component {
             this.popup.close();
           });
       } else {
-        AppHistory.push(
-          "/" +
-            i18n.language +
-            "/sports/play/" +
-            params +
-            "/" +
-            GameTypeEnum.SPORTS
-        );
+        AppHistory.push("/sports/play/" + params + "/" + GameTypeEnum.SPORTS);
       }
     } else {
       this.props.showLogin(true);
@@ -206,7 +199,7 @@ class Cockfight extends Component {
                       process.env.PUBLIC_URL +
                       "/assets/images/pcGamePage/cockfight/" +
                       item.abbreviation.toLowerCase() +
-                      ".jpg"
+                      ".png"
                     }
                     onClick={() => {
                       this.handleJoinGameClick(item.gpcode, item.type);

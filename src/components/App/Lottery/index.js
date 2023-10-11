@@ -162,12 +162,7 @@ class Lottery extends Component {
     if (this.props.account.token != null) {
       Common.closePreviousPopup();
       // this.props.performBalanceRefresh();
-      Common.PopupCenter(
-        "/" + i18n.language + "/joinlottery/" + name,
-        name,
-        1280,
-        720
-      );
+      Common.PopupCenter("/joinlottery/" + name, name, 1280, 720);
     } else {
       this.props.showLogin(true);
     }
@@ -200,7 +195,7 @@ class Lottery extends Component {
                       process.env.PUBLIC_URL +
                       "/assets/images/pcGamePage/lottery/" +
                       item.abbreviation.toLowerCase() +
-                      ".jpg"
+                      ".png"
                     }
                     onClick={() => {
                       this.handleJoinGameClick(item.abbreviation);

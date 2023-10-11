@@ -89,73 +89,19 @@ const Chip = styled.div`
 `;
 
 function Footer(props) {
-  const providers = [
-    { name: "BetConstruct" },
-    { name: "Avia" },
-    { name: "TF Sports" },
-    { name: "Joker" },
-    { name: "AE Slot" },
-    { name: "FACAI" },
-    { name: "Fast Spin" },
-    { name: "Kingmaker" },
-    { name: "PGSoft" },
-    { name: "Spadegaming" },
-    { name: "Venus" },
-    { name: "YL" },
-    { name: "WM" },
-    { name: "Netent" },
-    { name: "Red Tiger" },
-    { name: "JILI" },
-    { name: "Evolution" },
-    { name: "JDB" },
-    { name: "PHSB" },
-    { name: "Habanero" },
-  ];
-  const providers_TEP = [
-    { name: "BetConstruct" },
-    { name: "TF Sports" },
-    { name: "Joker" },
-    { name: "FACAI" },
-    { name: "Fast Spin" },
-    { name: "Kingmaker" },
-    { name: "PGSoft" },
-    { name: "Venus" },
-    { name: "YL" },
-    { name: "WM" },
-    { name: "Netent" },
-    { name: "Red Tiger" },
-    { name: "JILI" },
-    { name: "Evolution" },
-    { name: "JDB" },
-    { name: "PHSB" },
-    { name: "NLC" },
-    { name: "BTG" },
-    { name: "DG" },
-    { name: "SexyGaming" },
-  ];
   const navigateTo = (to) => {
-    props.history.push("/" + i18n.language + "/" + to);
+    props.history.push("/" + to);
     window.scroll({ top: 0, behavior: "smooth" });
   };
-
-  const getProviders = () => {
-    if(config.features.TEP_CustomProviders)
-      return providers_TEP;
-    else
-      return providers;
-  }
 
   const AboutUs = ({ img }) => (
     <Section>
       <SectionTitle>{i18n.t("T13.gamingLicense")}</SectionTitle>
       <AboutUsContainer>
         <AboutUsLogo img={img}></AboutUsLogo>
-        {i18n
-          .t("T13.footer.copyright")
-          .replace(/{brand}/g, config.brandName)}
+        {i18n.t("T13.footer.copyright").replace(/{brand}/g, config.brandName)}
         <br />
-        {i18n
-          .t("T13.footer.rights")}
+        {i18n.t("T13.footer.rights")}
         <br />
         Version {process.env.REACT_APP_VERSION}
       </AboutUsContainer>
@@ -202,18 +148,20 @@ function Footer(props) {
     <Section>
       <SectionTitle>{i18n.t("T13.partners")}</SectionTitle>
       <ChipContainer>
-        {providers
-          .map((item, index) => (
-            <Chip key={index}>{item.name}</Chip>
-          ))}
+        {providers.map((item, index) => (
+          <Chip key={index}>{item.name}</Chip>
+        ))}
       </ChipContainer>
     </Section>
   );
   return (
     <Container hide={props.hide}>
       <AboutUs img={GamingLicensePNG} />
-      <QuickLinks navigateTo={navigateTo} performOpenSupportModal={props.performOpenSupportModal} />
-      <Partners providers={getProviders()} />
+      <QuickLinks
+        navigateTo={navigateTo}
+        performOpenSupportModal={props.performOpenSupportModal}
+      />
+      <Partners providers={props.game.providerList} />
     </Container>
   );
 }

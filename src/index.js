@@ -196,6 +196,23 @@ const AppWrapper = () => {
     });
   }, []);
 
+  useEffect(() => {
+    var languages = "zh-CN|zh-TW|en-US|id-ID|th-TH|vi-VN".split("|");
+    var pathname = window.location.pathname;
+    var isfoundLanguage = "";
+    for (var i = 0; i < languages.length; i++) {
+      if (pathname.indexOf(languages[i]) >= 0) {
+        isfoundLanguage = languages[i];
+        break;
+      }
+    }
+    if (isfoundLanguage != "") {
+      pathname = pathname.replace("/" + isfoundLanguage, "/");
+      pathname = pathname.replace("//", "/");
+      window.location.href = pathname + window.location.search;
+    }
+  }, []);
+
   if (isReady) {
     return (
       <Provider store={store}>
@@ -234,34 +251,28 @@ const AppWrapper = () => {
                     <Route
                       exact
                       path={
-                        Common.baseRouteUrl +
                         "/deposit/:paymentcode/:methodcode/:channelid/:amount/:promotion/:name/:account?"
                       }
                       component={Deposit}
                     />
                     <Route
                       exact
-                      path={
-                        Common.baseRouteUrl +
-                        "/joingame/:type/:params/:params2?"
-                      }
+                      path={"/joingame/:type/:params/:params2?"}
                       component={JoinGame}
                     />
                     <Route
                       exact
-                      path={Common.baseRouteUrl + "/redirect/:url"}
+                      path={"/redirect/:url"}
                       component={RedirectPage}
                     />
                     <Route
                       exact
-                      path={Common.baseRouteUrl + "/joinlottery/:brand"}
+                      path={"/joinlottery/:brand"}
                       component={JoinLotteryGame}
                     />
                     <Route
                       exact
-                      path={
-                        Common.baseRouteUrl + "/joinlobbygame/:type/:params"
-                      }
+                      path={"/joinlobbygame/:type/:params"}
                       component={JoinLobbyGame}
                     />
                     {(() => {
@@ -269,17 +280,17 @@ const AppWrapper = () => {
                         return (
                           <Route
                             exact
-                            path={Common.baseRouteUrl + "/maintenance"}
+                            path={"/maintenance"}
                             render={(props) => <Maintenance />}
                           />
                         );
                       }
                     })()}
                     <Route
-                      path={Common.baseRouteUrl + "/"}
+                      path={"/"}
                       render={(props) => (isMobileOnly ? <Wap /> : <Web />)}
                     />
-                    <Redirect to={`/${languageDetector}`} />5
+                    <Redirect to={`/`} />
                   </Switch>
                 </Router>
               </SnackbarProvider>

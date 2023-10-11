@@ -65,7 +65,7 @@ const InnerWrap = styled.div`
   max-width: 1280px;
   width: 100%;
   font-size: 14px;
-  height: ${(props)=> props.displayGameListInHeader ? `384px`: `155px`};
+  height: ${(props) => (props.displayGameListInHeader ? `384px` : `155px`)};
 `;
 const TopContainer = styled.div`
   height: 45px;
@@ -348,11 +348,11 @@ class Header extends Component {
 
   onhandleLogout = () => {
     this.props.logout(this.props.account.token);
-    this.props.history.push("/" + i18n.language + "/");
+    this.props.history.push("/");
   };
   onhandleLogoClick = () => {
     this.setState({ selected: "/" });
-    this.props.history.push("/" + i18n.language + "/");
+    this.props.history.push("/");
     window.scrollTo({ top: 0, behavior: "auto" });
   };
   onhandleTransfer = () => {
@@ -362,7 +362,7 @@ class Header extends Component {
     ) {
       return;
     }
-    this.props.history.push("/" + i18n.language + "/account/transfer");
+    this.props.history.push("/account/transfer");
     window.scrollTo({ top: 0, behavior: "auto" });
   };
   onhandleDeposit = () => {
@@ -372,7 +372,7 @@ class Header extends Component {
     ) {
       return;
     }
-    this.props.history.push("/" + i18n.language + "/account/deposit");
+    this.props.history.push("/account/deposit");
     window.scrollTo({ top: 0, behavior: "auto" });
   };
   handleInboxClick = () => {
@@ -382,7 +382,7 @@ class Header extends Component {
     ) {
       return;
     }
-    this.props.history.push("/" + i18n.language + "/account/inbox");
+    this.props.history.push("/account/inbox");
     window.scrollTo({ top: 0, behavior: "auto" });
   };
   handleProfileClick = () => {
@@ -392,7 +392,7 @@ class Header extends Component {
     ) {
       return;
     }
-    this.props.history.push("/" + i18n.language + "/account/profile");
+    this.props.history.push("/account/profile");
     window.scrollTo({ top: 0, behavior: "auto" });
   };
   handleWithdrawClick = () => {
@@ -402,7 +402,7 @@ class Header extends Component {
     ) {
       return;
     }
-    this.props.history.push("/" + i18n.language + "/account/withdrawal");
+    this.props.history.push("/account/withdrawal");
     window.scrollTo({ top: 0, behavior: "auto" });
   };
   handleRefreshBalanceClick = () => {
@@ -421,12 +421,12 @@ class Header extends Component {
   };
   handleDownloadAppsClick = () => {
     this.setState({ selected: "/download" });
-    this.props.history.push("/" + i18n.language + "/download");
+    this.props.history.push("/download");
     window.scrollTo({ top: 0, behavior: "auto" });
     //alert("敬请期待");
   };
   handleContactUsClick = () => {
-    this.props.history.push("/" + i18n.language + "/aboutus/contactus");
+    this.props.history.push("/aboutus/contactus");
     window.scrollTo({ top: 0, behavior: "auto" });
   };
   HighlightLink = (link) => {};
@@ -444,7 +444,7 @@ class Header extends Component {
       return;
     }
     this.setState({ ...this.state, selected: path });
-    this.props.history.push("/" + i18n.language + `/${path}`);
+    this.props.history.push(`/${path}`);
     window.scrollTo({ top: 0, behavior: "auto" });
   };
 
@@ -489,14 +489,9 @@ class Header extends Component {
       if (this.props.history.location.pathname.indexOf("play") >= 0) {
         AppHistory.goBack();
       }
-      var win = Common.PopupCenter(
-        "/" + i18n.language + "/joinlottery/" + name,
-        name,
-        1280,
-        720
-      );
+      var win = Common.PopupCenter("/joinlottery/" + name, name, 1280, 720);
       // var win = window.open(
-      //   "/" + i18n.language + "/joinlottery/" + name,
+      //   "/joinlottery/" + name,
       //   "_blank",
       //   "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=1280,height=720"
       // );
@@ -539,10 +534,12 @@ class Header extends Component {
           this.props.showLogin(true);
         } else {
           if (gameType === GameTypeEnum.RNGSPORTS) {
-            this.props.history.push(
-              "/" + i18n.language + "/sports/" + gameCode
-            );
-          } else if (gameCode === "WGFM" || gameCode === "WGVIA") {
+            this.props.history.push("/sports/" + gameCode);
+          } else if (
+            gameCode === "WGFM" ||
+            gameCode === "WGVIA" ||
+            gameCode === "9WCRICKET"
+          ) {
             if (document.getElementById("audio") != null)
               document.getElementById("audio").volume = 0;
             if (this.props.history.location.pathname.indexOf("play") >= 0) {
@@ -550,7 +547,7 @@ class Header extends Component {
             }
             // this.handleRefreshBalanceClick();
             var win = Common.PopupCenter(
-              `/${i18n.language}/joinlobbygame/${gameType}/${gameCode}`,
+              `/joinlobbygame/${gameType}/${gameCode}`,
               gameCode,
               1280,
               720
@@ -569,12 +566,12 @@ class Header extends Component {
           } else {
             // this.handleRefreshBalanceClick();
             this.props.history.push(
-              "/" + i18n.language + "/sports/play/" + gameCode + "/" + gameType
+              "/sports/play/" + gameCode + "/" + gameType
             );
           }
         }
       } else {
-        this.props.history.push(`/${i18n.language}/${path}/${gameCode}`);
+        this.props.history.push(`/${path}/${gameCode}`);
       }
     } else {
       if (!this.props.account.token) {
@@ -665,7 +662,7 @@ class Header extends Component {
         game.type,
         item.path,
         game.gpcode,
-        "/" + i18n.language + "/joingame/" + game.type + "/" + game.gpcode
+        "/joingame/" + game.type + "/" + game.gpcode
       );
     }
   };
@@ -673,7 +670,11 @@ class Header extends Component {
   displayGameListInHeader = () => {
     const path = this.props.location.pathname;
     const pathArray = path.split("/");
-    if (pathArray[2] === undefined || pathArray[2] === null || pathArray[2] === "") {
+    if (
+      pathArray[1] === undefined ||
+      pathArray[1] === null ||
+      pathArray[1] === ""
+    ) {
       return true;
     } else {
       return false;

@@ -155,12 +155,7 @@ class ESports extends Component {
       // this.props.performBalanceRefresh();
       Common.closePreviousPopup();
       this.props.history.push(
-        "/" +
-          i18n.language +
-          "/sports/play/" +
-          params +
-          "/" +
-          GameTypeEnum.ESPORTS
+        "/sports/play/" + params + "/" + GameTypeEnum.ESPORTS
       );
     }
   };
@@ -186,7 +181,7 @@ class ESports extends Component {
                       process.env.PUBLIC_URL +
                       "/assets/images/pcGamePage/esports/" +
                       item.abbreviation.toLowerCase() +
-                      ".jpg"
+                      ".png"
                     }
                     onClick={() => {
                       this.handleJoinGameClick(item.abbreviation);

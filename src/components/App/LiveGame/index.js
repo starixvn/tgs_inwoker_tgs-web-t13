@@ -193,12 +193,7 @@ class LiveGame extends Component {
       Common.closePreviousPopup();
       // this.props.performBalanceRefresh();
       Common.PopupCenter(
-        "/" +
-          i18n.language +
-          "/joingame/" +
-          GameTypeEnum.LIVELOBBY +
-          "/" +
-          params.toUpperCase(),
+        "/joingame/" + GameTypeEnum.LIVELOBBY + "/" + params.toUpperCase(),
         params.toUpperCase(),
         1280,
         720
@@ -246,7 +241,7 @@ class LiveGame extends Component {
                       process.env.PUBLIC_URL +
                       "/assets/images/pcGamePage/live/" +
                       item.abbreviation.toLowerCase() +
-                      ".jpg"
+                      ".png"
                     }
                     onClick={() => {
                       this.handleJoinGameClick(item.abbreviation);
