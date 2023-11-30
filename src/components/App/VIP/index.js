@@ -151,13 +151,14 @@ const VIP = (props) => {
   useEffect(() => {
     const onScroll = () => {
       if (
-        vipBenefit!==undefined &&
-        vipBenefit.items !== undefined && 
+        vipBenefit !== undefined &&
+        vipBenefit.items !== undefined &&
         lastItemRef &&
         lastItemRef.current &&
         (document.documentElement.scrollTop < 0 ||
           document.documentElement.scrollTop >
-          (lastItemRef.current.getBoundingClientRect().height * vipBenefit.items.length))
+            lastItemRef.current.getBoundingClientRect().height *
+              vipBenefit.items.length)
       ) {
         setIsHeaderOutside(true);
       } else {
@@ -219,9 +220,15 @@ const VIP = (props) => {
             <VIPContainer>
               <VIPHeaderRowContainer isHeaderOutside={isHeaderOutside}>
                 <VipTitle title={i18n.t("T13.vip.level")} />
-                <VipTitle title={i18n.t("T13.vip.levelKeepAccumulateBetAmount")} />
-                <VipTitle title={i18n.t("T13.vip.levelKeepAccumulateDeposit")} />
-                <VipTitle title={i18n.t("T13.vip.levelUpAccumulateBetAmount")} />
+                <VipTitle
+                  title={i18n.t("T13.vip.levelKeepAccumulateBetAmount")}
+                />
+                <VipTitle
+                  title={i18n.t("T13.vip.levelKeepAccumulateDeposit")}
+                />
+                <VipTitle
+                  title={i18n.t("T13.vip.levelUpAccumulateBetAmount")}
+                />
                 <VipTitle title={i18n.t("T13.vip.levelUpAccumulateDeposit")} />
                 <VipTitle title={i18n.t("T13.vip.birthBenefit")} />
                 <VipTitle title={i18n.t("T13.vip.promotionBenefit")} />
@@ -280,24 +287,24 @@ const VIP = (props) => {
             <VIPRebateContainer>
               <VIPRebateHeader>
                 <VipTitle title={i18n.t("vip.vipBenefit")} />
-                <VipTitle title={i18n.t("vip.cardGameRebate")} />
                 <VipTitle title={i18n.t("vip.liveDealerRebate")} />
-                <VipTitle title={i18n.t("vip.lotteryRebate")} />
                 <VipTitle title={i18n.t("vip.slotRebate")} />
+                <VipTitle title={i18n.t("vip.cardGameRebate")} />
                 <VipTitle title={i18n.t("vip.sportsRebate")} />
                 <VipTitle title={i18n.t("vip.virtualSportsRebate")} />
+                <VipTitle title={i18n.t("vip.lotteryRebate")} />
               </VIPRebateHeader>
 
               {vipBenefitList.map((data, index) => {
                 return (
                   <VIPRebateRow key={index}>
                     <VipContent content={data.level} />
-                    <VipContent content={data.cardGameRebate + "%"} />
                     <VipContent content={data.liveDealerRebate + "%"} />
-                    <VipContent content={data.lotteryRebate + "%"} />
                     <VipContent content={data.slotRebate + "%"} />
+                    <VipContent content={data.cardGameRebate + "%"} />
                     <VipContent content={data.sportsRebate + "%"} />
                     <VipContent content={data.virtualSportsRebate + "%"} />
+                    <VipContent content={data.lotteryRebate + "%"} />
                   </VIPRebateRow>
                 );
               })}
