@@ -219,20 +219,14 @@ const VIP = (props) => {
           <React.Fragment>
             <VIPContainer>
               <VIPHeaderRowContainer isHeaderOutside={isHeaderOutside}>
-                <VipTitle title={i18n.t("T13.vip.level")} />
-                <VipTitle
-                  title={i18n.t("T13.vip.levelKeepAccumulateBetAmount")}
-                />
-                <VipTitle
-                  title={i18n.t("T13.vip.levelKeepAccumulateDeposit")}
-                />
-                <VipTitle
-                  title={i18n.t("T13.vip.levelUpAccumulateBetAmount")}
-                />
-                <VipTitle title={i18n.t("T13.vip.levelUpAccumulateDeposit")} />
-                <VipTitle title={i18n.t("T13.vip.birthBenefit")} />
-                <VipTitle title={i18n.t("T13.vip.promotionBenefit")} />
-                <VipTitle title={i18n.t("T13.vip.quarterlyBenefit")} />
+                <VipTitle title={i18n.t("vip.level")} />
+                <VipTitle title={i18n.t("vip.levelKeepAccumulateBetAmount")} />
+                <VipTitle title={i18n.t("vip.levelKeepAccumulateDeposit")} />
+                <VipTitle title={i18n.t("vip.levelUpAccumulateBetAmount")} />
+                <VipTitle title={i18n.t("vip.levelUpAccumulateDeposit")} />
+                <VipTitle title={i18n.t("vip.birthBenefit")} />
+                <VipTitle title={i18n.t("vip.promotionBenefit")} />
+                <VipTitle title={i18n.t("vip.quarterlyBenefit")} />
               </VIPHeaderRowContainer>
               <VIPListContainer isHeaderOutside={isHeaderOutside}>
                 {vipBenefitList.map((data, index) => {
