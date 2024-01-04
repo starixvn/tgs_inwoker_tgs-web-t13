@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 import config from "../../config/config";
 import i18n from "../../utils/i18n";
 import GamingLicensePNG from "../../assets/images/gaming-license.png";
+import VersionNumber from "../../utils/versionnumber";
 const Container = styled.div`
   width: 1280px;
   margin: 0 auto;
@@ -103,7 +104,7 @@ function Footer(props) {
         <br />
         {i18n.t("T13.footer.rights")}
         <br />
-        Version {process.env.REACT_APP_VERSION}
+        Version <VersionNumber />
       </AboutUsContainer>
     </Section>
   );
