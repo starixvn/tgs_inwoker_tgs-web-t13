@@ -96,7 +96,6 @@ const DownloadTitleSection = styled.div`
   padding-bottom: 20px;
 `;
 
-
 const SupportIcon = styled(Icons)`
   height: 30px;
   width: 30px;
@@ -226,7 +225,6 @@ const Links = styled.div`
   font-size: 15px;
 `;
 
-
 const DownloadContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -242,11 +240,7 @@ const Download = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   function getJsonData() {
-    return fetch(
-      "https://app12.s3.ap-east-1.amazonaws.com/version_" +
-        config.brand +
-        ".json"
-    )
+    return fetch(config.configUrl + "version_" + config.brand + ".json")
       .then((response) => response.json())
       .then((responseJson) => {
         setDownload(responseJson);

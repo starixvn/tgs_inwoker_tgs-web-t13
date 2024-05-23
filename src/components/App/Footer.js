@@ -11,7 +11,7 @@ import VersionNumber from "../../utils/versionnumber";
 const Container = styled.div`
   width: 1280px;
   margin: 0 auto;
-  height: 577px;
+  min-height: 577px;
   display: flex;
   justify-content: space-between;
 `;

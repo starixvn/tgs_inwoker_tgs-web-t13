@@ -3,13 +3,12 @@ import featureList from "./features";
 var template = 13; //2 for T2, 3 for T3 (based on .xd file)
 const config = {
   baseUrl:
-    window?.env?.apiUrl ||
-    (window?.env ? "/api/" : "https://stg-t1.rpgp.cc/api/"),
+    window?.env?.apiUrl || (window?.env ? "/api/" : "https://28win.co/api/"),
   client:
     window?.env?.client ||
     "uc0C5tXKanr6gN9P7HqlTQ1AGwUFJhg8jEzuFhCuHEC0E1QcCfZYrH",
   currency: window?.env?.currency || "PHP",
-  brand: window?.env?.brand || process.env.REACT_APP_BRAND || "xxxxxx",
+  brand: window?.env?.brand || process.env.REACT_APP_BRAND || "stg_PB",
   brandName: window?.env?.brandName
     ? window?.env?.brandName
     : window?.env?.brand || "GPI",
@@ -24,6 +23,7 @@ const config = {
     : "zh-CN",
   affiliateId: window?.env?.affiliateId || "",
   features: featureList["default"],
+  configUrl: window?.env?.configUrl || "https://app12.srvptt.com/",
   version: window?.env?.version,
 };
 

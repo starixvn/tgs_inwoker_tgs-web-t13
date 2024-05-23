@@ -311,7 +311,6 @@ class Play extends Component {
                         }
                       />
                       <div className="clear"></div>
-                      <LoadingLogoImg2 src={LoadingGIF} />
                     </LoadingInner>
                   </LoadingContainer>
                 );

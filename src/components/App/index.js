@@ -133,7 +133,7 @@ class App extends Component {
     //this.props.getHomePageGameList();
     const urlpath = this.props.location.pathname.split("/");
 
-     if (urlpath.length === 3) {
+    if (urlpath.length === 3) {
       if (urlpath[1] === "a") {
         localStorage.setItem("promotionId", urlpath[2] || "");
         localStorage.setItem("upper", ""); //reset

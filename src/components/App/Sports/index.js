@@ -162,7 +162,11 @@ class Sports extends Component {
       Common.closePreviousPopup();
       if (type === GameTypeEnum.RNGSPORTS) {
         this.props.history.push("/sports/" + params);
-      } else if (params === "WGFM" || params === "WGVIA") {
+      } else if (
+        params === "WGFM" ||
+        params === "WGVIA" ||
+        params === "9WCRICKET"
+      ) {
         Common.PopupCenter(
           `/joinlobbygame/${type}/${params}`,
           params,
